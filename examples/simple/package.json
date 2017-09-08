@@ -6,7 +6,7 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^21.0.1",
-    "jest-runner-eslint": "^0.0.2"
+    "jest-runner-eslint": "0.1.0"
   },
   "jest": {
     "runner": "jest-runner-eslint",

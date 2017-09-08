@@ -1540,9 +1540,9 @@ jest-resolve@^21.0.0:
     chalk "^2.0.1"
     is-builtin-module "^1.0.0"
 
-jest-runner-eslint@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/jest-runner-eslint/-/jest-runner-eslint-0.0.2.tgz#6719e0cb0a4c410c547a7a32a318e336ad027764"
+jest-runner-eslint@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/jest-runner-eslint/-/jest-runner-eslint-0.1.0.tgz#451560b8226e7588405e39af1a78c232161349f5"
   dependencies:
     babel-polyfill "^6.26.0"
     babel-register "6.26.0"
