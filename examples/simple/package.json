@@ -1,0 +1,15 @@
+{
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "21.0.1",
+    "jest-runner-mocha": "0.2.0",
+    "mocha": "3.5.0",
+    "should": "13.0.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "runner": "jest-runner-mocha"
+  }
+}
