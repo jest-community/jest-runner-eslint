@@ -10,7 +10,9 @@
     "url": "https://github.com/rogeliog/jest-runner-mocha.git"
   },
   "homepage": "https://github.com/rogeliog/jest-runner-mocha",
-  "files": ["build/"],
+  "files": [
+    "build/"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
@@ -20,9 +22,10 @@
     "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
   },
   "dependencies": {
-    "eslint": "4.5.0",
     "babel-polyfill": "^6.26.0",
     "babel-register": "6.26.0",
+    "eslint": "4.5.0",
+    "find-up": "^2.1.0",
     "lodash": "4.17.4",
     "minimatch": "3.0.4",
     "pify": "3.0.0",

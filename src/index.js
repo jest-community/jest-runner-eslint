@@ -4,7 +4,7 @@ const pify = require('pify');
 const workerFarm = require('worker-farm');
 const path = require('path');
 
-const TEST_WORKER_PATH = path.join(__dirname, 'runMocha.js');
+const TEST_WORKER_PATH = path.join(__dirname, 'runESLint.js');
 
 class CancelRun extends Error {
   constructor(message) {
@@ -13,7 +13,7 @@ class CancelRun extends Error {
   }
 }
 
-module.exports = class MochaTestRunner {
+module.exports = class ESLintTestRunner {
   constructor(globalConfig) {
     this._globalConfig = globalConfig;
   }

@@ -1,18 +1,7 @@
-const formatMochaError = require('../internal/formatMochaError');
-
-const hasError = (test = {}) => {
-  return (
-    test.err instanceof Error || (test.err && Object.keys(test.err).length > 0)
-  );
-};
-const toMochaError = test =>
-  hasError(test) ? `\n${formatMochaError(test)}\n\n` : null;
-
-const toTestResult = ({ stats, tests, jestTestPath, coverage }) => {
+const toTestResult = ({ stats, errorMessage, tests, jestTestPath }) => {
   return {
-    coverage,
     console: null,
-    failureMessage: toMochaError(tests.find(hasError)),
+    failureMessage: errorMessage,
     numFailingTests: stats.failures,
     numPassingTests: stats.passes,
     numPendingTests: stats.pending,
@@ -35,12 +24,12 @@ const toTestResult = ({ stats, tests, jestTestPath, coverage }) => {
     testResults: tests.map(test => {
       return {
         ancestorTitles: [],
-        duration: test.duration / 1000,
-        failureMessages: toMochaError(test),
-        fullName: test.fullTitle(),
-        numPassingAsserts: hasError(test) ? 1 : 0,
-        status: hasError(test) ? 'failed' : 'passed',
-        title: test.title,
+        duration: test.duration,
+        failureMessages: test.errorMessage,
+        fullName: test.testPath,
+        numPassingAsserts: test.errorMessage ? 1 : 0,
+        status: test.errorMessage ? 'failed' : 'passed',
+        title: 'ESLint',
       };
     }),
   };
