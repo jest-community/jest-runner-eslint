@@ -7,12 +7,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rogeliog/jest-runner-mocha.git"
+    "url": "https://github.com/rogeliog/jest-runner-eslint.git"
   },
-  "homepage": "https://github.com/rogeliog/jest-runner-mocha",
-  "files": [
-    "build/"
-  ],
+  "homepage": "https://github.com/rogeliog/jest-runner-eslint",
+  "files": ["build/"],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
