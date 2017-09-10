@@ -1,4 +1,10 @@
-const toTestResult = ({ stats, errorMessage, tests, jestTestPath }) => {
+const toTestResult = ({
+  stats,
+  skipped,
+  errorMessage,
+  tests,
+  jestTestPath,
+}) => {
   return {
     console: null,
     failureMessage: errorMessage,
@@ -9,7 +15,7 @@ const toTestResult = ({ stats, errorMessage, tests, jestTestPath }) => {
       end: +new Date(stats.end),
       start: +new Date(stats.start),
     },
-    skipped: false,
+    skipped,
     snapshot: {
       added: 0,
       fileDeleted: false,
