@@ -10,9 +10,7 @@
     "url": "https://github.com/rogeliog/jest-runner-eslint.git"
   },
   "homepage": "https://github.com/rogeliog/jest-runner-eslint",
-  "files": [
-    "build/"
-  ],
+  "files": ["build/"],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
@@ -22,12 +20,8 @@
     "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "babel-register": "6.26.0",
     "eslint": "4.5.0",
     "find-up": "^2.1.0",
-    "lodash": "4.17.4",
-    "minimatch": "3.0.4",
     "pify": "3.0.0",
     "throat": "4.1.0",
     "worker-farm": "1.5.0"
@@ -35,7 +29,6 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-jest": "21.0.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "1.6.0",
     "eslint-config-airbnb-base": "11.3.2",
     "eslint-config-prettier": "2.3.0",
