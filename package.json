@@ -1,6 +1,6 @@
 {
   "name": "jest-runner-eslint",
-  "version": "0.1.1",
+  "version": "0.2.0-0",
   "main": "build/index.js",
   "author": "Rogelio Guzman <rogelioguzmanh@gmail.com>",
   "description": "An experimental ESLint runner for Jest",
@@ -10,7 +10,9 @@
     "url": "https://github.com/rogeliog/jest-runner-eslint.git"
   },
   "homepage": "https://github.com/rogeliog/jest-runner-eslint",
-  "files": ["build/"],
+  "files": [
+    "build/"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
