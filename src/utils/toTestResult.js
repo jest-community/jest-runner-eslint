@@ -31,7 +31,7 @@ const toTestResult = ({
       return {
         ancestorTitles: [],
         duration: test.duration,
-        failureMessages: test.errorMessage,
+        failureMessages: [test.errorMessage],
         fullName: test.testPath,
         numPassingAsserts: test.errorMessage ? 1 : 0,
         status: test.errorMessage ? 'failed' : 'passed',
