@@ -44,3 +44,27 @@ module.exports = {
 ```bash
 yarn jest
 ```
+
+
+## Options
+
+This project uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig), so you can provide config via:
+* a `jest-runner-eslint` property in your `package.json`
+* a `jest-runner-eslint.config.js` JS file
+* a `.jest-runner-eslintrc` JSON file
+
+```js
+module.exports = {
+  "cliOptions": {
+    // ESLint cli options options here
+  },
+  "writeOnFix": // (true|false)
+}
+```
+
+#### cliOptions
+See https://eslint.org/docs/developer-guide/nodejs-api#cliengine for a full
+set of supported `cliOptions`
+
+#### writeOnFix
+Used for writing the updated file to disk when using `{ fix: true }` in the `cliOptions`

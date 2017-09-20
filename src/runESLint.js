@@ -1,4 +1,5 @@
 const getLocalESLint = require('./utils/getLocalESLint');
+const getESLintOptions = require('./utils/getESLintOptions');
 const toTestResult = require('./utils/toTestResult');
 
 const skip = ({ start, end, testPath }) =>
@@ -62,12 +63,18 @@ const runESLint = ({ testPath, config }, workerCallback) => {
   try {
     const start = +new Date();
     const { CLIEngine } = getLocalESLint(config);
-    const cli = new CLIEngine({});
+    const options = getESLintOptions(config);
+    const cli = new CLIEngine(options.cliOptions);
     if (cli.isPathIgnored(testPath)) {
       const end = +new Date();
       workerCallback(null, skip({ start, end, testPath }));
     } else {
       const report = cli.executeOnFiles([testPath]);
+
+      if (options.writeOnFix) {
+        CLIEngine.outputFixes(report);
+      }
+
       const end = +new Date();
 
       if (report.errorCount > 0) {
