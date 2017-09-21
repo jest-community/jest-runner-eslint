@@ -53,18 +53,51 @@ This project uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig), s
 * a `jest-runner-eslint.config.js` JS file
 * a `.jest-runner-eslintrc` JSON file
 
-```js
-module.exports = {
-  "cliOptions": {
-    // ESLint cli options options here
-  },
-  "writeOnFix": // (true|false)
+
+In `package.json`
+```json
+{
+  "jest-runner-eslint": {
+    "cliOptions": {}
+  }
 }
 ```
 
-#### cliOptions
 See https://eslint.org/docs/developer-guide/nodejs-api#cliengine for a full
 set of supported `cliOptions`
 
-#### writeOnFix
-Used for writing the updated file to disk when using `{ fix: true }` in the `cliOptions`
+#### `fix`
+This is similar to running ESLint with `--fix`
+```json
+{
+  "jest-runner-eslint": {
+    "cliOptions": {
+      "fix": true
+    }
+  }
+}
+```
+
+#### `configFile`
+This is similar to running ESLint with `-c /path/to/config-file`
+```json
+{
+  "jest-runner-eslint": {
+    "cliOptions": {
+      "configFile": "/path/to/config-file"
+    }
+  }
+}
+```
+
+#### `globals`
+This is similar to running ESLint with `--globals`
+```json
+{
+  "jest-runner-eslint": {
+    "cliOptions": {
+      "globals": ["describe", "it"]
+    }
+  }
+}
+```

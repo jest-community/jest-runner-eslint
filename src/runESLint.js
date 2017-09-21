@@ -71,7 +71,7 @@ const runESLint = ({ testPath, config }, workerCallback) => {
     } else {
       const report = cli.executeOnFiles([testPath]);
 
-      if (options.writeOnFix) {
+      if (options.cliOptions && options.cliOptions.fix) {
         CLIEngine.outputFixes(report);
       }
 
