@@ -1,5 +1,11 @@
 const normalizeOptions = require('../normalizeOptions');
 
+it('ignores unkown options', () => {
+  expect(normalizeOptions({ other: true })).not.toMatchObject({
+    other: true,
+  });
+});
+
 it('normalizes noInlineConfig', () => {
   expect(normalizeOptions({})).toMatchObject({
     allowInlineConfig: true,
@@ -34,22 +40,30 @@ it('normalizes config', () => {
   });
 });
 
-it('normalizes envs', () => {
+it('normalizes env', () => {
   expect(normalizeOptions({})).toMatchObject({
     envs: [],
   });
 
-  expect(normalizeOptions({ envs: ['mocha', 'browser'] })).toMatchObject({
+  expect(normalizeOptions({ env: 'mocha' })).toMatchObject({
+    envs: ['mocha'],
+  });
+
+  expect(normalizeOptions({ env: ['mocha', 'browser'] })).toMatchObject({
     envs: ['mocha', 'browser'],
   });
 });
 
-it('normalizes exts', () => {
+it('normalizes ext', () => {
   expect(normalizeOptions({})).toMatchObject({
     extensions: ['.js'],
   });
 
-  expect(normalizeOptions({ exts: ['.js', '.jsx', '.ts'] })).toMatchObject({
+  expect(normalizeOptions({ ext: '.ts' })).toMatchObject({
+    extensions: ['.ts'],
+  });
+
+  expect(normalizeOptions({ ext: ['.js', '.jsx', '.ts'] })).toMatchObject({
     extensions: ['.js', '.jsx', '.ts'],
   });
 });
@@ -64,12 +78,16 @@ it('normalizes fix', () => {
   });
 });
 
-it('normalizes globals', () => {
+it('normalizes global', () => {
   expect(normalizeOptions({})).toMatchObject({
     globals: [],
   });
 
-  expect(normalizeOptions({ globals: ['it', 'describe'] })).toMatchObject({
+  expect(normalizeOptions({ global: 'it' })).toMatchObject({
+    globals: ['it'],
+  });
+
+  expect(normalizeOptions({ global: ['it', 'describe'] })).toMatchObject({
     globals: ['it', 'describe'],
   });
 });
@@ -116,12 +134,16 @@ it('normalizes parserOptions', () => {
   });
 });
 
-it('normalizes plugins', () => {
+it('normalizes plugin', () => {
   expect(normalizeOptions({})).toMatchObject({
     plugins: [],
   });
 
-  expect(normalizeOptions({ plugins: ['prettier'] })).toMatchObject({
+  expect(normalizeOptions({ plugin: 'prettier' })).toMatchObject({
+    plugins: ['prettier'],
+  });
+
+  expect(normalizeOptions({ plugin: ['prettier'] })).toMatchObject({
     plugins: ['prettier'],
   });
 });
@@ -131,6 +153,10 @@ it('normalizes rulesdir', () => {
     rulePaths: [],
   });
 
+  expect(normalizeOptions({ rulesdir: '/path/to/rules' })).toMatchObject({
+    rulePaths: ['/path/to/rules'],
+  });
+
   expect(
     normalizeOptions({ rulesdir: ['/path/to/rules', '/other/path'] }),
   ).toMatchObject({
@@ -138,13 +164,17 @@ it('normalizes rulesdir', () => {
   });
 });
 
-it('normalizes rules', () => {
+it('normalizes rule', () => {
   expect(normalizeOptions({})).toMatchObject({
     rules: null,
   });
 
-  expect(normalizeOptions({ rules: [] })).toMatchObject({
-    rules: [],
+  expect(normalizeOptions({ rule: ['quotes: [2, double]'] })).toMatchObject({
+    rules: ['quotes: [2, double]'],
+  });
+
+  expect(normalizeOptions({ rule: 'quotes: [2, double]' })).toMatchObject({
+    rules: ['quotes: [2, double]'],
   });
 });
 

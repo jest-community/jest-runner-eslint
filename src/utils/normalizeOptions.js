@@ -28,16 +28,10 @@ const baseConfig = {
 const oneToOneKeyMap = {
   cacheLocation: 'cacheLocation',
   config: 'configFile',
-  envs: 'envs',
-  exts: 'extensions',
   fix: 'fix',
-  globals: 'globals',
   ignorePath: 'ignorePath',
   parser: 'parser',
   parserOptions: 'parserOptions',
-  plugins: 'plugins',
-  rulesdir: 'rulePaths',
-  rules: 'rules',
 };
 
 const mapOneToOneKeys = flow(
@@ -58,6 +52,42 @@ const normalizeOptions = rawConfig => {
 
   if (rawConfig.noEslintrc) {
     config.useEslintrc = !rawConfig.noEslintrc;
+  }
+
+  if (rawConfig.ext) {
+    config.extensions =
+      typeof rawConfig.ext === 'string' ? [rawConfig.ext] : rawConfig.ext;
+  }
+
+  if (rawConfig.env) {
+    config.envs =
+      typeof rawConfig.env === 'string' ? [rawConfig.env] : rawConfig.env;
+  }
+
+  if (rawConfig.global) {
+    config.globals =
+      typeof rawConfig.global === 'string'
+        ? [rawConfig.global]
+        : rawConfig.global;
+  }
+
+  if (rawConfig.plugin) {
+    config.plugins =
+      typeof rawConfig.plugin === 'string'
+        ? [rawConfig.plugin]
+        : rawConfig.plugin;
+  }
+
+  if (rawConfig.rulesdir) {
+    config.rulePaths =
+      typeof rawConfig.rulesdir === 'string'
+        ? [rawConfig.rulesdir]
+        : rawConfig.rulesdir;
+  }
+
+  if (rawConfig.rule) {
+    config.rules =
+      typeof rawConfig.rule === 'string' ? [rawConfig.rule] : rawConfig.rule;
   }
 
   return config;
