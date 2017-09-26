@@ -70,7 +70,7 @@ const BASE_CONFIG = {
 };
 
 /* eslint-disable no-param-reassign */
-const normalizeConfig = rawConfig =>
+const normalizeCliOptions = rawConfig =>
   Object.keys(BASE_CONFIG).reduce((config, key) => {
     const {
       name = key,
@@ -89,5 +89,11 @@ const normalizeConfig = rawConfig =>
     return config;
   }, {});
 /* eslint-enable no-param-reassign */
+
+const normalizeConfig = config => {
+  return Object.assign({}, config, {
+    cliOptions: normalizeCliOptions(config.cliOptions || {}),
+  });
+};
 
 module.exports = normalizeConfig;

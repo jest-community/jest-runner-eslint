@@ -1,189 +1,194 @@
 const normalizeConfig = require('../normalizeConfig');
 
+const normalizeCLIOptions = cliOptions =>
+  normalizeConfig({ cliOptions }).cliOptions;
+
 it('ignores unkown options', () => {
-  expect(normalizeConfig({ other: true })).not.toMatchObject({
+  expect(normalizeCLIOptions({ other: true })).not.toMatchObject({
     other: true,
   });
 });
 
 it('normalizes noInlineConfig', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     allowInlineConfig: true,
   });
 
-  expect(normalizeConfig({ noInlineConfig: true })).toMatchObject({
+  expect(normalizeCLIOptions({ noInlineConfig: true })).toMatchObject({
     allowInlineConfig: false,
   });
 
-  expect(normalizeConfig({ noInlineConfig: false })).toMatchObject({
+  expect(normalizeCLIOptions({ noInlineConfig: false })).toMatchObject({
     allowInlineConfig: true,
   });
 });
 
 it('normalizes cacheLocation', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     cacheLocation: '.eslintcache',
   });
 
-  expect(normalizeConfig({ cacheLocation: '/path/to/cache' })).toMatchObject({
+  expect(
+    normalizeCLIOptions({ cacheLocation: '/path/to/cache' }),
+  ).toMatchObject({
     cacheLocation: '/path/to/cache',
   });
 });
 
 it('normalizes config', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     configFile: null,
   });
 
-  expect(normalizeConfig({ config: '/path/to/config' })).toMatchObject({
+  expect(normalizeCLIOptions({ config: '/path/to/config' })).toMatchObject({
     configFile: '/path/to/config',
   });
 });
 
 it('normalizes env', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     envs: [],
   });
 
-  expect(normalizeConfig({ env: 'mocha' })).toMatchObject({
+  expect(normalizeCLIOptions({ env: 'mocha' })).toMatchObject({
     envs: ['mocha'],
   });
 
-  expect(normalizeConfig({ env: ['mocha', 'browser'] })).toMatchObject({
+  expect(normalizeCLIOptions({ env: ['mocha', 'browser'] })).toMatchObject({
     envs: ['mocha', 'browser'],
   });
 });
 
 it('normalizes ext', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     extensions: ['.js'],
   });
 
-  expect(normalizeConfig({ ext: '.ts' })).toMatchObject({
+  expect(normalizeCLIOptions({ ext: '.ts' })).toMatchObject({
     extensions: ['.ts'],
   });
 
-  expect(normalizeConfig({ ext: ['.js', '.jsx', '.ts'] })).toMatchObject({
+  expect(normalizeCLIOptions({ ext: ['.js', '.jsx', '.ts'] })).toMatchObject({
     extensions: ['.js', '.jsx', '.ts'],
   });
 });
 
 it('normalizes fix', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     fix: false,
   });
 
-  expect(normalizeConfig({ fix: true })).toMatchObject({
+  expect(normalizeCLIOptions({ fix: true })).toMatchObject({
     fix: true,
   });
 });
 
 it('normalizes global', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     globals: [],
   });
 
-  expect(normalizeConfig({ global: 'it' })).toMatchObject({
+  expect(normalizeCLIOptions({ global: 'it' })).toMatchObject({
     globals: ['it'],
   });
 
-  expect(normalizeConfig({ global: ['it', 'describe'] })).toMatchObject({
+  expect(normalizeCLIOptions({ global: ['it', 'describe'] })).toMatchObject({
     globals: ['it', 'describe'],
   });
 });
 
 it('normalizes noIgnore', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     ignore: true,
   });
 
-  expect(normalizeConfig({ noIgnore: true })).toMatchObject({
+  expect(normalizeCLIOptions({ noIgnore: true })).toMatchObject({
     ignore: false,
   });
 });
 
 it('normalizes ignorePath', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     ignorePath: null,
   });
 
-  expect(normalizeConfig({ ignorePath: '/path/to/ignore' })).toMatchObject({
+  expect(normalizeCLIOptions({ ignorePath: '/path/to/ignore' })).toMatchObject({
     ignorePath: '/path/to/ignore',
   });
 });
 
 it('normalizes parser', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     parser: 'espree',
   });
 
-  expect(normalizeConfig({ parser: 'flow' })).toMatchObject({
+  expect(normalizeCLIOptions({ parser: 'flow' })).toMatchObject({
     parser: 'flow',
   });
 });
 
 it('normalizes parserOptions', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     parserOptions: {},
   });
 
   expect(
-    normalizeConfig({ parserOptions: { ecmaVersion: 2015 } }),
+    normalizeCLIOptions({ parserOptions: { ecmaVersion: 2015 } }),
   ).toMatchObject({
     parserOptions: { ecmaVersion: 2015 },
   });
 });
 
 it('normalizes plugin', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     plugins: [],
   });
 
-  expect(normalizeConfig({ plugin: 'prettier' })).toMatchObject({
+  expect(normalizeCLIOptions({ plugin: 'prettier' })).toMatchObject({
     plugins: ['prettier'],
   });
 
-  expect(normalizeConfig({ plugin: ['prettier'] })).toMatchObject({
+  expect(normalizeCLIOptions({ plugin: ['prettier'] })).toMatchObject({
     plugins: ['prettier'],
   });
 });
 
 it('normalizes rulesdir', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     rulePaths: [],
   });
 
-  expect(normalizeConfig({ rulesdir: '/path/to/rules' })).toMatchObject({
+  expect(normalizeCLIOptions({ rulesdir: '/path/to/rules' })).toMatchObject({
     rulePaths: ['/path/to/rules'],
   });
 
   expect(
-    normalizeConfig({ rulesdir: ['/path/to/rules', '/other/path'] }),
+    normalizeCLIOptions({ rulesdir: ['/path/to/rules', '/other/path'] }),
   ).toMatchObject({
     rulePaths: ['/path/to/rules', '/other/path'],
   });
 });
 
 it('normalizes rule', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     rules: null,
   });
 
-  expect(normalizeConfig({ rule: ['quotes: [2, double]'] })).toMatchObject({
+  expect(normalizeCLIOptions({ rule: ['quotes: [2, double]'] })).toMatchObject({
     rules: ['quotes: [2, double]'],
   });
 
-  expect(normalizeConfig({ rule: 'quotes: [2, double]' })).toMatchObject({
+  expect(normalizeCLIOptions({ rule: 'quotes: [2, double]' })).toMatchObject({
     rules: ['quotes: [2, double]'],
   });
 });
 
 it('normalizes noEslintrc', () => {
-  expect(normalizeConfig({})).toMatchObject({
+  expect(normalizeCLIOptions({})).toMatchObject({
     useEslintrc: true,
   });
 
-  expect(normalizeConfig({ noEslintrc: true })).toMatchObject({
+  expect(normalizeCLIOptions({ noEslintrc: true })).toMatchObject({
     useEslintrc: false,
   });
 });
