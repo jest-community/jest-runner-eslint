@@ -58,54 +58,41 @@ In `package.json`
 ```json
 {
   "jest-runner-eslint": {
-    "cliOptions": {}
+    "cliOptions": {
+      // Options here
+    }
   }
 }
 ```
 
+or in `jest-runner-eslint.config.js`
+```js
+module.exports = {
+  cliOptions: {
+    // Options here
+  }
+}
+```
+
+
 ### cliOptions
 
-jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For example `--fix` is `cliOptions.fix` 
+jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For example `--fix` is `cliOptions.fix`
 
-|cliOption|description|default|example
-|-----|-----|-----|-----|
-|cacheLocation||`.eslintcache`|`"cacheLocation": "/path/to/cache"`
-|config||`null`|`"config": "/path/to/config"`
-|env||`null`|`"env": "mocha"` or `"env": ["mocha", "other"]`
-|ext||`[".js"]`|`"ext": ".jsx"` or `"ext": [".jsx", ".ts"]`
-|fix||`false`|`"fix": true`
-|global||`[]`|`"global": "it"` or `"global": ["it", "describe"]`
-|ignorePath||`null`|`"ignorePath": "/path/to/ignore"`
-|noEslintrc||`false`|`"noEslintrc": true`
-|noIgnore||`false`|`"noIgnore": true`
-|noInlineConfig||`false`|`"noInlineConfig": true`
-|parser||`espree`|`"parser": "flow"`
-|parserOptions||`{}`|`"parserOptions": { "myOption": true }`
-|plugin||`[]`|`"plugin": "prettier"` or `"plugin": ["pettier", "other"]`
-|rule||`null`|`"rule": "'quotes: [2, double]'"` or `"rule": ["quotes: [2, double]", "no-console: 2"]`
-|rulesdir||`[]`|`"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`
-
-
-#### `noInlineConfig`: boolean
-
-```json
-"cliOptions": {
-  "noInlineConfig": true
-}
-```
-
-#### `env`: string|Array\<string\>
-
-Single value
-```json
-"cliOptions": {
-  "env": "mocha"
-}
-```
-
-Multiple values
-```json
-"cliOptions": {
-  "env": ["mocha", "other"]
-}
-```
+|option|default|example
+|-----|-----|-----|
+|cacheLocation|`.eslintcache`|`"cacheLocation": "/path/to/cache"`
+|config|`null`|`"config": "/path/to/config"`
+|env|`null`|`"env": "mocha"` or `"env": ["mocha", "other"]`
+|ext|`[".js"]`|`"ext": ".jsx"` or `"ext": [".jsx", ".ts"]`
+|fix|`false`|`"fix": true`
+|global|`[]`|`"global": "it"` or `"global": ["it", "describe"]`
+|ignorePath|`null`|`"ignorePath": "/path/to/ignore"`
+|noEslintrc|`false`|`"noEslintrc": true`
+|noIgnore|`false`|`"noIgnore": true`
+|noInlineConfig|`false`|`"noInlineConfig": true`
+|parser|`espree`|`"parser": "flow"`
+|parserOptions|`{}`|`"parserOptions": { "myOption": true }`
+|plugin|`[]`|`"plugin": "prettier"` or `"plugin": ["pettier", "other"]`
+|rule|`null`|`"rule": "'quotes: [2, double]'"` or `"rule": ["quotes: [2, double]", "no-console: 2"]`
+|rulesdir|`[]`|`"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`

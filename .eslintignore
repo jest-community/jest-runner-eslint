@@ -1,4 +1,5 @@
 **/node_modules
 build
 
+**/coverage/
 integrationTests/__fixtures__/skipped/__eslint__/file.js
