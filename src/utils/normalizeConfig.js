@@ -33,17 +33,17 @@ const BASE_CONFIG = {
   },
   noEslintrc: {
     name: 'useEslintrc',
-    default: true,
+    default: false,
     transform: negate,
   },
   noIgnore: {
     name: 'ignore',
-    default: true,
+    default: false,
     transform: negate,
   },
   noInlineConfig: {
     name: 'allowInlineConfig',
-    default: true,
+    default: false,
     transform: negate,
   },
   parser: {
@@ -78,15 +78,11 @@ const normalizeCliOptions = rawConfig =>
       default: defaultValue,
     } = BASE_CONFIG[key];
 
-    if (rawConfig[key]) {
-      config[name] = transform(rawConfig[key]);
-    }
+    const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
-    if (config[name] === undefined) {
-      config[name] = defaultValue;
-    }
-
-    return config;
+    return Object.assign({}, config, {
+      [name]: transform(value),
+    });
   }, {});
 /* eslint-enable no-param-reassign */
 
