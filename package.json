@@ -22,6 +22,7 @@
     "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
   },
   "dependencies": {
+    "cosmiconfig": "^3.0.1",
     "eslint": "4.5.0",
     "find-up": "^2.1.0",
     "pify": "3.0.0",
