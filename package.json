@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "cosmiconfig": "^3.0.1",
-    "eslint": "4.5.0",
+    "eslint": "^4.5.0",
     "find-up": "^2.1.0",
     "pify": "3.0.0",
     "throat": "4.1.0",
