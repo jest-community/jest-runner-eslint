@@ -5,8 +5,11 @@
       {
         "useBuiltIns": true,
         "targets": {
-          "node": "6"
-        }
+          "node": "4"
+        },
+        "exclude": [
+          "transform-regenerator"
+        ]
       }
     ]
   ]
