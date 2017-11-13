@@ -1,8 +1,14 @@
-# jest-runner-eslint
-
 [![Build Status](https://travis-ci.org/jest-community/jest-runner-eslint.svg?branch=master)](https://travis-ci.org/jest-community/jest-runner-eslint) [![npm version](https://badge.fury.io/js/jest-runner-eslint.svg)](https://badge.fury.io/js/jest-runner-eslint)
 
-An experimental ESLint runner for Jest
+<div align="center">
+  <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
+  <img width="150" height="150" src="https://cdn.worldvectorlogo.com/logos/eslint.svg">
+  <a href="https://facebook.github.io/jest/">
+    <img width="150" height="150" vspace="" hspace="25" src="https://cdn.worldvectorlogo.com/logos/jest.svg">
+  </a>
+  <h1>jest-runner-eslint</h1>
+  <p>ESLint runner for Jest</p>
+</div>
 
 ![runner-eslint](https://user-images.githubusercontent.com/574806/30197438-9681385c-941c-11e7-80a8-2b11f15bd412.gif)
 
