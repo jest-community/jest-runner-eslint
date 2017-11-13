@@ -10,7 +10,9 @@
   <p>ESLint runner for Jest</p>
 </div>
 
-![runner-eslint](https://user-images.githubusercontent.com/574806/30197438-9681385c-941c-11e7-80a8-2b11f15bd412.gif)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/574806/30197438-9681385c-941c-11e7-80a8-2b11f15bd412.gif">
+</div>
 
 
 ## Usage
