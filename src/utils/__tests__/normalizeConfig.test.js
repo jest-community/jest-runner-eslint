@@ -118,7 +118,7 @@ it('normalizes ignorePath', () => {
 });
 
 it('normalizes parser', () => {
-  expect(normalizeCLIOptions({})).toMatchObject({
+  expect(normalizeCLIOptions({})).not.toMatchObject({
     parser: 'espree',
   });
 
@@ -128,7 +128,7 @@ it('normalizes parser', () => {
 });
 
 it('normalizes parserOptions', () => {
-  expect(normalizeCLIOptions({})).toMatchObject({
+  expect(normalizeCLIOptions({})).not.toMatchObject({
     parserOptions: {},
   });
 
