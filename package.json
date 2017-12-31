@@ -10,7 +10,9 @@
     "url": "https://github.com/jest-community/jest-runner-eslint.git"
   },
   "homepage": "https://github.com/jest-community/jest-runner-eslint",
-  "files": ["build/"],
+  "files": [
+    "build/"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",

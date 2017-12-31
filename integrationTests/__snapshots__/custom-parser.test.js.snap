@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Doesn't override parser when not set 1`] = `
+"FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
+  ● Test suite failed to run
+    Cannot find module 'this-parser-does-not-exist'
+      at mocked-stack-trace
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:
+Ran all test suites.
+
+"
+`;
