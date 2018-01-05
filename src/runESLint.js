@@ -78,7 +78,7 @@ const runESLint = ({ testPath, config }, workerCallback) => {
       const end = +new Date();
 
       if (report.errorCount > 0) {
-        const formatter = cli.getFormatter();
+        const formatter = cli.getFormatter(options.cliOptions.format);
         const errorMessage = formatter(
           CLIEngine.getErrorResults(report.results),
         );

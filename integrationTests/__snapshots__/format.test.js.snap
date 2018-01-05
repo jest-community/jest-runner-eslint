@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Applies custom formatter 1`] = `
+"FAIL integrationTests/__fixtures__/format/__eslint__/file.js
+      at mocked-stack-trace  2 |
+  3 | if (a === 2) {
+> 4 |   hello();
+    |   ^
+  5 |   bye();
+  6 | }
+  7 |
+mocked-stack-trace  3 | if (a === 2) {
+  4 |   hello();
+> 5 |   bye();
+    |   ^
+  6 | }
+  7 |
+2 errors found.
+  ✕ ESLint
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:
+Ran all test suites.
+
+"
+`;

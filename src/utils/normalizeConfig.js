@@ -23,6 +23,9 @@ const BASE_CONFIG = {
   fix: {
     default: false,
   },
+  format: {
+    default: null
+  },
   global: {
     name: 'globals',
     default: [],

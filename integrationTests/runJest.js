@@ -16,7 +16,7 @@ const normalize = output =>
 
 const runJest = (project, options = []) => {
   // eslint-disable-next-line
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
   return execa(
     'jest',
     [
