@@ -50,10 +50,10 @@ const BASE_CONFIG = {
     transform: negate,
   },
   parser: {
-    default: 'espree',
+    default: null,
   },
   parserOptions: {
-    default: {},
+    default: null,
   },
   plugin: {
     name: 'plugins',
