@@ -62,6 +62,11 @@ const pass = ({ start, end, testPath }) =>
 const runESLint = ({ testPath, config }, workerCallback) => {
   try {
     const start = +new Date();
+
+    if (config.setupTestFrameworkScriptFile) {
+      require(config.setupTestFrameworkScriptFile);
+    }
+
     const { CLIEngine } = getLocalESLint(config);
     const options = getESLintOptions(config);
     const cli = new CLIEngine(options.cliOptions);
