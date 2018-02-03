@@ -25,9 +25,8 @@
     "cosmiconfig": "^3.0.1",
     "eslint": "^4.5.0",
     "find-up": "^2.1.0",
-    "pify": "3.0.0",
-    "throat": "4.1.0",
-    "worker-farm": "1.5.0"
+    "jest-worker": "^22.1.0",
+    "throat": "4.1.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

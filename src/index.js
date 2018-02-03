@@ -1,6 +1,5 @@
 const throat = require('throat');
-const pify = require('pify');
-const workerFarm = require('worker-farm');
+const Worker = require('jest-worker').default;
 const path = require('path');
 
 const TEST_WORKER_PATH = path.join(__dirname, 'runESLint.js');
@@ -19,18 +18,12 @@ module.exports = class ESLintTestRunner {
 
   // eslint-disable-next-line
   async runTests(tests, watcher, onStart, onResult, onFailure) {
-    const farm = workerFarm(
-      {
-        autoStart: true,
-        maxConcurrentCallsPerWorker: 1,
-        maxConcurrentWorkers: this._globalConfig.maxWorkers,
-        maxRetries: 2, // Allow for a couple of transient errors.
-      },
-      TEST_WORKER_PATH,
-    );
+    const worker = new Worker(require.resolve(TEST_WORKER_PATH), {
+      maxRetries: 2,
+      maxWorkers: this._globalConfig.maxWorkers,
+    });
 
     const mutex = throat(this._globalConfig.maxWorkers);
-    const worker = pify(farm);
 
     const runTestInWorker = test =>
       mutex(async () => {
@@ -38,13 +31,9 @@ module.exports = class ESLintTestRunner {
           throw new CancelRun();
         }
         await onStart(test);
-        return worker({
+        return worker.runESLint({
           config: test.context.config,
-          globalConfig: this._globalConfig,
           testPath: test.path,
-          rawModuleMap: watcher.isWatchMode()
-            ? test.context.moduleMap.getRawModuleMap()
-            : null,
         });
       });
 
@@ -76,7 +65,7 @@ module.exports = class ESLintTestRunner {
       ),
     );
 
-    const cleanup = () => workerFarm.end(farm);
+    const cleanup = () => worker.end();
 
     return Promise.race([runAllTests, onInterrupt]).then(cleanup, cleanup);
   }
