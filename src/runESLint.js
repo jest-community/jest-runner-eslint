@@ -60,7 +60,7 @@ const pass = ({ start, end, testPath }) =>
   });
 
 module.exports.runESLint = ({ testPath, config }) => {
-  const start = +new Date();
+  const start = Date.now();
 
   if (config.setupTestFrameworkScriptFile) {
     require(config.setupTestFrameworkScriptFile);
@@ -70,7 +70,7 @@ module.exports.runESLint = ({ testPath, config }) => {
   const options = getESLintOptions(config);
   const cli = new CLIEngine(options.cliOptions);
   if (cli.isPathIgnored(testPath)) {
-    const end = +new Date();
+    const end = Date.now();
     return skip({ start, end, testPath });
   }
   const report = cli.executeOnFiles([testPath]);
@@ -79,7 +79,7 @@ module.exports.runESLint = ({ testPath, config }) => {
     CLIEngine.outputFixes(report);
   }
 
-  const end = +new Date();
+  const end = Date.now();
 
   if (report.errorCount > 0) {
     const formatter = cli.getFormatter(options.cliOptions.format);
