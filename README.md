@@ -36,7 +36,9 @@ In your `package.json`
 ```json
 {
   "jest": {
-    "runner": "jest-runner-eslint"
+    "runner": "jest-runner-eslint",
+    "displayName": "lint",
+    "testMatch": ["<rootDir>/src/**/*.js"],
   }
 }
 ```
@@ -45,8 +47,12 @@ Or in `jest.config.js`
 ```js
 module.exports = {
   runner: 'jest-runner-eslint',
+  displayName: 'lint',
+  testMatch: ['<rootDir>/src/**/*.js'],
 }
 ```
+
+Please update `testMatch` to match your project folder structure
 
 ### Run Jest
 ```bash
