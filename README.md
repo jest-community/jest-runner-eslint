@@ -32,6 +32,8 @@ npm install --save-dev jest jest-runner-eslint
 
 ### Add it to your Jest config
 
+#### Standalone
+
 In your `package.json`
 ```json
 {
@@ -53,6 +55,88 @@ module.exports = {
 ```
 
 Please update `testMatch` to match your project folder structure
+
+#### Alongside other runners
+
+It is recommended to use the [`projects`](https://facebook.github.io/jest/docs/en/configuration.html#projects-array-string-projectconfig) configuration option to run multiple Jest runners simultaneously.
+
+If you are using Jest <22.0.5, you can use multiple Jest configuration files and supply the paths to those files in the `projects` option. For example:
+
+```js
+// jest-test.config.js
+module.exports = {
+  // your Jest test options
+  displayName: 'test'
+}
+
+// jest-eslint.config.js
+module.exports = {
+  // your jest-runner-eslint options
+  runner: 'jest-runner-eslint',
+  displayName: 'lint',
+  testMatch: ['<rootDir>/src/**/*.js']
+}
+```
+
+In your `package.json`:
+
+```json
+{
+  "jest": {
+    "projects": [
+      "<rootDir>/jest-test.config.js",
+      "<rootDir>/jest-eslint.config.js"
+    ]
+  }
+}
+```
+
+Or in `jest.config.js`:
+
+```js
+module.exports = {
+  projects: [
+    '<rootDir>/jest-test.config.js',
+    '<rootDir>/jest-eslint.config.js'
+  ]
+}
+```
+
+If you are using Jest >=22.0.5, you can supply an array of project configuration objects instead. In your `package.json`:
+
+```json
+{
+  "jest": {
+    "projects": [
+      {
+        "displayName": "test"
+      },
+      {
+        "runner": "jest-runner-eslint",
+        "displayName": "lint",
+        "testMatch": ["<rootDir>/src/**/*.js"],
+      }
+    ] 
+  }
+}
+```
+
+Or in `jest.config.js`:
+
+```js
+module.exports = {
+  projects: [
+    {
+      displayName: 'test'
+    },
+    {
+      runner: 'jest-runner-eslint',
+      displayName: 'lint',
+      testMatch: ['<rootDir>/src/**/*.js']
+    }
+  ]
+}
+```
 
 ### Run Jest
 ```bash
