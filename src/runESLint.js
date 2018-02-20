@@ -59,43 +59,32 @@ const pass = ({ start, end, testPath }) =>
     jestTestPath: testPath,
   });
 
-const runESLint = ({ testPath, config }, workerCallback) => {
-  try {
-    const start = +new Date();
+module.exports.runESLint = ({ testPath, config }) => {
+  const start = Date.now();
 
-    if (config.setupTestFrameworkScriptFile) {
-      require(config.setupTestFrameworkScriptFile);
-    }
-
-    const { CLIEngine } = getLocalESLint(config);
-    const options = getESLintOptions(config);
-    const cli = new CLIEngine(options.cliOptions);
-    if (cli.isPathIgnored(testPath)) {
-      const end = +new Date();
-      workerCallback(null, skip({ start, end, testPath }));
-    } else {
-      const report = cli.executeOnFiles([testPath]);
-
-      if (options.cliOptions && options.cliOptions.fix) {
-        CLIEngine.outputFixes(report);
-      }
-
-      const end = +new Date();
-
-      if (report.errorCount > 0) {
-        const formatter = cli.getFormatter(options.cliOptions.format);
-        const errorMessage = formatter(
-          CLIEngine.getErrorResults(report.results),
-        );
-
-        workerCallback(null, fail({ start, end, testPath, errorMessage }));
-      } else {
-        workerCallback(null, pass({ start, end, testPath }));
-      }
-    }
-  } catch (e) {
-    workerCallback(e);
+  if (config.setupTestFrameworkScriptFile) {
+    require(config.setupTestFrameworkScriptFile);
   }
-};
 
-module.exports = runESLint;
+  const { CLIEngine } = getLocalESLint(config);
+  const options = getESLintOptions(config);
+  const cli = new CLIEngine(options.cliOptions);
+  if (cli.isPathIgnored(testPath)) {
+    const end = Date.now();
+    return skip({ start, end, testPath });
+  }
+  const report = cli.executeOnFiles([testPath]);
+
+  if (options.cliOptions && options.cliOptions.fix) {
+    CLIEngine.outputFixes(report);
+  }
+
+  const end = Date.now();
+
+  if (report.errorCount > 0) {
+    const formatter = cli.getFormatter(options.cliOptions.format);
+    const errorMessage = formatter(CLIEngine.getErrorResults(report.results));
+    return fail({ start, end, testPath, errorMessage });
+  }
+  return pass({ start, end, testPath });
+};
