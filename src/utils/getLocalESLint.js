@@ -7,7 +7,7 @@ const getLocalESLint = config => {
     // eslint-disable-next-line import/no-dynamic-require, global-require
     return require(path.resolve(nodeModulesPath, 'eslint'));
   } catch (e) {
-    // try resolving eslint using normal eslint resolution mechanism
+    // try resolving eslint using normal node resolution mechanism
     try {
       // eslint-disable-next-line global-require
       return require('eslint');
