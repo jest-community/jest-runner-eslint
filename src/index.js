@@ -2,6 +2,7 @@ const throat = require('throat');
 const pify = require('pify');
 const workerFarm = require('worker-farm');
 const path = require('path');
+const lint = require('./runESLint');
 
 const TEST_WORKER_PATH = path.join(__dirname, 'runESLint.js');
 
@@ -12,13 +13,41 @@ class CancelRun extends Error {
   }
 }
 
+async function runTestsSerial(tests, watcher, onStart, onResult, onFailure) {
+  const runner = async test => {
+    return onStart(test).then(() => {
+      return new Promise((resolve, reject) => {
+        lint(
+          { testPath: test.path, config: test.context.config },
+          (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          },
+        );
+      });
+    });
+  };
+  return Promise.all(
+    tests.map(test =>
+      runner(test)
+        .then(testResult => onResult(test, testResult))
+        .catch(error => onFailure(test, error)),
+    ),
+  );
+}
+
 module.exports = class ESLintTestRunner {
   constructor(globalConfig) {
     this._globalConfig = globalConfig;
   }
 
-  // eslint-disable-next-line
-  async runTests(tests, watcher, onStart, onResult, onFailure) {
+  async runTests(tests, watcher, onStart, onResult, onFailure, opts) {
+    if (opts && opts.serial) {
+      return runTestsSerial(tests, watcher, onStart, onResult, onFailure);
+    }
     const farm = workerFarm(
       {
         autoStart: true,
