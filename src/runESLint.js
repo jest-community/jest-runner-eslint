@@ -33,8 +33,7 @@ const runESLint = ({ testPath, config }) => {
     return fail({
       start,
       end,
-      test: { path: testPath, title: 'ESLint' },
-      errorMessage,
+      test: { path: testPath, title: 'ESLint', errorMessage },
     });
   }
 

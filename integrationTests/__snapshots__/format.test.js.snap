@@ -16,7 +16,7 @@ mocked-stack-trace  3 | if (a === 2) {
   6 | }
   7 |
 2 errors found.
-  ✓ ESLint
+  ✕ ESLint
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
