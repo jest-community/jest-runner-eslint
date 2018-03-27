@@ -14,7 +14,7 @@ const runESLint = ({ testPath, config }) => {
   const options = getESLintOptions(config);
   const cli = new CLIEngine(options.cliOptions);
   if (cli.isPathIgnored(testPath)) {
-    const end = +new Date();
+    const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
   }
 
