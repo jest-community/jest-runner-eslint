@@ -6,7 +6,7 @@ exports[`Works when it has failing tests 1`] = `
   4:3  error  'hello' is not defined  no-undef
   5:3  error  'bye' is not defined    no-undef
 ✖ 2 problems (2 errors, 0 warnings)
-  ✕ ESLint
+  ✓ ESLint
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total

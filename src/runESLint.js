@@ -1,10 +1,6 @@
-const createJestRunner = require('create-jest-runner');
+const { pass, fail, skip } = require('create-jest-runner');
 const getLocalESLint = require('./utils/getLocalESLint');
 const getESLintOptions = require('./utils/getESLintOptions');
-
-const pass = createJestRunner.pass;
-const fail = createJestRunner.fail;
-const skip = createJestRunner.skip;
 
 const runESLint = ({ testPath, config }) => {
   const start = Date.now();
@@ -19,7 +15,7 @@ const runESLint = ({ testPath, config }) => {
   const cli = new CLIEngine(options.cliOptions);
   if (cli.isPathIgnored(testPath)) {
     const end = +new Date();
-    return skip({ start, end, testPath });
+    return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
   }
 
   const report = cli.executeOnFiles([testPath]);
@@ -34,10 +30,15 @@ const runESLint = ({ testPath, config }) => {
     const formatter = cli.getFormatter(options.cliOptions.format);
     const errorMessage = formatter(CLIEngine.getErrorResults(report.results));
 
-    return fail({ start, end, testPath, errorMessage });
+    return fail({
+      start,
+      end,
+      test: { path: testPath, title: 'ESLint' },
+      errorMessage,
+    });
   }
 
-  return pass({ start, end, testPath });
+  return pass({ start, end, test: { path: testPath, title: 'ESLint' } });
 };
 
 module.exports = runESLint;

@@ -1,7 +1,5 @@
-const createJestRunner = require('create-jest-runner');
+const { createJestRunner } = require('create-jest-runner');
 
-const runner = createJestRunner.createJestRunner(
-  require.resolve('./runESLint'),
-);
+const runner = createJestRunner(require.resolve('./runESLint'));
 
 module.exports = runner;
