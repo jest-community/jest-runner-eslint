@@ -24,7 +24,7 @@ const BASE_CONFIG = {
     default: false,
   },
   format: {
-    default: null
+    default: null,
   },
   global: {
     name: 'globals',
@@ -60,10 +60,8 @@ const BASE_CONFIG = {
     default: [],
     transform: asArray,
   },
-  rule: {
-    name: 'rules',
+  rules: {
     default: null,
-    transform: asArray,
   },
   rulesdir: {
     name: 'rulePaths',

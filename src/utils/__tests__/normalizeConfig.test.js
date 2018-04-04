@@ -169,17 +169,15 @@ it('normalizes rulesdir', () => {
   });
 });
 
-it('normalizes rule', () => {
+it('normalizes rules', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
     rules: null,
   });
 
-  expect(normalizeCLIOptions({ rule: ['quotes: [2, double]'] })).toMatchObject({
-    rules: ['quotes: [2, double]'],
-  });
+  const ruleOptions = { quotes: [2, 'double'], 'no-console': 2 };
 
-  expect(normalizeCLIOptions({ rule: 'quotes: [2, double]' })).toMatchObject({
-    rules: ['quotes: [2, double]'],
+  expect(normalizeCLIOptions({ rules: ruleOptions })).toMatchObject({
+    rules: ruleOptions,
   });
 });
 
