@@ -1,10 +1,10 @@
-const path = require('path');
-const findUp = require('find-up');
+const resolve = require('resolve');
 
 const getLocalESLint = config => {
-  const nodeModulesPath = findUp.sync('node_modules', { cwd: config.rootDir });
+  const basedir = config.rootDir || process.cwd();
+  const eslintModulePath = resolve.sync('eslint', { basedir });
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  return require(path.resolve(nodeModulesPath, 'eslint'));
+  return require(eslintModulePath);
 };
 
 module.exports = getLocalESLint;
