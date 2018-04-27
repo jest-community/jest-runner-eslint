@@ -1,101 +1,43 @@
+const { pass, fail, skip } = require('create-jest-runner');
 const getLocalESLint = require('./utils/getLocalESLint');
 const getESLintOptions = require('./utils/getESLintOptions');
-const toTestResult = require('./utils/toTestResult');
 
-const skip = ({ start, end, testPath }) =>
-  toTestResult({
-    stats: {
-      failures: 0,
-      pending: 1,
-      passes: 0,
-      start,
-      end,
-    },
-    skipped: true,
-    tests: [
-      {
-        duration: end - start,
-        testPath,
-      },
-    ],
-    jestTestPath: testPath,
-  });
+const runESLint = ({ testPath, config }) => {
+  const start = Date.now();
 
-const fail = ({ start, end, testPath, errorMessage }) =>
-  toTestResult({
-    errorMessage,
-    stats: {
-      failures: 1,
-      pending: 0,
-      passes: 0,
-      start,
-      end,
-    },
-    tests: [
-      {
-        duration: end - start,
-        testPath,
-        errorMessage,
-      },
-    ],
-    jestTestPath: testPath,
-  });
-
-const pass = ({ start, end, testPath }) =>
-  toTestResult({
-    stats: {
-      failures: 0,
-      pending: 0,
-      passes: 1,
-      start,
-      end,
-    },
-    tests: [
-      {
-        duration: end - start,
-        testPath,
-      },
-    ],
-    jestTestPath: testPath,
-  });
-
-const runESLint = ({ testPath, config }, workerCallback) => {
-  try {
-    const start = +new Date();
-
-    if (config.setupTestFrameworkScriptFile) {
-      require(config.setupTestFrameworkScriptFile);
-    }
-
-    const { CLIEngine } = getLocalESLint(config);
-    const options = getESLintOptions(config);
-    const cli = new CLIEngine(options.cliOptions);
-    if (cli.isPathIgnored(testPath)) {
-      const end = +new Date();
-      workerCallback(null, skip({ start, end, testPath }));
-    } else {
-      const report = cli.executeOnFiles([testPath]);
-
-      if (options.cliOptions && options.cliOptions.fix) {
-        CLIEngine.outputFixes(report);
-      }
-
-      const end = +new Date();
-
-      if (report.errorCount > 0) {
-        const formatter = cli.getFormatter(options.cliOptions.format);
-        const errorMessage = formatter(
-          CLIEngine.getErrorResults(report.results),
-        );
-
-        workerCallback(null, fail({ start, end, testPath, errorMessage }));
-      } else {
-        workerCallback(null, pass({ start, end, testPath }));
-      }
-    }
-  } catch (e) {
-    workerCallback(e);
+  if (config.setupTestFrameworkScriptFile) {
+    // eslint-disable-next-line import/no-dynamic-require,global-require
+    require(config.setupTestFrameworkScriptFile);
   }
+
+  const { CLIEngine } = getLocalESLint(config);
+  const options = getESLintOptions(config);
+  const cli = new CLIEngine(options.cliOptions);
+  if (cli.isPathIgnored(testPath)) {
+    const end = Date.now();
+    return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
+  }
+
+  const report = cli.executeOnFiles([testPath]);
+
+  if (options.cliOptions && options.cliOptions.fix) {
+    CLIEngine.outputFixes(report);
+  }
+
+  const end = Date.now();
+
+  if (report.errorCount > 0) {
+    const formatter = cli.getFormatter(options.cliOptions.format);
+    const errorMessage = formatter(CLIEngine.getErrorResults(report.results));
+
+    return fail({
+      start,
+      end,
+      test: { path: testPath, title: 'ESLint', errorMessage },
+    });
+  }
+
+  return pass({ start, end, test: { path: testPath, title: 'ESLint' } });
 };
 
 module.exports = runESLint;
