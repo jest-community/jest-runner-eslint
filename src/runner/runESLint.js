@@ -1,8 +1,8 @@
 const { pass, fail, skip } = require('create-jest-runner');
-const getLocalESLint = require('./utils/getLocalESLint');
-const getESLintOptions = require('./utils/getESLintOptions');
+const getLocalESLint = require('../utils/getLocalESLint');
+const getESLintOptions = require('../utils/getESLintOptions');
 
-const runESLint = ({ testPath, config }) => {
+const runESLint = ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
   if (config.setupTestFrameworkScriptFile) {
@@ -11,7 +11,14 @@ const runESLint = ({ testPath, config }) => {
   }
 
   const { CLIEngine } = getLocalESLint(config);
-  const options = getESLintOptions(config);
+  const options = getESLintOptions(
+    config,
+    extraOptions
+      ? {
+          cliOptions: extraOptions.configOverrides,
+        }
+      : {},
+  );
   const cli = new CLIEngine(options.cliOptions);
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();

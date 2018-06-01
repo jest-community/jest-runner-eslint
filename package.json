@@ -1,7 +1,7 @@
 {
   "name": "jest-runner-eslint",
   "version": "0.6.0",
-  "main": "build/index.js",
+  "main": "build/runner/index.js",
   "author": "Rogelio Guzman <rogelioguzmanh@gmail.com>",
   "description": "An experimental ESLint runner for Jest",
   "license": "MIT",
@@ -11,6 +11,7 @@
   },
   "homepage": "https://github.com/jest-community/jest-runner-eslint",
   "files": [
+    "watch-plugin.js",
     "build/"
   ],
   "scripts": {
