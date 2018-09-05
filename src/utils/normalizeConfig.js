@@ -1,6 +1,7 @@
 const identity = v => v;
 const negate = v => !v;
 const asArray = v => (typeof v === 'string' ? [v] : v);
+const asInt = v => (typeof v === 'number' ? v : parseInt(v, 10));
 
 const BASE_CONFIG = {
   cache: {
@@ -43,6 +44,10 @@ const BASE_CONFIG = {
   ignorePattern: {
     default: [],
     transform: asArray,
+  },
+  maxWarnings: {
+    default: -1,
+    transform: asInt,
   },
   noEslintrc: {
     name: 'useEslintrc',

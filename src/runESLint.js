@@ -36,9 +36,19 @@ const runESLint = ({ testPath, config }) => {
 
   const end = Date.now();
 
-  if (report.errorCount > 0) {
+  const tooManyWarnings =
+    options.cliOptions &&
+    options.cliOptions.maxWarnings != null &&
+    options.cliOptions.maxWarnings >= 0 &&
+    report.warningCount > options.cliOptions.maxWarnings;
+
+  if (report.errorCount > 0 || tooManyWarnings) {
     const formatter = cli.getFormatter(options.cliOptions.format);
-    const errorMessage = formatter(CLIEngine.getErrorResults(report.results));
+    let errorMessage = formatter(CLIEngine.getErrorResults(report.results));
+
+    if (!report.errorCount && tooManyWarnings)
+      errorMessage += `\nESLint found too many warnings (maximum: ${options
+        .cliOptions.maxWarnings}).`;
 
     return fail({
       start,

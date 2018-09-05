@@ -190,6 +190,7 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 |global|`[]`|`"global": "it"` or `"global": ["it", "describe"]`
 |ignorePath|`null`|`"ignorePath": "/path/to/ignore"`
 |ignorePattern|`[]`|`"ignorePattern": ["/path/to/ignore/*"]`
+|maxWarnings|`-1`|`"maxWarnings": 0`
 |noEslintrc|`false`|`"noEslintrc": true`
 |noIgnore|`false`|`"noIgnore": true`
 |noInlineConfig|`false`|`"noInlineConfig": true`
