@@ -12,7 +12,7 @@ const runESLint = ({ testPath, config }) => {
 
   const { CLIEngine } = getLocalESLint(config);
   const options = getESLintOptions(config);
-  const quiet = !options.cliOptions || options.cliOptions.quiet !== false;
+  const quiet = options.cliOptions && options.cliOptions.quiet;
   const cli = new CLIEngine(
     Object.assign({}, options.cliOptions, {
       fix:
