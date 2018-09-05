@@ -1,11 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Fails if more than max warnings 1`] = `
-"PASS integrationTests/__fixtures__/max-warnings/__eslint__/file.js
-FAIL integrationTests/__fixtures__/max-warnings/__eslint__/file2.js
+"FAIL integrationTests/__fixtures__/max-warnings/__eslint__/file.js
+/mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/max-warnings/__eslint__/file.js
+  3:1  warning  Unexpected console statement  no-console
+  4:1  warning  Unexpected console statement  no-console
+  5:1  warning  Unexpected console statement  no-console
+✖ 3 problems (0 errors, 3 warnings)
 ESLint found too many warnings (maximum: 2).
-Test Suites: 1 failed, 1 passed, 2 total
-Tests:       1 failed, 1 passed, 2 total
+  ✕ ESLint
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
 Snapshots:   0 total
 Time:
 Ran all test suites.
