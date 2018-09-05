@@ -185,6 +185,7 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 |env|`null`|`"env": "mocha"` or `"env": ["mocha", "other"]`
 |ext|`[".js"]`|`"ext": ".jsx"` or `"ext": [".jsx", ".ts"]`
 |fix|`false`|`"fix": true`
+|fixDryRun|`false`|`"fixDryRun": true`
 |format|`null`|`"format": "codeframe"`
 |global|`[]`|`"global": "it"` or `"global": ["it", "describe"]`
 |ignorePath|`null`|`"ignorePath": "/path/to/ignore"`

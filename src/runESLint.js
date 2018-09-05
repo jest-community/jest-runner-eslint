@@ -12,7 +12,13 @@ const runESLint = ({ testPath, config }) => {
 
   const { CLIEngine } = getLocalESLint(config);
   const options = getESLintOptions(config);
-  const cli = new CLIEngine(options.cliOptions);
+  const cli = new CLIEngine(
+    Object.assign({}, options.cliOptions, {
+      fix:
+        options.cliOptions &&
+        (options.cliOptions.fix || options.cliOptions.fixDryRun),
+    }),
+  );
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
@@ -20,7 +26,11 @@ const runESLint = ({ testPath, config }) => {
 
   const report = cli.executeOnFiles([testPath]);
 
-  if (options.cliOptions && options.cliOptions.fix) {
+  if (
+    options.cliOptions &&
+    options.cliOptions.fix &&
+    !options.cliOptions.fixDryRun
+  ) {
     CLIEngine.outputFixes(report);
   }
 

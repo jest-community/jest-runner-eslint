@@ -26,6 +26,9 @@ const BASE_CONFIG = {
   fix: {
     default: false,
   },
+  fixDryRun: {
+    default: false,
+  },
   format: {
     default: null,
   },
