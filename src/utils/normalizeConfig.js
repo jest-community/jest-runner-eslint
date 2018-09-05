@@ -3,6 +3,9 @@ const negate = v => !v;
 const asArray = v => (typeof v === 'string' ? [v] : v);
 
 const BASE_CONFIG = {
+  cache: {
+    default: false,
+  },
   cacheLocation: {
     default: '.eslintcache',
   },
@@ -34,6 +37,10 @@ const BASE_CONFIG = {
   ignorePath: {
     default: null,
   },
+  ignorePattern: {
+    default: [],
+    transform: asArray,
+  },
   noEslintrc: {
     name: 'useEslintrc',
     default: false,
@@ -59,6 +66,9 @@ const BASE_CONFIG = {
     name: 'plugins',
     default: [],
     transform: asArray,
+  },
+  reportUnusedDisableDirectives: {
+    default: false,
   },
   rules: {
     default: null,

@@ -179,6 +179,7 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 
 |option|default|example
 |-----|-----|-----|
+|cache|`false`|`"cache": true`
 |cacheLocation|`.eslintcache`|`"cacheLocation": "/path/to/cache"`
 |config|`null`|`"config": "/path/to/config"`
 |env|`null`|`"env": "mocha"` or `"env": ["mocha", "other"]`
@@ -187,11 +188,13 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 |format|`null`|`"format": "codeframe"`
 |global|`[]`|`"global": "it"` or `"global": ["it", "describe"]`
 |ignorePath|`null`|`"ignorePath": "/path/to/ignore"`
+|ignorePattern|`[]`|`"ignorePattern": ["/path/to/ignore/*"]`
 |noEslintrc|`false`|`"noEslintrc": true`
 |noIgnore|`false`|`"noIgnore": true`
 |noInlineConfig|`false`|`"noInlineConfig": true`
 |parser|`espree`|`"parser": "flow"`
 |parserOptions|`{}`|`"parserOptions": { "myOption": true }`
 |plugin|`[]`|`"plugin": "prettier"` or `"plugin": ["pettier", "other"]`
+|reportUnusedDisableDirectives|`false`|`"reportUnusedDisableDirectives": true`
 |rules|`null`|`"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}`
 |rulesdir|`[]`|`"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`
