@@ -75,6 +75,9 @@ const BASE_CONFIG = {
     default: [],
     transform: asArray,
   },
+  quiet: {
+    default: true,
+  },
   reportUnusedDisableDirectives: {
     default: false,
   },

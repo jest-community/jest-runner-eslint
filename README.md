@@ -197,6 +197,7 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 |parser|`espree`|`"parser": "flow"`
 |parserOptions|`{}`|`"parserOptions": { "myOption": true }`
 |plugin|`[]`|`"plugin": "prettier"` or `"plugin": ["pettier", "other"]`
+|quiet|`true`|`"quiet": false`
 |reportUnusedDisableDirectives|`false`|`"reportUnusedDisableDirectives": true`
 |rules|`null`|`"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}`
 |rulesdir|`[]`|`"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`
