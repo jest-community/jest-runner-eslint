@@ -12,7 +12,15 @@ const runESLint = ({ testPath, config }) => {
 
   const { CLIEngine } = getLocalESLint(config);
   const options = getESLintOptions(config);
-  const cli = new CLIEngine(options.cliOptions);
+  const quiet = options.cliOptions && options.cliOptions.quiet;
+  const cli = new CLIEngine(
+    Object.assign({}, options.cliOptions, {
+      fix:
+        options.cliOptions &&
+        (options.cliOptions.fix || options.cliOptions.fixDryRun) &&
+        (quiet ? ({ severity }) => severity === 2 : true),
+    }),
+  );
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
@@ -20,15 +28,35 @@ const runESLint = ({ testPath, config }) => {
 
   const report = cli.executeOnFiles([testPath]);
 
-  if (options.cliOptions && options.cliOptions.fix) {
+  if (
+    options.cliOptions &&
+    options.cliOptions.fix &&
+    !options.cliOptions.fixDryRun
+  ) {
     CLIEngine.outputFixes(report);
   }
 
   const end = Date.now();
 
-  if (report.errorCount > 0) {
+  const tooManyWarnings =
+    options.cliOptions &&
+    options.cliOptions.maxWarnings != null &&
+    options.cliOptions.maxWarnings >= 0 &&
+    report.warningCount > options.cliOptions.maxWarnings;
+
+  const format = () => {
     const formatter = cli.getFormatter(options.cliOptions.format);
-    const errorMessage = formatter(CLIEngine.getErrorResults(report.results));
+    return formatter(
+      quiet ? CLIEngine.getErrorResults(report.results) : report.results,
+    );
+  };
+
+  if (report.errorCount > 0 || tooManyWarnings) {
+    let errorMessage = format();
+
+    if (!report.errorCount && tooManyWarnings)
+      errorMessage += `\nESLint found too many warnings (maximum: ${options
+        .cliOptions.maxWarnings}).`;
 
     return fail({
       start,
@@ -37,7 +65,17 @@ const runESLint = ({ testPath, config }) => {
     });
   }
 
-  return pass({ start, end, test: { path: testPath, title: 'ESLint' } });
+  const result = pass({
+    start,
+    end,
+    test: { path: testPath, title: 'ESLint' },
+  });
+
+  if (!quiet && report.warningCount > 0) {
+    result.console = [{ message: format(), origin: '', type: 'warn' }];
+  }
+
+  return result;
 };
 
 module.exports = runESLint;

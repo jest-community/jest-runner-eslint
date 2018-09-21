@@ -1,8 +1,12 @@
 const identity = v => v;
 const negate = v => !v;
 const asArray = v => (typeof v === 'string' ? [v] : v);
+const asInt = v => (typeof v === 'number' ? v : parseInt(v, 10));
 
 const BASE_CONFIG = {
+  cache: {
+    default: false,
+  },
   cacheLocation: {
     default: '.eslintcache',
   },
@@ -23,6 +27,9 @@ const BASE_CONFIG = {
   fix: {
     default: false,
   },
+  fixDryRun: {
+    default: false,
+  },
   format: {
     default: null,
   },
@@ -33,6 +40,14 @@ const BASE_CONFIG = {
   },
   ignorePath: {
     default: null,
+  },
+  ignorePattern: {
+    default: [],
+    transform: asArray,
+  },
+  maxWarnings: {
+    default: -1,
+    transform: asInt,
   },
   noEslintrc: {
     name: 'useEslintrc',
@@ -59,6 +74,12 @@ const BASE_CONFIG = {
     name: 'plugins',
     default: [],
     transform: asArray,
+  },
+  quiet: {
+    default: false,
+  },
+  reportUnusedDisableDirectives: {
+    default: false,
   },
   rules: {
     default: null,
