@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/jest-community/jest-runner-eslint",
   "files": [
-    "watch-plugin.js",
+    "watch.js",
     "build/"
   ],
   "scripts": {
@@ -23,10 +23,14 @@
     "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
   },
   "dependencies": {
+    "ansi-escapes": "^3.1.0",
+    "chalk": "^2.4.1",
     "cosmiconfig": "^3.0.1",
-    "create-jest-runner": "^0.3.0",
+    "create-jest-runner": "^0.4.0",
     "eslint": "^4.5.0",
-    "find-up": "^2.1.0"
+    "find-up": "^2.1.0",
+    "inquirer": "^6.2.0",
+    "prompts": "^0.1.8"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
@@ -38,7 +42,8 @@
     "eslint-plugin-jest": "20.0.3",
     "eslint-plugin-prettier": "2.2.0",
     "execa": "0.8.0",
-    "jest": "21.0.1",
+    "jest": "^23.6.0",
+    "jest-watch-select-projects": "^0.1.0",
     "prettier": "1.5.3"
   }
 }

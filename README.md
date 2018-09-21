@@ -14,7 +14,6 @@
   <img src="https://user-images.githubusercontent.com/574806/30197438-9681385c-941c-11e7-80a8-2b11f15bd412.gif">
 </div>
 
-
 ## Usage
 
 ### Install
@@ -27,7 +26,6 @@ yarn add --dev jest jest-runner-eslint
 # or with NPM
 
 npm install --save-dev jest jest-runner-eslint
-
 ```
 
 ### Add it to your Jest config
@@ -35,26 +33,42 @@ npm install --save-dev jest jest-runner-eslint
 #### Standalone
 
 In your `package.json`
+
 ```json
 {
   "jest": {
     "runner": "jest-runner-eslint",
     "displayName": "lint",
-    "testMatch": ["<rootDir>/src/**/*.js"],
+    "testMatch": ["<rootDir>/src/**/*.js"]
   }
 }
 ```
 
 Or in `jest.config.js`
+
 ```js
 module.exports = {
   runner: 'jest-runner-eslint',
   displayName: 'lint',
   testMatch: ['<rootDir>/src/**/*.js'],
-}
+};
 ```
 
 Please update `testMatch` to match your project folder structure
+
+#### Usage with watch plugin
+
+In order to enable the watch plugin add this to your Jest config. Now run Jest in watch mode.
+
+```js
+  watchPlugin: ['jest-runner-eslint/watch'],
+```
+
+You should now see a new option in the watch menu mode.
+
+```
+ › Press e to configure ESLint.
+```
 
 #### Alongside other runners
 
@@ -66,16 +80,16 @@ If you are using Jest <22.0.5, you can use multiple Jest configuration files and
 // jest-test.config.js
 module.exports = {
   // your Jest test options
-  displayName: 'test'
-}
+  displayName: 'test',
+};
 
 // jest-eslint.config.js
 module.exports = {
   // your jest-runner-eslint options
   runner: 'jest-runner-eslint',
   displayName: 'lint',
-  testMatch: ['<rootDir>/src/**/*.js']
-}
+  testMatch: ['<rootDir>/src/**/*.js'],
+};
 ```
 
 In your `package.json`:
@@ -97,9 +111,9 @@ Or in `jest.config.js`:
 module.exports = {
   projects: [
     '<rootDir>/jest-test.config.js',
-    '<rootDir>/jest-eslint.config.js'
-  ]
-}
+    '<rootDir>/jest-eslint.config.js',
+  ],
+};
 ```
 
 If you are using Jest >=22.0.5, you can supply an array of project configuration objects instead. In your `package.json`:
@@ -114,9 +128,9 @@ If you are using Jest >=22.0.5, you can supply an array of project configuration
       {
         "runner": "jest-runner-eslint",
         "displayName": "lint",
-        "testMatch": ["<rootDir>/src/**/*.js"],
+        "testMatch": ["<rootDir>/src/**/*.js"]
       }
-    ] 
+    ]
   }
 }
 ```
@@ -127,32 +141,33 @@ Or in `jest.config.js`:
 module.exports = {
   projects: [
     {
-      displayName: 'test'
+      displayName: 'test',
     },
     {
       runner: 'jest-runner-eslint',
       displayName: 'lint',
-      testMatch: ['<rootDir>/src/**/*.js']
-    }
-  ]
-}
+      testMatch: ['<rootDir>/src/**/*.js'],
+    },
+  ],
+};
 ```
 
 ### Run Jest
+
 ```bash
 yarn jest
 ```
 
-
 ## Options
 
 This project uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig), so you can provide config via:
-* a `jest-runner-eslint` property in your `package.json`
-* a `jest-runner-eslint.config.js` JS file
-* a `.jest-runner-eslintrc` JSON file
 
+- a `jest-runner-eslint` property in your `package.json`
+- a `jest-runner-eslint.config.js` JS file
+- a `.jest-runner-eslintrc` JSON file
 
 In `package.json`
+
 ```json
 {
   "jest-runner-eslint": {
@@ -164,34 +179,34 @@ In `package.json`
 ```
 
 or in `jest-runner-eslint.config.js`
+
 ```js
 module.exports = {
   cliOptions: {
     // Options here
-  }
-}
+  },
+};
 ```
-
 
 ### cliOptions
 
 jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For example `--fix` is `cliOptions.fix`
 
-|option|default|example
-|-----|-----|-----|
-|cacheLocation|`.eslintcache`|`"cacheLocation": "/path/to/cache"`
-|config|`null`|`"config": "/path/to/config"`
-|env|`null`|`"env": "mocha"` or `"env": ["mocha", "other"]`
-|ext|`[".js"]`|`"ext": ".jsx"` or `"ext": [".jsx", ".ts"]`
-|fix|`false`|`"fix": true`
-|format|`null`|`"format": "codeframe"`
-|global|`[]`|`"global": "it"` or `"global": ["it", "describe"]`
-|ignorePath|`null`|`"ignorePath": "/path/to/ignore"`
-|noEslintrc|`false`|`"noEslintrc": true`
-|noIgnore|`false`|`"noIgnore": true`
-|noInlineConfig|`false`|`"noInlineConfig": true`
-|parser|`espree`|`"parser": "flow"`
-|parserOptions|`{}`|`"parserOptions": { "myOption": true }`
-|plugin|`[]`|`"plugin": "prettier"` or `"plugin": ["pettier", "other"]`
-|rules|`null`|`"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}`
-|rulesdir|`[]`|`"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`
+| option         | default        | example                                                                                       |
+| -------------- | -------------- | --------------------------------------------------------------------------------------------- |
+| cacheLocation  | `.eslintcache` | `"cacheLocation": "/path/to/cache"`                                                           |
+| config         | `null`         | `"config": "/path/to/config"`                                                                 |
+| env            | `null`         | `"env": "mocha"` or `"env": ["mocha", "other"]`                                               |
+| ext            | `[".js"]`      | `"ext": ".jsx"` or `"ext": [".jsx", ".ts"]`                                                   |
+| fix            | `false`        | `"fix": true`                                                                                 |
+| format         | `null`         | `"format": "codeframe"`                                                                       |
+| global         | `[]`           | `"global": "it"` or `"global": ["it", "describe"]`                                            |
+| ignorePath     | `null`         | `"ignorePath": "/path/to/ignore"`                                                             |
+| noEslintrc     | `false`        | `"noEslintrc": true`                                                                          |
+| noIgnore       | `false`        | `"noIgnore": true`                                                                            |
+| noInlineConfig | `false`        | `"noInlineConfig": true`                                                                      |
+| parser         | `espree`       | `"parser": "flow"`                                                                            |
+| parserOptions  | `{}`           | `"parserOptions": { "myOption": true }`                                                       |
+| plugin         | `[]`           | `"plugin": "prettier"` or `"plugin": ["pettier", "other"]`                                    |
+| rules          | `null`         | `"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}` |
+| rulesdir       | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`       |
