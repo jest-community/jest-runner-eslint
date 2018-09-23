@@ -128,9 +128,7 @@ it('normalizes parser', () => {
 });
 
 it('normalizes parserOptions', () => {
-  expect(normalizeCLIOptions({})).not.toMatchObject({
-    parserOptions: {},
-  });
+  expect(normalizeCLIOptions({}).parseOptions).toBeUndefined();
 
   expect(
     normalizeCLIOptions({ parserOptions: { ecmaVersion: 2015 } }),
