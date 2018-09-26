@@ -12,12 +12,11 @@ const runESLint = ({ testPath, config }) => {
 
   const { CLIEngine } = getLocalESLint(config);
   const { cliOptions } = getESLintOptions(config);
-  const { quiet } = cliOptions;
   const cli = new CLIEngine(
     Object.assign({}, cliOptions, {
       fix:
         (cliOptions.fix || cliOptions.fixDryRun) &&
-        (quiet ? ({ severity }) => severity === 2 : true),
+        (cliOptions.quiet ? ({ severity }) => severity === 2 : true),
     }),
   );
   if (cli.isPathIgnored(testPath)) {
@@ -33,28 +32,33 @@ const runESLint = ({ testPath, config }) => {
 
   const end = Date.now();
 
-  const tooManyWarnings =
-    cliOptions.maxWarnings >= 0 && report.warningCount > cliOptions.maxWarnings;
+  const message = cli.getFormatter(cliOptions.format)(
+    cliOptions.quiet
+      ? CLIEngine.getErrorResults(report.results)
+      : report.results,
+  );
 
-  const format = () => {
-    const formatter = cli.getFormatter(cliOptions.format);
-    return formatter(
-      quiet ? CLIEngine.getErrorResults(report.results) : report.results,
-    );
-  };
-
-  if (report.errorCount > 0 || tooManyWarnings) {
-    let errorMessage = format();
-
-    if (!report.errorCount && tooManyWarnings)
-      errorMessage += `\nESLint found too many warnings (maximum: ${
-        cliOptions.maxWarnings
-      }).`;
-
+  if (report.errorCount > 0) {
     return fail({
       start,
       end,
-      test: { path: testPath, title: 'ESLint', errorMessage },
+      test: { path: testPath, title: 'ESLint', errorMessage: message },
+    });
+  }
+
+  const tooManyWarnings =
+    cliOptions.maxWarnings >= 0 && report.warningCount > cliOptions.maxWarnings;
+  if (tooManyWarnings) {
+    return fail({
+      start,
+      end,
+      test: {
+        path: testPath,
+        title: 'ESLint',
+        errorMessage: `${message}\nESLint found too many warnings (maximum: ${
+          cliOptions.maxWarnings
+        }).`,
+      },
     });
   }
 
@@ -64,8 +68,8 @@ const runESLint = ({ testPath, config }) => {
     test: { path: testPath, title: 'ESLint' },
   });
 
-  if (!quiet && report.warningCount > 0) {
-    result.console = [{ message: format(), origin: '', type: 'warn' }];
+  if (!cliOptions.quiet && report.warningCount > 0) {
+    result.console = [{ message, origin: '', type: 'warn' }];
   }
 
   return result;
