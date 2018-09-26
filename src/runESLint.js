@@ -2,6 +2,13 @@ const { pass, fail, skip } = require('create-jest-runner');
 const getLocalESLint = require('./utils/getLocalESLint');
 const getESLintOptions = require('./utils/getESLintOptions');
 
+const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
+  if (fix || fixDryRun) {
+    return quiet ? ({ severity }) => severity === 2 : true;
+  }
+  return undefined;
+};
+
 const runESLint = ({ testPath, config }) => {
   const start = Date.now();
 
@@ -14,11 +21,10 @@ const runESLint = ({ testPath, config }) => {
   const { cliOptions } = getESLintOptions(config);
   const cli = new CLIEngine(
     Object.assign({}, cliOptions, {
-      fix:
-        (cliOptions.fix || cliOptions.fixDryRun) &&
-        (cliOptions.quiet ? ({ severity }) => severity === 2 : true),
+      fix: getComputedFixValue(cliOptions),
     }),
   );
+
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
@@ -55,9 +61,7 @@ const runESLint = ({ testPath, config }) => {
       test: {
         path: testPath,
         title: 'ESLint',
-        errorMessage: `${message}\nESLint found too many warnings (maximum: ${
-          cliOptions.maxWarnings
-        }).`,
+        errorMessage: `${message}\nESLint found too many warnings (maximum: ${cliOptions.maxWarnings}).`,
       },
     });
   }
