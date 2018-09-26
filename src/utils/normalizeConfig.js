@@ -1,7 +1,17 @@
 const identity = v => v;
 const negate = v => !v;
 const asArray = v => (typeof v === 'string' ? [v] : v);
-const asInt = v => (typeof v === 'number' ? v : parseInt(v, 10));
+const asInt = v => {
+  if (typeof v === 'number') {
+    return v;
+  } else {
+    const int = parseInt(v, 10);
+    if (Number.isNaN(int)) {
+      throw new Error(`'${v}' cannot be converted to a number`);
+    }
+    return int;
+  }
+};
 
 const BASE_CONFIG = {
   cache: {
