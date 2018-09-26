@@ -1,4 +1,4 @@
-const mockCLIEngine = mockEngineConfig => {};
+/* eslint-disable class-methods-use-this, global-require */
 const path = require('path');
 
 const runESLintRunnerWithMockedEngine = options => {
@@ -9,11 +9,13 @@ const runESLintRunnerWithMockedEngine = options => {
         isPathIgnored(file) {
           return options.cliEngine.ignoredFiles.includes(file);
         }
+
         executeOnFiles() {
           return {
             errorCount: options.cliEngine.errorCount,
           };
         }
+
         getFormatter() {
           return () => {};
         }
@@ -29,7 +31,13 @@ it('Requires the config setupTestFrameworkScriptFile when specified', () => {
   const setupFile = path.join(__dirname, './path/to/setupFile.js');
 
   let setupFileWasLoaded = false;
-  jest.doMock(setupFile, () => (setupFileWasLoaded = true), { virtual: true });
+  jest.doMock(
+    setupFile,
+    () => {
+      setupFileWasLoaded = true;
+    },
+    { virtual: true },
+  );
 
   runESLintRunnerWithMockedEngine({
     cliEngine: {
