@@ -6,7 +6,12 @@ module.exports = {
   projects: [
     {
       displayName: 'e2e',
-      testPathIgnorePatterns: ['/examples/', '/node_modules/', '/__eslint__/'],
+      testPathIgnorePatterns: [
+        '/examples/',
+        '/node_modules/',
+        '/__eslint__/',
+        '/__fixtures__/',
+      ],
       testMatch: [
         '<rootDir>/integrationTests/*.test.js',
         '<rootDir>/integrationTests/**/*.test.js',
@@ -15,6 +20,22 @@ module.exports = {
     {
       displayName: 'tests',
       testMatch: ['<rootDir>/src/**/__tests__/**/*.js'],
+    },
+    {
+      displayName: 'lint',
+      runner: './',
+      testPathIgnorePatterns: [
+        '/examples/',
+        '/node_modules/',
+        '/__eslint__/',
+        '/__fixtures__/',
+      ],
+      testMatch: [
+        '<rootDir>/src/*.js',
+        '<rootDir>/src/**/*.js',
+        '<rootDir>/integrationTests/*.js',
+        '<rootDir>/integrationTests/**/*.js',
+      ],
     },
   ],
 };
