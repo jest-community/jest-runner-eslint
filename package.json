@@ -22,10 +22,12 @@
     "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "cosmiconfig": "^3.0.1",
     "create-jest-runner": "^0.4.1",
     "eslint": "^4.5.0",
-    "find-up": "^2.1.0"
+    "find-up": "^2.1.0",
+    "ora": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
