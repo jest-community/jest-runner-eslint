@@ -2,6 +2,13 @@ const { pass, fail, skip } = require('create-jest-runner');
 const getLocalESLint = require('./utils/getLocalESLint');
 const getESLintOptions = require('./utils/getESLintOptions');
 
+const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
+  if (fix || fixDryRun) {
+    return quiet ? ({ severity }) => severity === 2 : true;
+  }
+  return undefined;
+};
+
 const runESLint = ({ testPath, config }) => {
   const start = Date.now();
 
@@ -11,16 +18,13 @@ const runESLint = ({ testPath, config }) => {
   }
 
   const { CLIEngine } = getLocalESLint(config);
-  const options = getESLintOptions(config);
-  const quiet = options.cliOptions && options.cliOptions.quiet;
+  const { cliOptions } = getESLintOptions(config);
   const cli = new CLIEngine(
-    Object.assign({}, options.cliOptions, {
-      fix:
-        options.cliOptions &&
-        (options.cliOptions.fix || options.cliOptions.fixDryRun) &&
-        (quiet ? ({ severity }) => severity === 2 : true),
+    Object.assign({}, cliOptions, {
+      fix: getComputedFixValue(cliOptions),
     }),
   );
+
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
@@ -28,40 +32,37 @@ const runESLint = ({ testPath, config }) => {
 
   const report = cli.executeOnFiles([testPath]);
 
-  if (
-    options.cliOptions &&
-    options.cliOptions.fix &&
-    !options.cliOptions.fixDryRun
-  ) {
+  if (cliOptions.fix && !cliOptions.fixDryRun) {
     CLIEngine.outputFixes(report);
   }
 
   const end = Date.now();
 
-  const tooManyWarnings =
-    options.cliOptions &&
-    options.cliOptions.maxWarnings != null &&
-    options.cliOptions.maxWarnings >= 0 &&
-    report.warningCount > options.cliOptions.maxWarnings;
+  const message = cli.getFormatter(cliOptions.format)(
+    cliOptions.quiet
+      ? CLIEngine.getErrorResults(report.results)
+      : report.results,
+  );
 
-  const format = () => {
-    const formatter = cli.getFormatter(options.cliOptions.format);
-    return formatter(
-      quiet ? CLIEngine.getErrorResults(report.results) : report.results,
-    );
-  };
-
-  if (report.errorCount > 0 || tooManyWarnings) {
-    let errorMessage = format();
-
-    if (!report.errorCount && tooManyWarnings)
-      errorMessage += `\nESLint found too many warnings (maximum: ${options
-        .cliOptions.maxWarnings}).`;
-
+  if (report.errorCount > 0) {
     return fail({
       start,
       end,
-      test: { path: testPath, title: 'ESLint', errorMessage },
+      test: { path: testPath, title: 'ESLint', errorMessage: message },
+    });
+  }
+
+  const tooManyWarnings =
+    cliOptions.maxWarnings >= 0 && report.warningCount > cliOptions.maxWarnings;
+  if (tooManyWarnings) {
+    return fail({
+      start,
+      end,
+      test: {
+        path: testPath,
+        title: 'ESLint',
+        errorMessage: `${message}\nESLint found too many warnings (maximum: ${cliOptions.maxWarnings}).`,
+      },
     });
   }
 
@@ -71,8 +72,8 @@ const runESLint = ({ testPath, config }) => {
     test: { path: testPath, title: 'ESLint' },
   });
 
-  if (!quiet && report.warningCount > 0) {
-    result.console = [{ message: format(), origin: '', type: 'warn' }];
+  if (!cliOptions.quiet && report.warningCount > 0) {
+    result.console = [{ message, origin: '', type: 'warn' }];
   }
 
   return result;

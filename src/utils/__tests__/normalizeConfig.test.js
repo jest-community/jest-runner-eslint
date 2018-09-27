@@ -97,6 +97,20 @@ it('normalizes global', () => {
   });
 });
 
+it('normalizes maxWarnings', () => {
+  expect(normalizeCLIOptions({})).toMatchObject({
+    maxWarnings: -1,
+  });
+
+  expect(normalizeCLIOptions({ maxWarnings: '10' })).toMatchObject({
+    maxWarnings: 10,
+  });
+
+  expect(() => normalizeCLIOptions({ maxWarnings: 'not-an-int' })).toThrowError(
+    `'not-an-int' cannot be converted to a number`,
+  );
+});
+
 it('normalizes noIgnore', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
     ignore: true,
