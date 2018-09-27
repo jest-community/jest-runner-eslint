@@ -1,6 +1,6 @@
 const { pass, fail, skip } = require('create-jest-runner');
-const getLocalESLint = require('./utils/getLocalESLint');
-const getESLintOptions = require('./utils/getESLintOptions');
+const getLocalESLint = require('../utils/getLocalESLint');
+const getESLintOptions = require('../utils/getESLintOptions');
 
 const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   if (fix || fixDryRun) {

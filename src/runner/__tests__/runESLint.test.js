@@ -3,7 +3,7 @@ const path = require('path');
 
 const runESLintRunnerWithMockedEngine = options => {
   jest.resetModules();
-  jest.doMock('../utils/getLocalESLint', () => () => {
+  jest.doMock('../../utils/getLocalESLint', () => () => {
     return {
       CLIEngine: class {
         isPathIgnored(file) {
