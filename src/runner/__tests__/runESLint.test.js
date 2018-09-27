@@ -24,7 +24,7 @@ const runESLintRunnerWithMockedEngine = options => {
   });
   const runESLint = require('../runESLint');
 
-  return runESLint(options.runESLint);
+  return runESLint(Object.assign({ extraOptions: {} }, options.runESLint));
 };
 
 it('Requires the config setupTestFrameworkScriptFile when specified', () => {

@@ -23,14 +23,16 @@
   },
   "dependencies": {
     "cosmiconfig": "^3.0.1",
-    "create-jest-runner": "^0.3.0",
+    "create-jest-runner": "^0.4.1",
     "eslint": "^4.5.0",
     "find-up": "^2.1.0"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-jest": "23.6.0",
-    "babel-preset-env": "1.6.0",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "eslint-config-airbnb-base": "11.3.2",
     "eslint-config-prettier": "2.3.0",
     "eslint-plugin-import": "2.7.0",

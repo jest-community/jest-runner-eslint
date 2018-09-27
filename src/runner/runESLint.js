@@ -9,7 +9,7 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
-const runESLint = ({ testPath, config }) => {
+const runESLint = ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
   if (config.setupTestFrameworkScriptFile) {
@@ -18,12 +18,18 @@ const runESLint = ({ testPath, config }) => {
   }
 
   const { CLIEngine } = getLocalESLint(config);
-  const { cliOptions } = getESLintOptions(config);
-  const cli = new CLIEngine(
-    Object.assign({}, cliOptions, {
-      fix: getComputedFixValue(cliOptions),
-    }),
+  const { cliOptions: baseCliOptions } = getESLintOptions(config);
+  const cliOptions = Object.assign(
+    {},
+    baseCliOptions,
+    {
+      fix: getComputedFixValue(baseCliOptions),
+    },
+    {
+      fix: extraOptions.fix,
+    },
   );
+  const cli = new CLIEngine(cliOptions);
 
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();

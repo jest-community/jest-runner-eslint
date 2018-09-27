@@ -1,15 +1,14 @@
+const configOverrides = require('../utils/configOverrides');
+
 class ESLintWatchFixPlugin {
-  constructor() {
-    this.fix = false;
-  }
   run() {
-    this.fix = !this.fix;
+    configOverrides.setFix(!configOverrides.getFix());
     return Promise.resolve(true);
   }
   getUsageInfo() {
     return {
       key: 'F',
-      prompt: `${this.fix ? 'disable' : 'enable'} ESLint --fix`,
+      prompt: `${configOverrides.getFix() ? 'disable' : 'enable'} ESLint --fix`,
     };
   }
 }
