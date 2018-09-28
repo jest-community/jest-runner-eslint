@@ -143,6 +143,27 @@ module.exports = {
 yarn jest
 ```
 
+## Toggle `--fix` in watch mode
+
+`jest-eslint-runner` comes with a watch plugin that allows you to toggle the `--fix` value
+while in watch mode without having to update your configuration.
+
+![fix](https://user-images.githubusercontent.com/574806/46181271-93205080-c279-11e8-8d73-b4c5e11086c4.gif)
+
+
+To use this watch plugin simply add this to your Jest configuration.
+```js
+{
+  watchPlugins: ['jest-runner-eslint/watch-fix'],
+}
+```
+
+After this run Jest in watch mode and you will see the following line in your watch usage menu
+```
+ › Press F to override ESLint --fix.
+```
+
+
 
 ## Options
 
@@ -171,6 +192,8 @@ module.exports = {
   }
 }
 ```
+
+###
 
 
 ### cliOptions
