@@ -15,31 +15,40 @@
   ],
   "scripts": {
     "test": "jest",
-    "lint": "eslint .",
+    "lint": "eslint . --config ./.eslintrc.json --no-eslintrc",
     "watch": "babel src -w --ignore **/*.test.js,integration -d build",
+    "prebuild": "rimraf build/",
     "build": "babel src --ignore **/*.test.js,integration -d build",
     "prepublish": "yarn build",
-    "format": "prettier --single-quote --trailing-comma all --write \"!(build)/**/*.js\""
+    "format": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "cosmiconfig": "^3.0.1",
-    "create-jest-runner": "^0.3.0",
-    "eslint": "^4.5.0",
-    "find-up": "^2.1.0"
+    "cosmiconfig": "^5.0.0",
+    "create-jest-runner": "^0.4.1",
+    "eslint": "^5.6.0",
+    "find-up": "^3.0.0"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-jest": "23.6.0",
-    "babel-preset-env": "1.6.0",
-    "eslint-config-airbnb-base": "11.3.2",
-    "eslint-config-prettier": "2.3.0",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jest": "20.0.3",
-    "eslint-plugin-prettier": "2.2.0",
-    "execa": "0.8.0",
-    "jest": "23.6.0",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "execa": "^1.0.0",
+    "jest": "^23.6.0",
     "jest-watch-select-projects": "^0.1.1",
     "jest-watch-typeahead": "^0.2.0",
-    "prettier": "1.5.3"
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2"
+  },
+  "prettier": {
+    "proseWrap": "never",
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
