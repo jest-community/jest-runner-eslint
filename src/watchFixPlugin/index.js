@@ -32,7 +32,7 @@ class ESLintWatchFixPlugin {
       stream: this._stdout,
     }).start();
 
-    await wait(1000);
+    await wait(700);
     spinner.succeed();
     await wait(500);
   }
