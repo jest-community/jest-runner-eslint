@@ -1,6 +1,6 @@
 const { pass, fail, skip } = require('create-jest-runner');
-const getLocalESLint = require('./utils/getLocalESLint');
-const getESLintOptions = require('./utils/getESLintOptions');
+const getLocalESLint = require('../utils/getLocalESLint');
+const getESLintOptions = require('../utils/getESLintOptions');
 
 const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   if (fix || fixDryRun) {
@@ -9,7 +9,7 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
-const runESLint = ({ testPath, config }) => {
+const runESLint = ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
   if (config.setupTestFrameworkScriptFile) {
@@ -18,12 +18,14 @@ const runESLint = ({ testPath, config }) => {
   }
 
   const { CLIEngine } = getLocalESLint(config);
-  const { cliOptions } = getESLintOptions(config);
-  const cli = new CLIEngine(
-    Object.assign({}, cliOptions, {
-      fix: getComputedFixValue(cliOptions),
-    }),
-  );
+  const { cliOptions: baseCliOptions } = getESLintOptions(config);
+  const cliOptions = {
+    ...baseCliOptions,
+    fix: getComputedFixValue(baseCliOptions),
+    ...extraOptions,
+  };
+
+  const cli = new CLIEngine(cliOptions);
 
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();

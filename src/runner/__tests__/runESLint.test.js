@@ -3,7 +3,7 @@ const path = require('path');
 
 const runESLintRunnerWithMockedEngine = options => {
   jest.resetModules();
-  jest.doMock('../utils/getLocalESLint', () => () => {
+  jest.doMock('../../utils/getLocalESLint', () => () => {
     return {
       CLIEngine: class {
         isPathIgnored(file) {
@@ -24,7 +24,7 @@ const runESLintRunnerWithMockedEngine = options => {
   });
   const runESLint = require('../runESLint');
 
-  return runESLint(options.runESLint);
+  return runESLint({ extraOptions: {}, ...options.runESLint });
 };
 
 it('Requires the config setupTestFrameworkScriptFile when specified', () => {
