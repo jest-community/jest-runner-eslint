@@ -8,13 +8,6 @@ jest.useFakeTimers();
 let WatchFixPlugin;
 let configOverrides;
 
-const runAndAwait = async plugin => {
-  const runPromise = plugin.run();
-  await jest.runTimersToTime(700);
-  await jest.runTimersToTime(500);
-  return runPromise;
-};
-
 describe('watchFixPlugin', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -31,14 +24,14 @@ describe('watchFixPlugin', () => {
       prompt: 'override ESLint --fix',
     });
 
-    await runAndAwait(plugin);
+    await plugin.run(plugin);
 
     expect(plugin.getUsageInfo()).toEqual({
       key: 'F',
       prompt: 'toggle ESLint --fix (enabled)',
     });
 
-    await runAndAwait(plugin);
+    await plugin.run(plugin);
 
     expect(plugin.getUsageInfo()).toEqual({
       key: 'F',
@@ -52,11 +45,11 @@ describe('watchFixPlugin', () => {
     const plugin = new WatchFixPlugin({ stdout, config });
     expect(configOverrides.getFix()).toBeUndefined();
 
-    await runAndAwait(plugin);
+    await plugin.run(plugin);
 
     expect(configOverrides.getFix()).toBe(true);
 
-    await runAndAwait(plugin);
+    await plugin.run(plugin);
 
     expect(configOverrides.getFix()).toBe(false);
   });

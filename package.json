@@ -27,8 +27,7 @@
     "cosmiconfig": "^5.0.0",
     "create-jest-runner": "^0.4.1",
     "eslint": "^5.6.0",
-    "find-up": "^3.0.0",
-    "ora": "^3.0.0"
+    "find-up": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",

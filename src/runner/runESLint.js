@@ -19,16 +19,12 @@ const runESLint = ({ testPath, config, extraOptions }) => {
 
   const { CLIEngine } = getLocalESLint(config);
   const { cliOptions: baseCliOptions } = getESLintOptions(config);
-  const cliOptions = Object.assign(
-    {},
-    baseCliOptions,
-    {
-      fix: getComputedFixValue(baseCliOptions),
-    },
-    {
-      fix: extraOptions.fix,
-    },
-  );
+  const cliOptions = {
+    ...baseCliOptions,
+    fix: getComputedFixValue(baseCliOptions),
+    ...extraOptions,
+  };
+
   const cli = new CLIEngine(cliOptions);
 
   if (cli.isPathIgnored(testPath)) {
