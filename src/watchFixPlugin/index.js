@@ -15,22 +15,21 @@ class ESLintWatchFixPlugin {
   }
 
   getUsageInfo() {
+    const getPrompt = () => {
+      const fix = configOverrides.getFix();
+      if (fix === undefined) {
+        return 'override ESLint --fix';
+      }
+      if (!fix) {
+        return `toggle ESLint --fix ${chalk.italic('(disabled)')}`;
+      }
+      return `toggle ESLint --fix ${chalk.italic('(enabled)')}`;
+    };
+
     return {
       key: this._key,
-      prompt: this._getPrompt(),
+      prompt: getPrompt(),
     };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _getPrompt() {
-    const fix = configOverrides.getFix();
-    if (fix === undefined) {
-      return 'override ESLint --fix';
-    }
-    if (!fix) {
-      return `toggle ESLint --fix ${chalk.italic('(disabled)')}`;
-    }
-    return `toggle ESLint --fix ${chalk.italic('(enabled)')}`;
   }
 }
 
