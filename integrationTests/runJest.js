@@ -28,10 +28,9 @@ const runJest = (project, options = []) => {
     ].concat(options),
     {
       env: process.env,
+      reject: false,
     },
-  )
-    .catch(t => t)
-    .then(({ stdout, stderr }) => `${normalize(stderr)}\n${normalize(stdout)}`);
+  ).then(({ stdout, stderr }) => `${normalize(stderr)}\n${normalize(stdout)}`);
 };
 
 module.exports = runJest;

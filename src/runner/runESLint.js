@@ -67,7 +67,9 @@ const runESLint = ({ testPath, config, extraOptions }) => {
       test: {
         path: testPath,
         title: 'ESLint',
-        errorMessage: `${message}\nESLint found too many warnings (maximum: ${cliOptions.maxWarnings}).`,
+        errorMessage: `${message}\nESLint found too many warnings (maximum: ${
+          cliOptions.maxWarnings
+        }).`,
       },
     });
   }

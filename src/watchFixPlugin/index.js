@@ -42,7 +42,9 @@ class ESLintWatchFixPlugin {
     const fix = configOverrides.getFix();
     if (fix === undefined) {
       return 'override ESLint --fix';
-    } else if (!fix) {
+    }
+
+    if (!fix) {
       return `toggle ESLint --fix ${chalk.italic('(disabled)')}`;
     }
     return `toggle ESLint --fix ${chalk.italic('(enabled)')}`;
