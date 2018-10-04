@@ -1,5 +1,5 @@
 const { pass, fail, skip } = require('create-jest-runner');
-const getLocalESLint = require('../utils/getLocalESLint');
+const { CLIEngine } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
 
 const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
@@ -17,7 +17,6 @@ const runESLint = ({ testPath, config, extraOptions }) => {
     require(config.setupTestFrameworkScriptFile);
   }
 
-  const { CLIEngine } = getLocalESLint(config);
   const { cliOptions: baseCliOptions } = getESLintOptions(config);
   const cliOptions = {
     ...baseCliOptions,

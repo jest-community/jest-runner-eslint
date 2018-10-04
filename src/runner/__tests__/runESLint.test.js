@@ -3,25 +3,23 @@ const path = require('path');
 
 const runESLintRunnerWithMockedEngine = options => {
   jest.resetModules();
-  jest.doMock('../../utils/getLocalESLint', () => () => {
-    return {
-      CLIEngine: class {
-        isPathIgnored(file) {
-          return options.cliEngine.ignoredFiles.includes(file);
-        }
+  jest.doMock('eslint', () => ({
+    CLIEngine: class {
+      isPathIgnored(file) {
+        return options.cliEngine.ignoredFiles.includes(file);
+      }
 
-        executeOnFiles() {
-          return {
-            errorCount: options.cliEngine.errorCount,
-          };
-        }
+      executeOnFiles() {
+        return {
+          errorCount: options.cliEngine.errorCount,
+        };
+      }
 
-        getFormatter() {
-          return () => {};
-        }
-      },
-    };
-  });
+      getFormatter() {
+        return () => {};
+      }
+    },
+  }));
   const runESLint = require('../runESLint');
 
   return runESLint({ extraOptions: {}, ...options.runESLint });
