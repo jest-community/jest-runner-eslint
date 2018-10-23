@@ -11,7 +11,8 @@
   },
   "homepage": "https://github.com/jest-community/jest-runner-eslint",
   "files": [
-    "build/"
+    "build/",
+    "watch-fix.js"
   ],
   "scripts": {
     "test": "jest",
