@@ -1,6 +1,6 @@
 {
   "name": "jest-runner-eslint",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "main": "build/runner",
   "author": "Rogelio Guzman <rogelioguzmanh@gmail.com>",
   "description": "An experimental ESLint runner for Jest",
