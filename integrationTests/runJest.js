@@ -15,8 +15,7 @@ const normalize = output =>
     .replace(/\s+\n/g, '\n');
 
 const runJest = (project, options = []) => {
-  // eslint-disable-next-line
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+  jest.setTimeout(30000);
   return execa(
     'jest',
     [
@@ -27,7 +26,7 @@ const runJest = (project, options = []) => {
       path.join(__dirname, '__fixtures__', project),
     ].concat(options),
     {
-      env: process.env,
+      env: { ...process.env, FORCE_COLOR: 0 },
       reject: false,
     },
   ).then(({ stdout, stderr }) => `${normalize(stderr)}\n${normalize(stdout)}`);
