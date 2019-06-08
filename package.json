@@ -20,7 +20,7 @@
     "watch": "babel src -w --ignore **/*.test.js,integration -d build",
     "prebuild": "rimraf build/",
     "build": "babel src --ignore **/*.test.js,integration -d build",
-    "prepublish": "yarn build",
+    "prepare": "yarn build",
     "format": "prettier --write \"**/*.js\""
   },
   "dependencies": {
