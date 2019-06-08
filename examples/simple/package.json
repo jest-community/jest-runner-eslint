@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^21.0.1",
-    "jest-runner-eslint": "0.1.0"
+    "jest": "^24.8.0",
+    "jest-runner-eslint": "file:../../"
   },
   "jest": {
     "runner": "jest-runner-eslint",
