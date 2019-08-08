@@ -77,7 +77,7 @@ const BASE_CONFIG = {
     default: null,
   },
   parserOptions: {
-    default: null,
+    default: {},
   },
   plugin: {
     name: 'plugins',
