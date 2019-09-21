@@ -77,7 +77,7 @@ const BASE_CONFIG = {
     default: null,
   },
   parserOptions: {
-    default: null,
+    default: {},
   },
   plugin: {
     name: 'plugins',
@@ -91,7 +91,7 @@ const BASE_CONFIG = {
     default: false,
   },
   rules: {
-    default: null,
+    default: {},
   },
   rulesdir: {
     name: 'rulePaths',
