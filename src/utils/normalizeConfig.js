@@ -91,7 +91,7 @@ const BASE_CONFIG = {
     default: false,
   },
   rules: {
-    default: null,
+    default: {},
   },
   rulesdir: {
     name: 'rulePaths',
