@@ -4,3 +4,14 @@ node_js:
   - '10'
   - '8'
   - '6'
+install:
+  - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
+  - 'yarn'
+env:
+  - 'ESLINT=6'
+  - 'ESLINT=5'
+  - 'ESLINT=4'
+matrix:
+  exclude:
+    - node_js: '6'
+      env: 'ESLINT=6'

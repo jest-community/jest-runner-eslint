@@ -3,6 +3,22 @@
 exports[`Doesn't override parser when not set 1`] = `
 "FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
   ● Test suite failed to run
+    Failed to load parser 'this-parser-does-not-exist' declared in 'integrationTests/__fixtures__/custom-parser/.eslintrc.json': Cannot find module 'this-parser-does-not-exist'
+    Require stack:
+    - /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/custom-parser/.eslintrc.json
+      at mocked-stack-trace
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:
+Ran all test suites.
+
+"
+`;
+
+exports[`Doesn't override parser when not set [ESLint<6] 1`] = `
+"FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
+  ● Test suite failed to run
     Cannot find module 'this-parser-does-not-exist'
       at mocked-stack-trace
 Test Suites: 1 failed, 1 total
