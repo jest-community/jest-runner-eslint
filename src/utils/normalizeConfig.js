@@ -111,6 +111,7 @@ const normalizeCliOptions = rawConfig =>
 
     const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
+    // eslint-disable-next-line prefer-object-spread
     return Object.assign({}, config, {
       [name]: transform(value),
     });
@@ -118,6 +119,7 @@ const normalizeCliOptions = rawConfig =>
 /* eslint-enable no-param-reassign */
 
 const normalizeConfig = config => {
+  // eslint-disable-next-line prefer-object-spread
   return Object.assign({}, config, {
     cliOptions: normalizeCliOptions(config.cliOptions || {}),
   });
