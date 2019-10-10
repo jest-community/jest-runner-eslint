@@ -4,7 +4,7 @@
   <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
   <img width="150" height="150" src="https://cdn.worldvectorlogo.com/logos/eslint.svg">
   <a href="https://facebook.github.io/jest/">
-    <img width="150" height="150" vspace="" hspace="25" src="https://cdn.worldvectorlogo.com/logos/jest.svg">
+    <img width="150" height="150" vspace="" hspace="25" src="https://cdn.worldvectorlogo.com/logos/jest-0.svg">
   </a>
   <h1>jest-runner-eslint</h1>
   <p>ESLint runner for Jest</p>
@@ -220,5 +220,5 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 | plugin                        | `[]`           | `"plugin": "prettier"` or `"plugin": ["pettier", "other"]`                                    |
 | quiet                         | `true`         | `"quiet": false`                                                                              |
 | reportUnusedDisableDirectives | `false`        | `"reportUnusedDisableDirectives": true`                                                       |
-| rules                         | `null`         | `"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}` |
+| rules                         | `{}`           | `"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}` |
 | rulesdir                      | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`       |

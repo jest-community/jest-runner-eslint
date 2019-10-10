@@ -142,7 +142,9 @@ it('normalizes parser', () => {
 });
 
 it('normalizes parserOptions', () => {
-  expect(normalizeCLIOptions({}).parseOptions).toBeUndefined();
+  expect(normalizeCLIOptions({})).toMatchObject({
+    parserOptions: {},
+  });
 
   expect(
     normalizeCLIOptions({ parserOptions: { ecmaVersion: 2015 } }),
@@ -183,7 +185,7 @@ it('normalizes rulesdir', () => {
 
 it('normalizes rules', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    rules: null,
+    rules: {},
   });
 
   const ruleOptions = { quotes: [2, 'double'], 'no-console': 2 };
