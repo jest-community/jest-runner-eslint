@@ -4,6 +4,8 @@
   "rules": {
     "no-underscore-dangle": 0,
     "arrow-body-style": 0,
+    // we still support node 6
+    "prefer-object-spread": 0,
     "prettier/prettier": [
       "error",
       {
