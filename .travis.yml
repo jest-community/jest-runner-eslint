@@ -6,7 +6,7 @@ node_js:
   - '6'
 install:
   - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
-  - 'if [ -n "${JEST}" ]; then yarn add "eslint@${JEST}"; fi'
+  - 'if [ -n "${JEST}" ]; then yarn add "jest@${JEST}"; fi'
   - 'yarn'
 env:
   - 'ESLINT=6'
