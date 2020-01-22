@@ -5,8 +5,8 @@ node_js:
   - '8'
   - '6'
 install:
-  - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
   - 'if [ -n "${JEST}" ]; then yarn add --dev "jest@${JEST}"; fi'
+  - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
   - 'yarn'
 env:
   - 'ESLINT=4 JEST=21'
