@@ -3,14 +3,25 @@ node_js:
   - '12'
   - '10'
   - '8'
+  - '6'
 install:
   - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
+  - 'if [ -n "${JEST}" ]; then yarn add "eslint@${JEST}"; fi'
   - 'yarn'
 env:
   - 'ESLINT=6'
   - 'ESLINT=5'
   - 'ESLINT=4'
+  - 'JEST=21'
+  - 'JEST=22'
+  - 'JEST=23'
+  - 'JEST=24'
+  - 'JEST=25'
 matrix:
   exclude:
     - node_js: '6'
       env: 'ESLINT=6'
+    - node_js: '6'
+      env: 'JEST=25'
+    - node_js: '8'
+      env: 'JEST=25'
