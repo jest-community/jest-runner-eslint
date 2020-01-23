@@ -9,15 +9,6 @@ install:
   - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
   - 'yarn'
 env:
-  - 'ESLINT=4 JEST=21'
-  - 'ESLINT=5 JEST=21'
-  - 'ESLINT=6 JEST=21'
-  - 'ESLINT=4 JEST=22'
-  - 'ESLINT=5 JEST=22'
-  - 'ESLINT=6 JEST=22'
-  - 'ESLINT=4 JEST=23'
-  - 'ESLINT=5 JEST=23'
-  - 'ESLINT=6 JEST=23'
   - 'ESLINT=4 JEST=24'
   - 'ESLINT=5 JEST=24'
   - 'ESLINT=6 JEST=24'
@@ -27,12 +18,6 @@ env:
 matrix:
   exclude:
     # exclude eslint 6 on node 6
-    - node_js: '6'
-      env: 'ESLINT=6 JEST=21'
-    - node_js: '6'
-      env: 'ESLINT=6 JEST=22'
-    - node_js: '6'
-      env: 'ESLINT=6 JEST=23'
     - node_js: '6'
       env: 'ESLINT=6 JEST=24'
     - node_js: '6'
