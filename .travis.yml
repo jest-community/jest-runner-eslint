@@ -5,8 +5,7 @@ node_js:
   - '8'
   - '6'
 install:
-  - 'if [ -n "${JEST}" ]; then yarn add --dev "jest@${JEST}" "babel-jest@${JEST}"; fi'
-  - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
+  - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}"'
   - 'yarn'
 env:
   - 'ESLINT=4 JEST=24'
@@ -35,4 +34,4 @@ matrix:
     - node_js: '8'
       env: 'ESLINT=5 JEST=25'
     - node_js: '8'
-      env: 'ESLINT=5 JEST=25'
+      env: 'ESLINT=6 JEST=25'
