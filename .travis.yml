@@ -5,13 +5,33 @@ node_js:
   - '8'
   - '6'
 install:
-  - 'if [ -n "${ESLINT}" ]; then yarn add "eslint@${ESLINT}"; fi'
+  - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}"'
   - 'yarn'
 env:
-  - 'ESLINT=6'
-  - 'ESLINT=5'
-  - 'ESLINT=4'
+  - 'ESLINT=4 JEST=24'
+  - 'ESLINT=5 JEST=24'
+  - 'ESLINT=6 JEST=24'
+  - 'ESLINT=4 JEST=25'
+  - 'ESLINT=5 JEST=25'
+  - 'ESLINT=6 JEST=25'
 matrix:
   exclude:
+    # exclude eslint 6 on node 6
     - node_js: '6'
-      env: 'ESLINT=6'
+      env: 'ESLINT=6 JEST=24'
+    - node_js: '6'
+      env: 'ESLINT=6 JEST=25'
+    # exclude jest 25 on node 6
+    - node_js: '6'
+      env: 'ESLINT=4 JEST=25'
+    - node_js: '6'
+      env: 'ESLINT=5 JEST=25'
+    - node_js: '6'
+      env: 'ESLINT=6 JEST=25'
+    # exclude jest 25 on node 8
+    - node_js: '8'
+      env: 'ESLINT=4 JEST=25'
+    - node_js: '8'
+      env: 'ESLINT=5 JEST=25'
+    - node_js: '8'
+      env: 'ESLINT=6 JEST=25'
