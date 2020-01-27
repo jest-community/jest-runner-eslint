@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-env": "~7.7.0",
     "babel-jest": "^25.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.3.0",
