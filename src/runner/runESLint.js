@@ -9,6 +9,24 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
+let cachedValues;
+const getCachedValues = (config, extraOptions) => {
+  if (!cachedValues) {
+    const { cliOptions: baseCliOptions } = getESLintOptions(config);
+    const cliOptions = {
+      ...baseCliOptions,
+      fix: getComputedFixValue(baseCliOptions),
+      ...extraOptions,
+    };
+    const cli = new CLIEngine(cliOptions);
+    const formatter = cli.getFormatter(cliOptions.format);
+
+    cachedValues = { cli, formatter, cliOptions };
+  }
+
+  return cachedValues;
+};
+
 const runESLint = ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
@@ -17,14 +35,7 @@ const runESLint = ({ testPath, config, extraOptions }) => {
     require(config.setupTestFrameworkScriptFile);
   }
 
-  const { cliOptions: baseCliOptions } = getESLintOptions(config);
-  const cliOptions = {
-    ...baseCliOptions,
-    fix: getComputedFixValue(baseCliOptions),
-    ...extraOptions,
-  };
-
-  const cli = new CLIEngine(cliOptions);
+  const { cli, formatter, cliOptions } = getCachedValues(config, extraOptions);
 
   if (cli.isPathIgnored(testPath)) {
     const end = Date.now();
@@ -39,7 +50,7 @@ const runESLint = ({ testPath, config, extraOptions }) => {
 
   const end = Date.now();
 
-  const message = cli.getFormatter(cliOptions.format)(
+  const message = formatter(
     cliOptions.quiet
       ? CLIEngine.getErrorResults(report.results)
       : report.results,
