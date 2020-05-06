@@ -6,7 +6,7 @@ const rootDir = path.join(__dirname, '..');
 
 const normalize = output =>
   output
-    .replace(/\(?\d*\.?\d+m?s\)?/g, '')
+    .replace(/\(?\d*\.?\d+ ?m?s\b\)?/g, '')
     .replace(/, estimated/g, '')
     .replace(new RegExp(rootDir, 'g'), '/mocked-path-to-jest-runner-mocha')
     .replace(new RegExp('.*at .*\\n', 'g'), 'mocked-stack-trace')
