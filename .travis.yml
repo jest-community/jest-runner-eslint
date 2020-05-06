@@ -14,6 +14,9 @@ env:
   - 'ESLINT=4 JEST=25'
   - 'ESLINT=5 JEST=25'
   - 'ESLINT=6 JEST=25'
+  - 'ESLINT=4 JEST=26'
+  - 'ESLINT=5 JEST=26'
+  - 'ESLINT=6 JEST=26'
 matrix:
   exclude:
     # exclude eslint 6 on node 6
@@ -35,3 +38,17 @@ matrix:
       env: 'ESLINT=5 JEST=25'
     - node_js: '8'
       env: 'ESLINT=6 JEST=25'
+    # exclude jest 26 on node 6
+    - node_js: '6'
+      env: 'ESLINT=4 JEST=26'
+    - node_js: '6'
+      env: 'ESLINT=5 JEST=26'
+    - node_js: '6'
+      env: 'ESLINT=6 JEST=26'
+    # exclude jest 26 on node 8
+    - node_js: '8'
+      env: 'ESLINT=4 JEST=26'
+    - node_js: '8'
+      env: 'ESLINT=5 JEST=26'
+    - node_js: '8'
+      env: 'ESLINT=6 JEST=26'
