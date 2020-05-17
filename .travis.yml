@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - 6
-  - 8
-  - 10
-  - 12
   - 14
+  - 12
+  - 10
+  - 8
+  - 6
 install:
   - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}"'
   - 'yarn'
