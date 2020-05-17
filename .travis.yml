@@ -1,9 +1,10 @@
 language: node_js
 node_js:
-  - '12'
-  - '10'
-  - '8'
-  - '6'
+  - 6
+  - 8
+  - 10
+  - 12
+  - 14
 install:
   - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}"'
   - 'yarn'
@@ -11,12 +12,15 @@ env:
   - 'ESLINT=4 JEST=24'
   - 'ESLINT=5 JEST=24'
   - 'ESLINT=6 JEST=24'
+  - 'ESLINT=7 JEST=24'
   - 'ESLINT=4 JEST=25'
   - 'ESLINT=5 JEST=25'
   - 'ESLINT=6 JEST=25'
+  - 'ESLINT=7 JEST=25'
   - 'ESLINT=4 JEST=26'
   - 'ESLINT=5 JEST=26'
   - 'ESLINT=6 JEST=26'
+  - 'ESLINT=7 JEST=26'
 matrix:
   exclude:
     # exclude eslint 6 on node 6
@@ -24,6 +28,12 @@ matrix:
       env: 'ESLINT=6 JEST=24'
     - node_js: '6'
       env: 'ESLINT=6 JEST=25'
+    # exclude eslint 7 on node 6
+    - node_js: '6'
+      env: 'ESLINT=7 JEST=24'
+    # exclude eslint 7 on node 8
+    - node_js: '8'
+      env: 'ESLINT=7 JEST=24'
     # exclude jest 25 on node 6
     - node_js: '6'
       env: 'ESLINT=4 JEST=25'
@@ -31,6 +41,8 @@ matrix:
       env: 'ESLINT=5 JEST=25'
     - node_js: '6'
       env: 'ESLINT=6 JEST=25'
+    - node_js: '6'
+      env: 'ESLINT=7 JEST=25'
     # exclude jest 25 on node 8
     - node_js: '8'
       env: 'ESLINT=4 JEST=25'
@@ -38,6 +50,8 @@ matrix:
       env: 'ESLINT=5 JEST=25'
     - node_js: '8'
       env: 'ESLINT=6 JEST=25'
+    - node_js: '8'
+      env: 'ESLINT=7 JEST=25'
     # exclude jest 26 on node 6
     - node_js: '6'
       env: 'ESLINT=4 JEST=26'
@@ -45,6 +59,8 @@ matrix:
       env: 'ESLINT=5 JEST=26'
     - node_js: '6'
       env: 'ESLINT=6 JEST=26'
+    - node_js: '6'
+      env: 'ESLINT=7 JEST=26'
     # exclude jest 26 on node 8
     - node_js: '8'
       env: 'ESLINT=4 JEST=26'
@@ -52,3 +68,5 @@ matrix:
       env: 'ESLINT=5 JEST=26'
     - node_js: '8'
       env: 'ESLINT=6 JEST=26'
+    - node_js: '8'
+      env: 'ESLINT=7 JEST=26'
