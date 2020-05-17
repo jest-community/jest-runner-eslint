@@ -12,7 +12,7 @@ describe('watchFixPlugin', () => {
   beforeEach(() => {
     jest.resetModules();
     configOverrides = require('../../utils/configOverrides');
-    WatchFixPlugin = require('../');
+    WatchFixPlugin = require('..');
   });
 
   it('shows the correct prompt', async () => {

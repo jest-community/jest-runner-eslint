@@ -114,16 +114,18 @@ const normalizeCliOptions = rawConfig =>
 
     const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
-    return Object.assign({}, config, {
-      [name]: transform(value),
-    });
+    return {
+      ...config,
+      [name]: transform(value)
+    };
   }, {});
 /* eslint-enable no-param-reassign */
 
 const normalizeConfig = config => {
-  return Object.assign({}, config, {
+  return {
+    ...config,
     cliOptions: normalizeCliOptions(config.cliOptions || {}),
-  });
+  };
 };
 
 module.exports = normalizeConfig;
