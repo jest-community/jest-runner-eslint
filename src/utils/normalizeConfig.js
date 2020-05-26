@@ -90,6 +90,9 @@ const BASE_CONFIG = {
   reportUnusedDisableDirectives: {
     default: false,
   },
+  resolvePluginsRelativeTo: {
+    default: undefined,
+  },
   rules: {
     default: {},
   },
