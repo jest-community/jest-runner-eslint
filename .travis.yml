@@ -6,8 +6,8 @@ node_js:
   - 8
   - 6
 install:
-  - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}"'
-  - 'yarn'
+  - 'yarn add "eslint@${ESLINT}" "jest@${JEST}" "babel-jest@${JEST}" --ignore-engines'
+  - 'yarn --ignore-engines'
 env:
   - 'ESLINT=4 JEST=24'
   - 'ESLINT=5 JEST=24'
