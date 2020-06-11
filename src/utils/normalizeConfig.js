@@ -116,7 +116,7 @@ const normalizeCliOptions = rawConfig =>
 
     return {
       ...config,
-      [name]: transform(value)
+      [name]: transform(value),
     };
   }, {});
 /* eslint-enable no-param-reassign */
