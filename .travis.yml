@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  # eslint 7: node 10+
-  # jest 26: node 10+
+  # eslint 7: node 10.12+
+  # jest 26: node 10.14.2+
   - 14
   - 12
   - 10
@@ -14,7 +14,7 @@ env:
   - 'ESLINT=6 JEST=26'
   - 'ESLINT=7 JEST=26'
 matrix:
-  # jest 25: 8+
+  # jest 25: node 8+
   include:
     # eslint 6, node 8
     - node_js: 8

@@ -54,5 +54,8 @@
     "proseWrap": "never",
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "engines": {
+    "node": ">=8.10.0"
   }
 }
