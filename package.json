@@ -29,9 +29,9 @@
     "create-jest-runner": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.0",
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
     "babel-jest": "^25.1 || ^26",
     "eslint": "^6 || ^7",
     "eslint-config-airbnb-base": "^14.2.0",
@@ -39,11 +39,11 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^23.17.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "execa": "^2.1.0",
+    "execa": "^3.4.0",
     "jest": "^25.1 || ^26",
     "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "^0.5.0",
-    "prettier": "^1.14.3",
+    "prettier": "1.19.1",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
