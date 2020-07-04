@@ -1,10 +1,10 @@
-const cosmiconfig = require('cosmiconfig');
+const { cosmiconfigSync } = require('cosmiconfig');
 const normalizeConfig = require('./normalizeConfig');
 
-const explorer = cosmiconfig('jest-runner-eslint');
+const explorer = cosmiconfigSync('jest-runner-eslint');
 
 const getESLintOptions = config => {
-  const result = explorer.searchSync(config.rootDir);
+  const result = explorer.search(config.rootDir);
 
   if (result) {
     return normalizeConfig(result.config);

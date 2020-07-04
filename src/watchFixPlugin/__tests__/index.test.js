@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const chalk = require('chalk');
 
-jest.doMock('chalk', () => new chalk.constructor({ enabled: false }));
+jest.doMock('chalk', () => new chalk.Instance({ level: 0 }));
 
 jest.useFakeTimers();
 
