@@ -53,6 +53,40 @@ it('Requires the config setupTestFrameworkScriptFile when specified', () => {
   expect(setupFileWasLoaded).toBeTruthy();
 });
 
+it('Requires the config setupFilesAfterEnv when specified', () => {
+  const setupFiles = [
+    path.join(__dirname, './path/to/setupFileFoo.js'),
+    path.join(__dirname, './path/to/setupFileBar.js'),
+  ];
+
+  const setupFilesWereLoaded = setupFiles.map(() => false);
+
+  setupFiles.forEach((setupFile, index) => {
+    jest.doMock(
+      setupFile,
+      () => {
+        setupFilesWereLoaded[index] = true;
+      },
+      { virtual: true },
+    );
+  });
+
+  runESLintRunnerWithMockedEngine({
+    cliEngine: {
+      ignoredFiles: ['/path/to/file.test.js'],
+      errorCount: 0,
+    },
+    runESLint: {
+      testPath: 'path/to/file.test.js',
+      config: {
+        setupFilesAfterEnv: setupFiles,
+      },
+    },
+  });
+
+  expect(setupFilesWereLoaded).toEqual([true, true]);
+});
+
 it('Returns "skipped" when the test path is ignored', () => {
   const result = runESLintRunnerWithMockedEngine({
     cliEngine: {

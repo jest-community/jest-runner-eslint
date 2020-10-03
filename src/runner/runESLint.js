@@ -30,9 +30,16 @@ const getCachedValues = (config, extraOptions) => {
 const runESLint = ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
+  // Jest <= 25.x
   if (config.setupTestFrameworkScriptFile) {
     // eslint-disable-next-line import/no-dynamic-require,global-require
     require(config.setupTestFrameworkScriptFile);
+  }
+
+  // Jest >= 26.x
+  if (config.setupFilesAfterEnv) {
+    // eslint-disable-next-line import/no-dynamic-require,global-require
+    config.setupFilesAfterEnv.forEach(require);
   }
 
   const { cli, formatter, cliOptions } = getCachedValues(config, extraOptions);
