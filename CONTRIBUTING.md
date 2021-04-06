@@ -6,7 +6,7 @@
 
    ```sh
    git clone https://github.com/<your_username>/jest-runner-eslint
-   cd jest
+   cd jest-runner-eslint
    git checkout -b my_branch
    ```
 
