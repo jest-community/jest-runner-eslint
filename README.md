@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jest-community/jest-runner-eslint.svg?branch=master)](https://travis-ci.org/jest-community/jest-runner-eslint) [![npm version](https://badge.fury.io/js/jest-runner-eslint.svg)](https://badge.fury.io/js/jest-runner-eslint)
+[![Build Status](https://travis-ci.org/jest-community/jest-runner-eslint.svg?branch=main)](https://travis-ci.org/jest-community/jest-runner-eslint) [![npm version](https://badge.fury.io/js/jest-runner-eslint.svg)](https://badge.fury.io/js/jest-runner-eslint)
 
 <div align="center">
   <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
