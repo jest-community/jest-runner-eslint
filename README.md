@@ -4,7 +4,7 @@
   <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
   <img width="150" height="150" src="https://cdn.worldvectorlogo.com/logos/eslint.svg">
   <a href="https://facebook.github.io/jest/">
-    <img width="150" height="150" vspace="" hspace="25" src="https://cdn.worldvectorlogo.com/logos/jest-0.svg">
+    <img width="150" height="150" vspace="" hspace="25" src="https://github.com/facebook/jest/blob/master/website/static/img/jest.png">
   </a>
   <h1>jest-runner-eslint</h1>
   <p>ESLint runner for Jest</p>
