@@ -222,4 +222,4 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 | resolvePluginsRelativeTo      | `undefined`    | `"resolvePluginsRelativeTo": "./eslint-config"`                                               |
 | reportUnusedDisableDirectives | `false`        | `"reportUnusedDisableDirectives": true`                                                       |
 | rules                         | `{}`           | `"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}` |
-| rulesdir                      | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`       |
+| rulesdir                      | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"rulesdir": ["/path/to/rules/dir", "/path/to/other"]`  |
