@@ -13,6 +13,8 @@ env:
   - 'ESLINT=7 JEST=25'
   - 'ESLINT=6 JEST=26'
   - 'ESLINT=7 JEST=26'
+  - 'ESLINT=6 JEST=27'
+  - 'ESLINT=7 JEST=27'
 matrix:
   # jest 25: node 8+
   include:
