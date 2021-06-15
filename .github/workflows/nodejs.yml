@@ -34,10 +34,10 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install with eslint v${{ matrix.eslint-version }} and jest@${{jest.eslint-version }}
+      - name: install with eslint v${{ matrix.eslint-version }} and jest@${{ matrix.jest-version }}
         run: |
           yarn
-          yarn add --dev eslint@${{matrix.eslint-version }} jest@${{jest.eslint-version }}
+          yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }}
       - name: run tests
         run: yarn test
   test-os:
