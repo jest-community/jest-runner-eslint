@@ -1,0 +1,40 @@
+name: Unit tests
+
+on:
+  push:
+    branches:
+      - main
+      - next
+  pull_request:
+    branches:
+      - main
+      - next
+
+jobs:
+  test-node:
+    name:
+      # prettier-ignore
+      Test on Node.js v${{ matrix.node-version }}, eslint v${{ matrix.eslint-version }} and jest v${{ matrix.jest-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 16.x]
+        eslint-version: [6, 7]
+        jest-version: [25, 26, 27]
+        include:
+          # eslint@7 and jest@26 doesn't support node@8
+          - node-version: 8.x
+            eslint-version: 6
+            jest-version: 25
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install with eslint v${{ matrix.eslint-version }} and jest@${{ matrix.jest-version }}
+        run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} --ignore-engines
+      - name: run tests
+        run: yarn test
