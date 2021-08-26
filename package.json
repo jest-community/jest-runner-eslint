@@ -26,13 +26,13 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "cosmiconfig": "^6.0.0",
-    "create-jest-runner": "^0.6.0"
+    "create-jest-runner": "^0.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
-    "babel-jest": "^25.1 || ^26",
+    "babel-jest": "^25.1 || ^26 || ^27",
     "eslint": "^6 || ^7",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -40,7 +40,7 @@
     "eslint-plugin-jest": "^23.17.1",
     "eslint-plugin-prettier": "^3.1.4",
     "execa": "^3.4.0",
-    "jest": "^25.1 || ^26",
+    "jest": "^25.1 || ^26 || ^27",
     "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "^0.5.0",
     "prettier": "1.19.1",
@@ -56,6 +56,6 @@
     "trailingComma": "all"
   },
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=10.13.0"
   }
 }
