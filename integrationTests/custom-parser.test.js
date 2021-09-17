@@ -10,12 +10,12 @@ if (
   eslint.CLIEngine.version.startsWith('5')
 ) {
   it.skip("Doesn't override parser when not set", () => {});
-  it("Doesn't override parser when not set [ESLint<6]", () => {
-    return expect(runJest('custom-parser')).resolves.toMatchSnapshot();
+  it("Doesn't override parser when not set [ESLint<6]", async () => {
+    expect(await runJest('custom-parser')).toMatchSnapshot();
   });
 } else {
-  it("Doesn't override parser when not set", () => {
-    return expect(runJest('custom-parser')).resolves.toMatchSnapshot();
+  it("Doesn't override parser when not set", async () => {
+    expect(await runJest('custom-parser')).toMatchSnapshot();
   });
   it.skip("Doesn't override parser when not set [ESLint<6]", () => {});
 }

@@ -1,5 +1,5 @@
 const runJest = require('./runJest');
 
-it('Works when it has failing tests', () => {
-  return expect(runJest('skipped')).resolves.toMatchSnapshot();
+it('Works when it has failing tests', async () => {
+  expect(await runJest('skipped')).toMatchSnapshot();
 });
