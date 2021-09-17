@@ -44,7 +44,8 @@
     "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "^0.6.4",
     "prettier": "1.19.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "semver": "^6.3.0"
   },
   "peerDependencies": {
     "eslint": "^6 || ^7",
