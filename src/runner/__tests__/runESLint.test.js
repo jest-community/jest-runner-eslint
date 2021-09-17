@@ -11,7 +11,12 @@ const runESLintRunnerWithMockedEngine = options => {
 
       executeOnFiles() {
         return {
+          results:
+            options.cliEngine.errorCount > 0
+              ? [{ errorCount: options.cliEngine.errorCount, warningCount: 0 }]
+              : [],
           errorCount: options.cliEngine.errorCount,
+          warningCount: 0,
         };
       }
 
@@ -25,7 +30,7 @@ const runESLintRunnerWithMockedEngine = options => {
   return runESLint({ extraOptions: {}, ...options.runESLint });
 };
 
-it('Requires the config setupTestFrameworkScriptFile when specified', () => {
+it('Requires the config setupTestFrameworkScriptFile when specified', async () => {
   const setupFile = path.join(__dirname, './path/to/setupFile.js');
 
   let setupFileWasLoaded = false;
@@ -37,7 +42,7 @@ it('Requires the config setupTestFrameworkScriptFile when specified', () => {
     { virtual: true },
   );
 
-  runESLintRunnerWithMockedEngine({
+  await runESLintRunnerWithMockedEngine({
     cliEngine: {
       ignoredFiles: ['/path/to/file.test.js'],
       errorCount: 0,
@@ -53,8 +58,8 @@ it('Requires the config setupTestFrameworkScriptFile when specified', () => {
   expect(setupFileWasLoaded).toBeTruthy();
 });
 
-it('Returns "skipped" when the test path is ignored', () => {
-  const result = runESLintRunnerWithMockedEngine({
+it('Returns "skipped" when the test path is ignored', async () => {
+  const result = await runESLintRunnerWithMockedEngine({
     cliEngine: {
       ignoredFiles: ['/path/to/file.test.js'],
       errorCount: 0,
@@ -73,8 +78,8 @@ it('Returns "skipped" when the test path is ignored', () => {
   });
 });
 
-it('Returns "passed" when the test passed', () => {
-  const result = runESLintRunnerWithMockedEngine({
+it('Returns "passed" when the test passed', async () => {
+  const result = await runESLintRunnerWithMockedEngine({
     cliEngine: {
       ignoredFiles: [],
       errorCount: 0,
@@ -92,8 +97,8 @@ it('Returns "passed" when the test passed', () => {
   });
 });
 
-it('Returns "fail" when the test failed', () => {
-  const result = runESLintRunnerWithMockedEngine({
+it('Returns "fail" when the test failed', async () => {
+  const result = await runESLintRunnerWithMockedEngine({
     cliEngine: {
       ignoredFiles: [],
       errorCount: 1,

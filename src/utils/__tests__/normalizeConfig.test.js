@@ -3,7 +3,7 @@ const normalizeConfig = require('../normalizeConfig');
 const normalizeCLIOptions = cliOptions =>
   normalizeConfig({ cliOptions }).cliOptions;
 
-it('ignores unkown options', () => {
+it('ignores unknown options', () => {
   expect(normalizeCLIOptions({ other: true })).not.toMatchObject({
     other: true,
   });
