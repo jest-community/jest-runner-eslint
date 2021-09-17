@@ -35,6 +35,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install with eslint v${{ matrix.eslint-version }} and jest@${{ matrix.jest-version }}
-        run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} --ignore-engines
+        run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }} --ignore-engines
       - name: run tests
         run: yarn test
