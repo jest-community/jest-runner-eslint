@@ -1,3 +1,5 @@
+const dotProp = require('dot-prop');
+
 const identity = v => v;
 const negate = v => !v;
 const asArray = v => (typeof v === 'string' ? [v] : v);
@@ -12,7 +14,7 @@ const asInt = v => {
   return int;
 };
 
-const BASE_CONFIG = {
+const OLD_BASE_CONFIG = {
   cache: {
     default: false,
   },
@@ -40,7 +42,7 @@ const BASE_CONFIG = {
     default: false,
   },
   format: {
-    default: null,
+    default: undefined,
   },
   global: {
     name: 'globals',
@@ -103,28 +105,70 @@ const BASE_CONFIG = {
   },
 };
 
+const BASE_CONFIG = {
+  ...OLD_BASE_CONFIG,
+  config: {
+    name: 'overrideConfigFile',
+    default: null,
+  },
+  env: {
+    name: 'overrideConfig.env',
+    default: {},
+  },
+  global: {
+    name: 'overrideConfig.globals',
+    default: {},
+  },
+  ignorePattern: {
+    name: 'overrideConfig.ignorePatterns',
+    default: [],
+    transform: asArray,
+  },
+  parser: {
+    name: 'overrideConfig.parser',
+    default: null,
+  },
+  parserOptions: {
+    name: 'overrideConfig.parserOptions',
+    default: {},
+  },
+  plugin: {
+    name: 'overrideConfig.plugins',
+    default: [],
+    transform: asArray,
+  },
+  reportUnusedDisableDirectives: {
+    default: null,
+  },
+  rules: {
+    name: 'overrideConfig.rules',
+    default: {},
+  },
+};
+
 /* eslint-disable no-param-reassign */
-const normalizeCliOptions = rawConfig =>
-  Object.keys(BASE_CONFIG).reduce((config, key) => {
+const normalizeCliOptions = (rawConfig, newApi) => {
+  const configToUse = newApi ? BASE_CONFIG : OLD_BASE_CONFIG;
+  return Object.keys(configToUse).reduce((config, key) => {
     const {
       name = key,
       transform = identity,
       default: defaultValue,
-    } = BASE_CONFIG[key];
+    } = configToUse[key];
 
     const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
-    return {
-      ...config,
-      [name]: transform(value),
-    };
+    dotProp.set(config, name, transform(value));
+
+    return config;
   }, {});
+};
 /* eslint-enable no-param-reassign */
 
-const normalizeConfig = config => {
+const normalizeConfig = (config, newApi) => {
   return {
     ...config,
-    cliOptions: normalizeCliOptions(config.cliOptions || {}),
+    cliOptions: normalizeCliOptions(config.cliOptions || {}, newApi),
   };
 };
 

@@ -1,5 +1,8 @@
+const { ESLint } = require('eslint');
+
 module.exports = {
   cliOptions: {
-    global: ['hello'],
+    // `ESLint` requires this to be an object, not an array
+    global: ESLint ? { hello: true } : ['hello'],
   },
 };
