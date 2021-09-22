@@ -1,6 +1,9 @@
 {
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["prettier", "jest"],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
   "rules": {
     "no-underscore-dangle": 0,
     "arrow-body-style": 0,

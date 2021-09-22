@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/jest-community/jest-runner-eslint.svg?branch=master)](https://travis-ci.org/jest-community/jest-runner-eslint) [![npm version](https://badge.fury.io/js/jest-runner-eslint.svg)](https://badge.fury.io/js/jest-runner-eslint)
+[![Actions Status](https://github.com/jest-community/jest-runner-eslint/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/jest-community/jest-runner-eslint/actions) [![npm version](https://badge.fury.io/js/jest-runner-eslint.svg)](https://badge.fury.io/js/jest-runner-eslint)
 
 <div align="center">
   <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
   <img width="150" height="150" src="https://cdn.worldvectorlogo.com/logos/eslint.svg">
   <a href="https://facebook.github.io/jest/">
-    <img width="150" height="150" vspace="" hspace="25" src="https://cdn.worldvectorlogo.com/logos/jest-0.svg">
+    <img width="150" height="150" vspace="" hspace="25" src="https://github.com/facebook/jest/blob/b5aa00204e80927efee6b44ac7dd6b22b8c78e22/website/static/img/jest.png">
   </a>
   <h1>jest-runner-eslint</h1>
   <p>ESLint runner for Jest</p>
@@ -146,7 +146,7 @@ yarn jest
 
 ## Toggle `--fix` in watch mode
 
-`jest-eslint-runner` comes with a watch plugin that allows you to toggle the `--fix` value while in watch mode without having to update your configuration.
+`jest-runner-eslint` comes with a watch plugin that allows you to toggle the `--fix` value while in watch mode without having to update your configuration.
 
 ![fix](https://user-images.githubusercontent.com/574806/46181271-93205080-c279-11e8-8d73-b4c5e11086c4.gif)
 
@@ -222,4 +222,4 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 | resolvePluginsRelativeTo      | `undefined`    | `"resolvePluginsRelativeTo": "./eslint-config"`                                               |
 | reportUnusedDisableDirectives | `false`        | `"reportUnusedDisableDirectives": true`                                                       |
 | rules                         | `{}`           | `"rules": {"quotes": [2, "double"]}` or `"rules": {"quotes": [2, "double"], "no-console": 2}` |
-| rulesdir                      | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"env": ["/path/to/rules/dir", "/path/to/other"]`       |
+| rulesdir                      | `[]`           | `"rulesdir": "/path/to/rules/dir"` or `"rulesdir": ["/path/to/rules/dir", "/path/to/other"]`  |

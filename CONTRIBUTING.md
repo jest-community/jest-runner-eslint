@@ -1,6 +1,6 @@
 ### Setup up your dev environment
 
-1. Fork the repo and create your branch from `master`. A guide on how to fork a repository: https://help.github.com/articles/fork-a-repo/
+1. Fork the repo and create your branch from `main`. A guide on how to fork a repository: https://help.github.com/articles/fork-a-repo/
 
    Open terminal (e.g. Terminal, iTerm, Git Bash or Git Shell) and type:
 

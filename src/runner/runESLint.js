@@ -1,5 +1,5 @@
 const { pass, fail, skip } = require('create-jest-runner');
-const { CLIEngine } = require('eslint');
+const { CLIEngine, ESLint } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
 
 const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
@@ -9,25 +9,59 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
+const ESLintEngine = ESLint || CLIEngine;
+
 let cachedValues;
 const getCachedValues = (config, extraOptions) => {
   if (!cachedValues) {
-    const { cliOptions: baseCliOptions } = getESLintOptions(config);
+    const useEngine = ESLint == null;
+    const { cliOptions: baseCliOptions } = getESLintOptions(config, !useEngine);
     const cliOptions = {
       ...baseCliOptions,
       fix: getComputedFixValue(baseCliOptions),
       ...extraOptions,
     };
-    const cli = new CLIEngine(cliOptions);
-    const formatter = cli.getFormatter(cliOptions.format);
 
-    cachedValues = { cli, formatter, cliOptions };
+    // these are not constructor args, so remove them
+    const { fixDryRun, format, maxWarnings, quiet } = cliOptions;
+    delete cliOptions.fixDryRun;
+    delete cliOptions.format;
+    delete cliOptions.maxWarnings;
+    delete cliOptions.quiet;
+
+    const cli = useEngine ? new CLIEngine(cliOptions) : new ESLint(cliOptions);
+
+    cachedValues = {
+      isPathIgnored: cli.isPathIgnored.bind(cli),
+      lintFiles: (...args) => {
+        if (useEngine) {
+          return cli.executeOnFiles(...args).results;
+        }
+
+        return cli.lintFiles(...args);
+      },
+      formatter: async (...args) => {
+        if (useEngine) {
+          return cli.getFormatter(format)(...args);
+        }
+
+        const formatter = await cli.loadFormatter(format);
+
+        return formatter.format(...args);
+      },
+      cliOptions: {
+        ...cliOptions,
+        fixDryRun,
+        maxWarnings,
+        quiet,
+      },
+    };
   }
 
   return cachedValues;
 };
 
-const runESLint = ({ testPath, config, extraOptions }) => {
+const runESLint = async ({ testPath, config, extraOptions }) => {
   const start = Date.now();
 
   if (config.setupTestFrameworkScriptFile) {
@@ -40,28 +74,29 @@ const runESLint = ({ testPath, config, extraOptions }) => {
     config.setupFilesAfterEnv.forEach(require);
   }
 
-  const { cli, formatter, cliOptions } = getCachedValues(config, extraOptions);
+  const { isPathIgnored, lintFiles, formatter, cliOptions } = getCachedValues(
+    config,
+    extraOptions,
+  );
 
-  if (cli.isPathIgnored(testPath)) {
+  if (await isPathIgnored(testPath)) {
     const end = Date.now();
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
   }
 
-  const report = cli.executeOnFiles([testPath]);
+  const report = await lintFiles([testPath]);
 
   if (cliOptions.fix && !cliOptions.fixDryRun) {
-    CLIEngine.outputFixes(report);
+    await ESLintEngine.outputFixes(report);
   }
 
   const end = Date.now();
 
-  const message = formatter(
-    cliOptions.quiet
-      ? CLIEngine.getErrorResults(report.results)
-      : report.results,
+  const message = await formatter(
+    cliOptions.quiet ? ESLintEngine.getErrorResults(report) : report,
   );
 
-  if (report.errorCount > 0) {
+  if (report[0]?.errorCount > 0) {
     return fail({
       start,
       end,
@@ -70,7 +105,8 @@ const runESLint = ({ testPath, config, extraOptions }) => {
   }
 
   const tooManyWarnings =
-    cliOptions.maxWarnings >= 0 && report.warningCount > cliOptions.maxWarnings;
+    cliOptions.maxWarnings >= 0 &&
+    report[0]?.warningCount > cliOptions.maxWarnings;
   if (tooManyWarnings) {
     return fail({
       start,
@@ -89,7 +125,7 @@ const runESLint = ({ testPath, config, extraOptions }) => {
     test: { path: testPath, title: 'ESLint' },
   });
 
-  if (!cliOptions.quiet && report.warningCount > 0) {
+  if (!cliOptions.quiet && report[0]?.warningCount > 0) {
     result.console = [{ message, origin: '', type: 'warn' }];
   }
 
