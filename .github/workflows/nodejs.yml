@@ -19,13 +19,17 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [10.x, 12.x, 14.x, 16.x]
-        eslint-version: [6, 7]
+        eslint-version: [6, 7, 8]
         jest-version: [25, 26, 27]
         include:
           # eslint@7 and jest@26 doesn't support node@8
           - node-version: 8.x
             eslint-version: 6
             jest-version: 25
+        exclude:
+          # eslint@8 doesn't support node@10
+          - node-version: 10.x
+            eslint-version: 8
     runs-on: ubuntu-latest
 
     steps:
