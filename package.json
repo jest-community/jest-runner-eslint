@@ -20,7 +20,7 @@
     "watch": "babel src -w --ignore **/*.test.js,integration -d build",
     "prebuild": "rimraf build/",
     "build": "babel src --ignore **/*.test.js,integration -d build",
-    "prepare": "patch-package && yarn build",
+    "prepare": "yarn build",
     "format": "prettier --write \"**/*.js\""
   },
   "dependencies": {
@@ -45,7 +45,6 @@
     "jest": "^25.1 || ^26 || ^27",
     "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "^0.6.4",
-    "patch-package": "^5.1.2",
     "prettier": "1.19.1",
     "rimraf": "^3.0.2",
     "semver": "^6.3.0"
