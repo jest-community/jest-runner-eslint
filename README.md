@@ -217,7 +217,7 @@ jest-runner-eslint maps a lot of ESLint CLI arguments to config options. For exa
 | noInlineConfig                | `false`        | `"noInlineConfig": true`                                                                      |
 | parser                        | `espree`       | `"parser": "flow"`                                                                            |
 | parserOptions                 | `{}`           | `"parserOptions": { "myOption": true }`                                                       |
-| plugin                        | `[]`           | `"plugin": "prettier"` or `"plugin": ["pettier", "other"]`                                    |
+| plugin                        | `[]`           | `"plugin": "prettier"` or `"plugin": ["prettier", "other"]`                                    |
 | quiet                         | `false`        | `"quiet": true`                                                                               |
 | resolvePluginsRelativeTo      | `undefined`    | `"resolvePluginsRelativeTo": "./eslint-config"`                                               |
 | reportUnusedDisableDirectives | `false`        | `"reportUnusedDisableDirectives": true`                                                       |
