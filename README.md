@@ -58,7 +58,7 @@ Please update `testMatch` to match your project folder structure
 
 #### Alongside other runners
 
-It is recommended to use the [`projects`](https://facebook.github.io/jest/docs/en/configuration.html#projects-array-string-projectconfig) configuration option to run multiple Jest runners simultaneously.
+It is recommended to use the [`projects`](https://jestjs.io/docs/configuration#projects-arraystring--projectconfig) configuration option to run multiple Jest runners simultaneously.
 
 If you are using Jest <22.0.5, you can use multiple Jest configuration files and supply the paths to those files in the `projects` option. For example:
 
