@@ -20,9 +20,9 @@ jobs:
       matrix:
         node-version: [10.x, 12.x, 14.x, 16.x]
         eslint-version: [6, 7, 8]
-        jest-version: [25, 26, 27]
+        jest-version: [25, 26, 27, 28]
         include:
-          # eslint@7 and jest@26 doesn't support node@8
+          # eslint@7 and jest@26 don't support node@8
           - node-version: 8.x
             eslint-version: 6
             jest-version: 25
@@ -30,6 +30,9 @@ jobs:
           # eslint@8 doesn't support node@10
           - node-version: 10.x
             eslint-version: 8
+          # jest@28 doesn't support node@10
+          - node-version: 10.x
+            jest-version: 28
     runs-on: ubuntu-latest
 
     steps:
