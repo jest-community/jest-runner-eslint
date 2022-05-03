@@ -14,13 +14,14 @@ jobs:
   test-node:
     name:
       # prettier-ignore
-      Test on Node.js v${{ matrix.node-version }}, eslint v${{ matrix.eslint-version }} and jest v${{ matrix.jest-version }}
+      Test on Node.js v${{ matrix.node-version }}, eslint v${{ matrix.eslint-version }}, jest v${{ matrix.jest-version }}, and jest-watch-typeahead v${{ matrix.jest-watch-typeahead-version }}
     strategy:
       fail-fast: false
       matrix:
         node-version: [10.x, 12.x, 14.x, 16.x]
         eslint-version: [6, 7, 8]
         jest-version: [25, 26, 27, 28]
+        jest-watch-typeahead-version: [0.6, 1]
         include:
           # eslint@7 and jest@26 don't support node@8
           - node-version: 8.x
@@ -33,6 +34,18 @@ jobs:
           # jest@28 doesn't support node@10
           - node-version: 10.x
             jest-version: 28
+          # jest-watch-typeahead@1 doesn't support jest@25
+          - jest-version: 25
+            jest-watch-typeahead-version: 1
+          # jest-watch-typeahead@1 doesn't support jest@26
+          - jest-version: 26
+            jest-watch-typeahead-version: 1
+          # jest-watch-typeahead@0.6 doesn't support jest@27
+          - jest-version: 27
+            jest-watch-typeahead-version: 0.6
+          # jest-watch-typeahead@0.6 doesn't support jest@28
+          - jest-version: 28
+            jest-watch-typeahead-version: 0.6
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +54,7 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install with eslint v${{ matrix.eslint-version }} and jest@${{ matrix.jest-version }}
-        run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }} --ignore-engines
+      - name: install with eslint v${{ matrix.eslint-version }}, jest@${{ matrix.jest-version }}, and jest-watch-typeahead@${{ matrix.jest-watch-typeahead-version }}
+        run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }} jest-watch-typeahead@${{ matrix.jest-watch-typeahead-version }} --ignore-engines
       - name: run tests
         run: yarn test
