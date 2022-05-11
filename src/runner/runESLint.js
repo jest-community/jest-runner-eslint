@@ -84,7 +84,20 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
     return skip({ start, end, test: { path: testPath, title: 'ESLint' } });
   }
 
-  const report = await lintFiles([testPath]);
+  let report;
+  try {
+    report = await lintFiles([testPath]);
+  } catch (e) {
+    return fail({
+      start,
+      end: Date.now(),
+      test: {
+        path: testPath,
+        title: 'ESLint execution error',
+        errorMessage: e.message,
+      }
+    });
+  }
 
   if (cliOptions.fix && !cliOptions.fixDryRun) {
     await ESLintEngine.outputFixes(report);
