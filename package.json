@@ -44,7 +44,7 @@
     "execa": "^3.4.0",
     "jest": "^25.1 || ^26 || ^27 || ^28",
     "jest-watch-select-projects": "^2.0.0",
-    "jest-watch-typeahead": "^1.1.0",
+    "jest-watch-typeahead": "^0.6.4 || ^1.1.0",
     "prettier": "1.19.1",
     "rimraf": "^3.0.2",
     "semver": "^6.3.0"
