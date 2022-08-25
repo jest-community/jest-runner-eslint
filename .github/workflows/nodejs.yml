@@ -58,11 +58,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: yarn
       - name: install with eslint v${{ matrix.eslint-version }}, jest@${{ matrix.jest-version }}, and jest-watch-typeahead@${{ matrix.jest-watch-typeahead-version }}
         run: yarn add --dev eslint@${{ matrix.eslint-version }} jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }} jest-watch-typeahead@${{ matrix.jest-watch-typeahead-version }} --ignore-engines
       - name: run tests
