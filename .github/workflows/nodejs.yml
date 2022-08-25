@@ -18,9 +18,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x]
+        node-version: [10.x, 12.x, 14.x, 16.x, 18.x]
         eslint-version: [6, 7, 8]
-        jest-version: [25, 26, 27, 28]
+        jest-version: [25, 26, 27, 28, 29]
         jest-watch-typeahead-version: [0.6, 1]
         include:
           # eslint@7 and jest@26 don't support node@8
@@ -34,6 +34,12 @@ jobs:
           # jest@28 doesn't support node@10
           - node-version: 10.x
             jest-version: 28
+          # jest@29 doesn't support node@10
+          - node-version: 10.x
+            jest-version: 29
+          # jest@29 doesn't support node@12
+          - node-version: 12.x
+            jest-version: 29
           # jest-watch-typeahead@1 doesn't support jest@25
           - jest-version: 25
             jest-watch-typeahead-version: 1
@@ -45,6 +51,9 @@ jobs:
             jest-watch-typeahead-version: 0.6
           # jest-watch-typeahead@0.6 doesn't support jest@28
           - jest-version: 28
+            jest-watch-typeahead-version: 0.6
+          # jest-watch-typeahead@0.6 doesn't support jest@29
+          - jest-version: 29
             jest-watch-typeahead-version: 0.6
     runs-on: ubuntu-latest
 
