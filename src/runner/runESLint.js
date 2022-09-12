@@ -95,7 +95,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
         path: testPath,
         title: 'ESLint execution error',
         errorMessage: e.message,
-      }
+      },
     });
   }
 

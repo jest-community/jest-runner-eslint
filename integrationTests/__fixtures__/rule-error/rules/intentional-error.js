@@ -11,7 +11,7 @@ module.exports = {
       Identifier(node) {
         const obj = {};
         obj.will.cause.an.error.here;
-      }
-    }
-  }
+      },
+    };
+  },
 };
