@@ -55,6 +55,9 @@ jobs:
           # jest-watch-typeahead@0.6 doesn't support jest@29
           - jest-version: 29
             jest-watch-typeahead-version: 0.6
+          # Modern timers need Jest 29.2.1 on Node 19: https://github.com/facebook/jest/pull/13467
+          - node-version: 19.x
+            jest-version: 28
     runs-on: ubuntu-latest
 
     steps:
