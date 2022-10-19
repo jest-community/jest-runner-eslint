@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x, 18.x]
+        node-version: [10.x, 12.x, 14.x, 16.x, 18.x, 19.x]
         eslint-version: [6, 7, 8]
         jest-version: [25, 26, 27, 28, 29]
         jest-watch-typeahead-version: [0.6, 1]
