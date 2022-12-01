@@ -1,26 +1,26 @@
-const { fail } = require('create-jest-runner');
 const { CLIEngine, ESLint } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
 
 /*
- * This function exists because there are issues with the `pass` and `fail`
- * functions from `create-jest-runner`:
+ * This function exists because there are issues with the `pass`, `skip`, and
+ * `fail` functions from `create-jest-runner`:
  *
- * 1. The `pass` function has a bug in our version of `create-jest-runner` where
- *    calling it will actually pass an `undefined` item in `testResults`, which
- *    causes the GithubActionsReporter to report an empty error message on every
- *    file.  This has been resolved in later versions of `create-jest-runner`,
- *    but upgrading is a breaking change that is incompatible with some node
- *    versions we support.
+ * 1. The `pass` and `skip` functions have a bug in our version of
+ *    `create-jest-runner` where calling them will actually pass an `undefined`
+ *    item in `testResults`, which causes the GithubActionsReporter to report an
+ *    empty error message on every file.  This has been resolved in later
+ *    versions of `create-jest-runner`, but upgrading is a breaking change that
+ *    is incompatible with some node versions we support.
  *
  * 2. The `fail` function in `create-jest-runner` does not support passing
  *    multiple failure messages, which makes it impossible to annotate each
  *    eslint failure.  This has not been resolved, although presumably could be
- *    worked around by using the underlying `toTestResult` function instead.
+ *    worked around by using the underlying `toTestResult` function instead
+ *    (although that function isn't exposed in the public API of that library).
  *
  * TODO At some point, we should put a PR in to `create-jest-runner` to resolve
  * point 2 above, and then should upgrade and remove this function and go back
- * to using `pass` and `fail` from that library instead.
+ * to using `pass`, `skip`, and `fail` from that library instead.
  */
 const mkTestResults = ({
   message,
@@ -29,7 +29,7 @@ const mkTestResults = ({
   numFailingTests,
   numPassingTests,
   testPath,
-  testResults,
+  assertionResults,
 }) => {
   const startTime = new Date(start).getTime();
   const endTime = new Date(end).getTime();
@@ -59,7 +59,7 @@ const mkTestResults = ({
       updated: 0,
     },
     testFilePath: testPath,
-    testResults: testResults.map(result => ({
+    testResults: assertionResults.map(result => ({
       duration: endTime - startTime,
       ancestorTitles: [],
       failureDetails: [],
@@ -73,6 +73,21 @@ const mkTestResults = ({
     })),
   };
 };
+
+const mkAssertionResults = (testPath, report) =>
+  report[0].messages?.map(reportMessage => ({
+    message: [
+      reportMessage.message,
+      `    at ${testPath}:${reportMessage.line}:${reportMessage.column}`,
+    ].join('\n'),
+    fullName: `${reportMessage.line}:${reportMessage.column}: ${reportMessage.message} [${reportMessage.ruleId}]`,
+    location: {
+      column: reportMessage.line,
+      line: reportMessage.column,
+    },
+    status: 'failed',
+    title: reportMessage.ruleId,
+  })) ?? [];
 
 const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   if (fix || fixDryRun) {
@@ -159,7 +174,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
       testPath,
       numFailingTests: 0,
       numPassingTests: 0,
-      testResults: [
+      assertionResults: [
         {
           title: 'ESLint',
           status: 'skipped',
@@ -188,20 +203,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
       testPath,
       numFailingTests: report[0].errorCount,
       numPassingTests: 0,
-      testResults:
-        report[0].messages?.map(reportMessage => ({
-          message: [
-            reportMessage.message,
-            `    at ${testPath}:${reportMessage.line}:${reportMessage.column}`,
-          ].join('\n'),
-          fullName: `${reportMessage.line}:${reportMessage.column}: ${reportMessage.message} [${reportMessage.ruleId}]`,
-          location: {
-            column: reportMessage.line,
-            line: reportMessage.column,
-          },
-          status: 'failed',
-          title: reportMessage.ruleId,
-        })) ?? [],
+      assertionResults: mkAssertionResults(testPath, report),
     });
   }
 
@@ -209,14 +211,14 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
     cliOptions.maxWarnings >= 0 &&
     report[0]?.warningCount > cliOptions.maxWarnings;
   if (tooManyWarnings) {
-    return fail({
+    return mkTestResults({
+      message: `${message}\nESLint found too many warnings (maximum: ${cliOptions.maxWarnings}).`,
       start,
       end,
-      test: {
-        path: testPath,
-        title: 'ESLint',
-        errorMessage: `${message}\nESLint found too many warnings (maximum: ${cliOptions.maxWarnings}).`,
-      },
+      testPath,
+      numFailingTests: 1,
+      numPassingTests: 0,
+      assertionResults: mkAssertionResults(testPath, report),
     });
   }
 
@@ -226,7 +228,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
     testPath,
     numFailingTests: 0,
     numPassingTests: 1,
-    testResults: [
+    assertionResults: [
       {
         title: 'ESLint',
         status: 'passed',

@@ -2,7 +2,9 @@
 
 exports[`Fails if more than max warnings 1`] = `
 "FAIL integrationTests/__fixtures__/max-warnings/__eslint__/file.js
-  ✕ ESLint 
+  ✕ no-console 
+  ✕ no-console 
+  ✕ no-console 
 
 
 /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/max-warnings/__eslint__/file.js
