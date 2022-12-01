@@ -51,6 +51,7 @@ const getCachedValues = (config, extraOptions) => {
       },
       cliOptions: {
         ...cliOptions,
+        format,
         fixDryRun,
         maxWarnings,
         quiet,
@@ -97,11 +98,48 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
   );
 
   if (report[0]?.errorCount > 0) {
-    return fail({
-      start,
-      end,
-      test: { path: testPath, title: 'ESLint', errorMessage: message },
-    });
+    return {
+      failureMessage: message,
+      leaks: false,
+      numFailingTests: report[0].errorCount,
+      numPassingTests: 0,
+      numPendingTests: 0,
+      numTodoTests: 0,
+      openHandles: [],
+      perfStats: {
+        start: new Date(start).getTime(),
+        end: new Date(end).getTime(),
+      },
+      skipped: false,
+      snapshot: {
+        added: 0,
+        fileDeleted: false,
+        matched: 0,
+        unchecked: 0,
+        uncheckedKeys: [],
+        unmatched: 0,
+        updated: 0,
+      },
+      testFilePath: testPath,
+      testResults: await Promise.all(
+        report[0].messages?.map(async reportMessage => ({
+          ancestorTitles: [],
+          duration: end - start,
+          failureMessages: [
+            `${reportMessage.message}\n    at ${testPath}:${reportMessage.line}:${reportMessage.column}`,
+          ],
+          fullName: `${reportMessage.line}:${reportMessage.column}: ${reportMessage.message} [${reportMessage.ruleId}]`,
+          location: {
+            column: reportMessage.line,
+            line: reportMessage.column,
+          },
+          testFilePath: testPath,
+          numPassingAsserts: 1,
+          status: 'failed',
+          title: reportMessage.ruleId,
+        })) ?? [],
+      ),
+    };
   }
 
   const tooManyWarnings =
