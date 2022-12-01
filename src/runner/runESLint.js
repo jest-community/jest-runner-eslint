@@ -121,8 +121,8 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
         updated: 0,
       },
       testFilePath: testPath,
-      testResults: await Promise.all(
-        report[0].messages?.map(async reportMessage => ({
+      testResults:
+        report[0].messages?.map(reportMessage => ({
           ancestorTitles: [],
           duration: end - start,
           failureMessages: [
@@ -138,7 +138,6 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
           status: 'failed',
           title: reportMessage.ruleId,
         })) ?? [],
-      ),
     };
   }
 
