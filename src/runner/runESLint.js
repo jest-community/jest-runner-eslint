@@ -67,7 +67,7 @@ const mkTestResults = ({
       fullName: result.fullName,
       location: result.location,
       testFilePath: testPath,
-      numPassingAsserts: 0,
+      numPassingAsserts: numPassingTests,
       status: result.status,
       title: result.title,
     })),
