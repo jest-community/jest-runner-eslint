@@ -98,6 +98,8 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
   );
 
   if (report[0]?.errorCount > 0) {
+    const startTime = new Date(start).getTime();
+    const endTime = new Date(end).getTime();
     return {
       failureMessage: message,
       leaks: false,
@@ -107,8 +109,10 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
       numTodoTests: 0,
       openHandles: [],
       perfStats: {
-        start: new Date(start).getTime(),
-        end: new Date(end).getTime(),
+        start: startTime,
+        end: endTime,
+        duration: endTime - startTime,
+        slow: false,
       },
       skipped: false,
       snapshot: {
