@@ -6,9 +6,9 @@ const rootDir = path.join(__dirname, '..');
 
 const normalize = output =>
   output
-    .replace(/((✕|✓) .* )\(\d*\.?\d+ m?s\)/g, '$1')
+    .replace(/((✕|✓) .* )\(\d*\.?\d+ ?m?s\)/g, '$1')
     .replace(new RegExp(rootDir, 'g'), '/mocked-path-to-jest-runner-mocha')
-    .replace(/(Time: {8})\d+\.?\d+ m?s/, '$1');
+    .replace(/(Time: {8})\d+\.?\d+ ?m?s/, '$1');
 
 const runJest = (project, options = []) => {
   jest.setTimeout(30000);
