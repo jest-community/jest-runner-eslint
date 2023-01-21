@@ -22,11 +22,6 @@ jobs:
         eslint-version: [6, 7, 8]
         jest-version: [25, 26, 27, 28, 29]
         jest-watch-typeahead-version: [0.6, 1]
-        include:
-          # eslint@7 and jest@26 don't support node@8
-          - node-version: 8.x
-            eslint-version: 6
-            jest-version: 25
         exclude:
           # eslint@8 doesn't support node@10
           - node-version: 10.x
