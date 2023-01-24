@@ -107,7 +107,7 @@ it('Returns "skipped" when the test path is ignored', async () => {
   expect(result).toMatchObject({
     numFailingTests: 0,
     numPassingTests: 0,
-    numPendingTests: 1,
+    numPendingTests: 0,
     skipped: true,
   });
 });

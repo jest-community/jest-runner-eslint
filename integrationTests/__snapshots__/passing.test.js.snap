@@ -2,11 +2,12 @@
 
 exports[`Works when it has only passing tests 1`] = `
 "PASS integrationTests/__fixtures__/passing/__eslint__/file.js
-  ✓ ESLint
+  ✓ ESLint 
+
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:
+Time:        
 Ran all test suites.
 "
 `;

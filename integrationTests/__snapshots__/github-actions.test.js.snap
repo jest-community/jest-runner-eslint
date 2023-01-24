@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports with the github actions reporter 1`] = `
+"
+::error file=/mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/github-actions/__eslint__/failing.js,line=4,title=no-undef::'hello' is not defined.%0A%0A    at __eslint__/failing.js:4:3
+
+::error file=/mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/github-actions/__eslint__/failing.js,line=5,title=no-undef::'bye' is not defined.%0A%0A    at __eslint__/failing.js:5:3
+"
+`;

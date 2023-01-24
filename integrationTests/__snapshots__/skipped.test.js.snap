@@ -2,9 +2,9 @@
 
 exports[`Works when it has failing tests 1`] = `
 "Test Suites: 1 skipped, 0 of 1 total
-Tests:       1 skipped, 1 total
+Tests:       0 total
 Snapshots:   0 total
-Time:
+Time:        
 Ran all test suites.
 "
 `;

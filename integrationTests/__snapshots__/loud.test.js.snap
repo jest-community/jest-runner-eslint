@@ -3,15 +3,20 @@
 exports[`Outputs warnings as console messages 1`] = `
 "PASS integrationTests/__fixtures__/loud/__eslint__/file.js
   ● Console
+
   console.warn
+    
     /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/loud/__eslint__/file.js
       3:1  warning  Unexpected console statement  no-console
+    
     ✖ 1 problem (0 errors, 1 warning)
-  ✓ ESLint
+
+  ✓ ESLint 
+
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:
+Time:        
 Ran all test suites.
 "
 `;
