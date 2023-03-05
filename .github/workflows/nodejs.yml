@@ -23,6 +23,9 @@ jobs:
         jest-version: [27, 28, 29]
         jest-watch-typeahead-version: [1, 2]
         exclude:
+          # jest@29 doesn't support node@12
+          - node-version: 12.x
+            jest-version: 29
           # jest-watch-typeahead@2 doesn't support node@12
           - node-version: 12
             jest-watch-typeahead-version: 2
