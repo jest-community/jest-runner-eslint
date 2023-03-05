@@ -18,43 +18,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x, 18.x, 19.x]
-        eslint-version: [6, 7, 8]
-        jest-version: [25, 26, 27, 28, 29]
-        jest-watch-typeahead-version: [0.6, 1]
-        include:
-          # eslint@7 and jest@26 don't support node@8
-          - node-version: 8.x
-            eslint-version: 6
-            jest-version: 25
+        node-version: [12.x, 14.x, 16.x, 18.x, 19.x]
+        eslint-version: [7, 8]
+        jest-version: [27, 28, 29]
+        jest-watch-typeahead-version: [1, 2]
         exclude:
-          # eslint@8 doesn't support node@10
-          - node-version: 10.x
-            eslint-version: 8
-          # jest@28 doesn't support node@10
-          - node-version: 10.x
-            jest-version: 28
-          # jest@29 doesn't support node@10
-          - node-version: 10.x
-            jest-version: 29
           # jest@29 doesn't support node@12
           - node-version: 12.x
             jest-version: 29
-          # jest-watch-typeahead@1 doesn't support jest@25
-          - jest-version: 25
-            jest-watch-typeahead-version: 1
-          # jest-watch-typeahead@1 doesn't support jest@26
-          - jest-version: 26
-            jest-watch-typeahead-version: 1
-          # jest-watch-typeahead@0.6 doesn't support jest@27
-          - jest-version: 27
-            jest-watch-typeahead-version: 0.6
-          # jest-watch-typeahead@0.6 doesn't support jest@28
-          - jest-version: 28
-            jest-watch-typeahead-version: 0.6
-          # jest-watch-typeahead@0.6 doesn't support jest@29
-          - jest-version: 29
-            jest-watch-typeahead-version: 0.6
+          # jest-watch-typeahead@2 doesn't support node@12
+          - node-version: 12
+            jest-watch-typeahead-version: 2
           # Modern timers need Jest 29.2.1 on Node 19: https://github.com/facebook/jest/pull/13467
           - node-version: 19.x
             jest-version: 28

@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb-base", "prettier"],
+  "extends": ["airbnb-base", "prettier", "prettier/prettier"],
   "plugins": ["prettier", "jest"],
   "parserOptions": {
     "ecmaVersion": 11
@@ -7,13 +7,7 @@
   "rules": {
     "no-underscore-dangle": 0,
     "arrow-body-style": 0,
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "trailingComma": "all"
-      }
-    ]
+    "prettier/prettier": 2
   },
   "env": {
     "jest/globals": true
