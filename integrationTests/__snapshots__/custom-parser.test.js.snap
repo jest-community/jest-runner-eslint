@@ -1,41 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Doesn't override parser when not set [ESLint<6] 1`] = `
-"FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
-  ● Test suite failed to run
-
-    Cannot find module 'this-parser-does-not-exist'
-
-      at ModuleResolver.resolve (../../../node_modules/eslint/lib/util/module-resolver.js:72:19)
-
-Test Suites: 1 failed, 1 total
-Tests:       0 total
-Snapshots:   0 total
-Time:        
-Ran all test suites.
-"
-`;
-
-exports[`Doesn't override parser when not set [ESLint=6] 1`] = `
-"FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
-  ● Test suite failed to run
-
-    Failed to load parser 'this-parser-does-not-exist' declared in 'integrationTests/__fixtures__/custom-parser/.eslintrc.json': Cannot find module 'this-parser-does-not-exist'
-    Require stack:
-    - /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/custom-parser/.eslintrc.json
-
-      at Object.resolve (../../../node_modules/eslint/lib/shared/relative-module-resolver.js:44:50)
-          at _normalizeObjectConfigDataBody.next (<anonymous>)
-          at _normalizeObjectConfigData.next (<anonymous>)
-
-Test Suites: 1 failed, 1 total
-Tests:       0 total
-Snapshots:   0 total
-Time:        
-Ran all test suites.
-"
-`;
-
 exports[`Doesn't override parser when not set [ESLint=7] 1`] = `
 "FAIL __eslint__/file.js
   ● Test suite failed to run
