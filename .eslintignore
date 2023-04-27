@@ -1,5 +1,3 @@
 build/
 **/coverage/
-integrationTests/__fixtures__/skipped/__eslint__/file.js
-integrationTests/__fixtures__/github-actions/__eslint__/skipped.js
 **/node_modules/**

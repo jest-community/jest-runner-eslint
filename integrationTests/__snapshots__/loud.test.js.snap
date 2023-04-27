@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Outputs warnings as console messages 1`] = `
-"PASS integrationTests/__fixtures__/loud/__eslint__/file.js
+"PASS __eslint__/file.js
   ● Console
 
   console.warn

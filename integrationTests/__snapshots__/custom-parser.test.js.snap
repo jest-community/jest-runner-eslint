@@ -57,10 +57,10 @@ Ran all test suites.
 `;
 
 exports[`Doesn't override parser when not set 1`] = `
-"FAIL integrationTests/__fixtures__/custom-parser/__eslint__/file.js
+"FAIL __eslint__/file.js
   ● Test suite failed to run
 
-    Failed to load parser 'this-parser-does-not-exist' declared in 'integrationTests/__fixtures__/custom-parser/.eslintrc.json': Cannot find module 'this-parser-does-not-exist'
+    Failed to load parser 'this-parser-does-not-exist' declared in '.eslintrc.json': Cannot find module 'this-parser-does-not-exist'
     Require stack:
     - /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/custom-parser/.eslintrc.json
 

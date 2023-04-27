@@ -10,18 +10,13 @@ const normalize = output =>
     .replace(new RegExp(rootDir, 'g'), '/mocked-path-to-jest-runner-mocha')
     .replace(/(Time: {8})\d*(\.\d+)? ?m?s/, '$1');
 
-const runJest = (project, options = []) => {
+const runJest = (testDir, options = []) => {
   jest.setTimeout(30000);
   return execa(
     'jest',
-    [
-      '--useStderr',
-      '--no-watchman',
-      '--no-cache',
-      '--projects',
-      path.join(__dirname, '__fixtures__', project),
-    ].concat(options),
+    ['--useStderr', '--no-watchman', '--no-cache'].concat(options),
     {
+      cwd: path.join(__dirname, '__fixtures__', testDir),
       env: { ...process.env, FORCE_COLOR: 0 },
       reject: false,
     },

@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Applies custom formatter 1`] = `
-"FAIL integrationTests/__fixtures__/format/__eslint__/file.js
+"FAIL __eslint__/file.js
   ✕ no-undef 
   ✕ no-undef 
 
-error: 'hello' is not defined (no-undef) at integrationTests/__fixtures__/format/__eslint__/file.js:4:3:
+error: 'hello' is not defined (no-undef) at __eslint__/file.js:4:3:
   2 | 
   3 | if (a === 2) {
 > 4 |   hello();
@@ -15,7 +15,7 @@ error: 'hello' is not defined (no-undef) at integrationTests/__fixtures__/format
   7 | 
 
 
-error: 'bye' is not defined (no-undef) at integrationTests/__fixtures__/format/__eslint__/file.js:5:3:
+error: 'bye' is not defined (no-undef) at __eslint__/file.js:5:3:
   3 | if (a === 2) {
   4 |   hello();
 > 5 |   bye();
