@@ -1,33 +1,28 @@
 /* eslint-disable class-methods-use-this, global-require */
 const path = require('path');
 
-const runESLintRunnerWithMockedEngine = options => {
+const runESLintRunnerWithMockedEngine = ({ mockOptions, runESLintOptions }) => {
   jest.resetModules();
   jest.doMock('eslint', () => ({
-    CLIEngine: class {
+    ESLint: class {
       isPathIgnored(file) {
-        return options.cliEngine.ignoredFiles.includes(file);
+        return mockOptions.ignoredFiles.includes(file);
       }
 
-      executeOnFiles() {
-        return {
-          results:
-            options.cliEngine.errorCount > 0
-              ? [{ errorCount: options.cliEngine.errorCount, warningCount: 0 }]
-              : [],
-          errorCount: options.cliEngine.errorCount,
-          warningCount: 0,
-        };
+      lintFiles() {
+        return mockOptions.errorCount > 0
+          ? [{ errorCount: mockOptions.errorCount, warningCount: 0 }]
+          : [];
       }
 
-      getFormatter() {
-        return () => {};
+      loadFormatter() {
+        return Promise.resolve({ format() {} });
       }
     },
   }));
   const runESLint = require('../runESLint');
 
-  return runESLint({ extraOptions: {}, ...options.runESLint });
+  return runESLint({ extraOptions: {}, ...runESLintOptions });
 };
 
 it('Requires the config setupTestFrameworkScriptFile when specified', async () => {
@@ -43,11 +38,11 @@ it('Requires the config setupTestFrameworkScriptFile when specified', async () =
   );
 
   await runESLintRunnerWithMockedEngine({
-    cliEngine: {
+    mockOptions: {
       ignoredFiles: ['/path/to/file.test.js'],
       errorCount: 0,
     },
-    runESLint: {
+    runESLintOptions: {
       testPath: 'path/to/file.test.js',
       config: {
         setupTestFrameworkScriptFile: setupFile,
@@ -77,11 +72,11 @@ it('Requires the config setupFilesAfterEnv when specified', async () => {
   });
 
   await runESLintRunnerWithMockedEngine({
-    cliEngine: {
+    mockOptions: {
       ignoredFiles: ['/path/to/file.test.js'],
       errorCount: 0,
     },
-    runESLint: {
+    runESLintOptions: {
       testPath: 'path/to/file.test.js',
       config: {
         setupFilesAfterEnv: setupFiles,
@@ -94,11 +89,11 @@ it('Requires the config setupFilesAfterEnv when specified', async () => {
 
 it('Returns "skipped" when the test path is ignored', async () => {
   const result = await runESLintRunnerWithMockedEngine({
-    cliEngine: {
+    mockOptions: {
       ignoredFiles: ['/path/to/file.test.js'],
       errorCount: 0,
     },
-    runESLint: {
+    runESLintOptions: {
       testPath: '/path/to/file.test.js',
       config: {},
     },
@@ -114,11 +109,11 @@ it('Returns "skipped" when the test path is ignored', async () => {
 
 it('Returns "passed" when the test passed', async () => {
   const result = await runESLintRunnerWithMockedEngine({
-    cliEngine: {
+    mockOptions: {
       ignoredFiles: [],
       errorCount: 0,
     },
-    runESLint: {
+    runESLintOptions: {
       testPath: '/path/to/file.test.js',
       config: {},
     },
@@ -133,11 +128,11 @@ it('Returns "passed" when the test passed', async () => {
 
 it('Returns "fail" when the test failed', async () => {
   const result = await runESLintRunnerWithMockedEngine({
-    cliEngine: {
+    mockOptions: {
       ignoredFiles: [],
       errorCount: 1,
     },
-    runESLint: {
+    runESLintOptions: {
       testPath: '/path/to/file.test.js',
       config: {},
     },

@@ -1,4 +1,4 @@
-const { CLIEngine, ESLint } = require('eslint');
+const { ESLint } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
 
 /*
@@ -96,13 +96,10 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
-const ESLintEngine = ESLint || CLIEngine;
-
 let cachedValues;
 const getCachedValues = (config, extraOptions) => {
   if (!cachedValues) {
-    const useEngine = ESLint == null;
-    const { cliOptions: baseCliOptions } = getESLintOptions(config, !useEngine);
+    const { cliOptions: baseCliOptions } = getESLintOptions(config);
     const cliOptions = {
       ...baseCliOptions,
       fix: getComputedFixValue(baseCliOptions),
@@ -110,39 +107,19 @@ const getCachedValues = (config, extraOptions) => {
     };
 
     // these are not constructor args, so remove them
-    const { fixDryRun, format, maxWarnings, quiet } = cliOptions;
-    delete cliOptions.fixDryRun;
-    delete cliOptions.format;
-    delete cliOptions.maxWarnings;
-    delete cliOptions.quiet;
+    const { fixDryRun, format, maxWarnings, quiet, ...eslintOptions } =
+      cliOptions;
 
-    const cli = useEngine ? new CLIEngine(cliOptions) : new ESLint(cliOptions);
+    const cli = new ESLint(eslintOptions);
 
     cachedValues = {
       isPathIgnored: cli.isPathIgnored.bind(cli),
-      lintFiles: (...args) => {
-        if (useEngine) {
-          return cli.executeOnFiles(...args).results;
-        }
-
-        return cli.lintFiles(...args);
-      },
+      lintFiles: (...args) => cli.lintFiles(...args),
       formatter: async (...args) => {
-        if (useEngine) {
-          return cli.getFormatter(format)(...args);
-        }
-
         const formatter = await cli.loadFormatter(format);
-
         return formatter.format(...args);
       },
-      cliOptions: {
-        ...cliOptions,
-        format,
-        fixDryRun,
-        maxWarnings,
-        quiet,
-      },
+      cliOptions,
     };
   }
 
@@ -186,13 +163,13 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
   const report = await lintFiles([testPath]);
 
   if (cliOptions.fix && !cliOptions.fixDryRun) {
-    await ESLintEngine.outputFixes(report);
+    await ESLint.outputFixes(report);
   }
 
   const end = Date.now();
 
   const message = await formatter(
-    cliOptions.quiet ? ESLintEngine.getErrorResults(report) : report,
+    cliOptions.quiet ? ESLint.getErrorResults(report) : report,
   );
 
   if (report[0]?.errorCount > 0) {

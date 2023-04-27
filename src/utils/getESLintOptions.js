@@ -3,14 +3,14 @@ const normalizeConfig = require('./normalizeConfig');
 
 const explorer = cosmiconfigSync('jest-runner-eslint');
 
-const getESLintOptions = (config, newApi) => {
+const getESLintOptions = config => {
   const result = explorer.search(config.rootDir);
 
   if (result) {
-    return normalizeConfig(result.config, newApi);
+    return normalizeConfig(result.config);
   }
 
-  return normalizeConfig({}, newApi);
+  return normalizeConfig({});
 };
 
 module.exports = getESLintOptions;
