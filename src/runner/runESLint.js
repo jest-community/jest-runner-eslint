@@ -1,6 +1,32 @@
 const { ESLint } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
 
+let FlatESLint;
+let shouldUseFlatConfig;
+
+try {
+  // Use a dynamic require here rather than a global require because this
+  // import path does not exist in eslint v7 which this library still
+  // supports
+  //
+  // ESlint exposes the new FlatESLint API under `eslint/use-at-your-own-risk` by
+  // using it's [export configuration](https://tinyurl.com/2s45zh9b).  However,
+  // the `import/no-unresolved` rule is [not aware of
+  // `exports`](https://tinyurl.com/469djpx3) and causes a false error here.  So,
+  // let's ignore that rule for this import.
+  //
+  // eslint-disable-next-line global-require, import/no-unresolved
+  const eslintExperimental = require('eslint/use-at-your-own-risk');
+  FlatESLint = eslintExperimental.FlatESLint;
+  shouldUseFlatConfig = eslintExperimental.shouldUseFlatConfig;
+} catch {
+  /* no-op */
+}
+
+if (shouldUseFlatConfig === undefined) {
+  shouldUseFlatConfig = () => Promise.resolve(false);
+}
+
 /*
  * This function exists because there are issues with the `pass`, `skip`, and
  * `fail` functions from `create-jest-runner`:
@@ -96,8 +122,41 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
+const getESLintConstructor = async () => {
+  if (await shouldUseFlatConfig()) {
+    return FlatESLint;
+  }
+
+  return ESLint;
+};
+
+// Remove options that are not constructor args.
+const getESLintConstructorArgs = async cliOptions => {
+  // these are not constructor args for either the legacy or the flat ESLint
+  // api
+  const { fixDryRun, format, maxWarnings, quiet, ...legacyConstructorArgs } =
+    cliOptions;
+
+  if (await shouldUseFlatConfig()) {
+    // these options are supported by the legacy ESLint api but aren't
+    // supported by the ESLintFlat api
+    const {
+      extensions,
+      ignorePath,
+      rulePaths,
+      resolvePluginsRelativeTo,
+      useEslintrc,
+      overrideConfig,
+      ...flatConstructorArgs
+    } = legacyConstructorArgs;
+    return flatConstructorArgs;
+  }
+
+  return legacyConstructorArgs;
+};
+
 let cachedValues;
-const getCachedValues = (config, extraOptions) => {
+const getCachedValues = async (config, extraOptions) => {
   if (!cachedValues) {
     const { cliOptions: baseCliOptions } = getESLintOptions(config);
     const cliOptions = {
@@ -106,20 +165,20 @@ const getCachedValues = (config, extraOptions) => {
       ...extraOptions,
     };
 
-    // these are not constructor args, so remove them
-    const { fixDryRun, format, maxWarnings, quiet, ...eslintOptions } =
-      cliOptions;
-
-    const cli = new ESLint(eslintOptions);
+    const ESLintConstructor = await getESLintConstructor();
+    const cli = new ESLintConstructor(
+      await getESLintConstructorArgs(cliOptions),
+    );
 
     cachedValues = {
       isPathIgnored: cli.isPathIgnored.bind(cli),
       lintFiles: (...args) => cli.lintFiles(...args),
       formatter: async (...args) => {
-        const formatter = await cli.loadFormatter(format);
+        const formatter = await cli.loadFormatter(cliOptions.format);
         return formatter.format(...args);
       },
       cliOptions,
+      ESLintConstructor,
     };
   }
 
@@ -139,10 +198,8 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
     config.setupFilesAfterEnv.forEach(require);
   }
 
-  const { isPathIgnored, lintFiles, formatter, cliOptions } = getCachedValues(
-    config,
-    extraOptions,
-  );
+  const { isPathIgnored, lintFiles, formatter, cliOptions, ESLintConstructor } =
+    await getCachedValues(config, extraOptions);
 
   if (await isPathIgnored(testPath)) {
     return mkTestResults({
@@ -163,13 +220,13 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
   const report = await lintFiles([testPath]);
 
   if (cliOptions.fix && !cliOptions.fixDryRun) {
-    await ESLint.outputFixes(report);
+    await ESLintConstructor.outputFixes(report);
   }
 
   const end = Date.now();
 
   const message = await formatter(
-    cliOptions.quiet ? ESLint.getErrorResults(report) : report,
+    cliOptions.quiet ? ESLintConstructor.getErrorResults(report) : report,
   );
 
   if (report[0]?.errorCount > 0) {
