@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Works with the new flat config format 1`] = `
+"FAIL __eslint__/file.js
+  ✕ no-console 
+
+
+/mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/flat-config/__eslint__/file.js
+  3:1  error  Unexpected console statement  no-console
+
+✖ 1 problem (1 error, 0 warnings)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        
+Ran all test suites.
+"
+`;
