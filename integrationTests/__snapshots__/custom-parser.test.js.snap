@@ -28,7 +28,7 @@ exports[`Doesn't override parser when not set 1`] = `
     Require stack:
     - /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/custom-parser/.eslintrc.json
 
-      at Object.resolve (../../../node_modules/@eslint/eslintrc/dist/eslintrc.cjs:2325:46)
+      at Object.resolve (../../../node_modules/@eslint/eslintrc/dist/eslintrc.cjs:2337:46)
           at _normalizeObjectConfigDataBody.next (<anonymous>)
           at _normalizeObjectConfigData.next (<anonymous>)
 
