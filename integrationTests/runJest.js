@@ -1,6 +1,6 @@
+const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const execa = require('execa');
-const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
 
