@@ -24,8 +24,7 @@ const runESLintRunnerWithMockedEngine = ({
       }
 
       // eslint-disable-next-line no-unused-vars
-      static outputFixes(report) {
-        return Promise.resolve();
+      async static outputFixes(report) {
       }
     },
   }));
