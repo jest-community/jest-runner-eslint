@@ -122,6 +122,15 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
+const removeUndefinedFromObject = object => {
+  return Object.keys(object).forEach(v => {
+    if (object[v] === undefined) {
+      // eslint-disable-next-line no-param-reassign
+      delete object[v];
+    }
+  });
+};
+
 const getESLintConstructor = async () => {
   if (await shouldUseFlatConfig()) {
     return FlatESLint;
@@ -162,7 +171,7 @@ const getCachedValues = async (config, extraOptions) => {
     const cliOptions = {
       ...baseCliOptions,
       fix: getComputedFixValue(baseCliOptions),
-      ...extraOptions,
+      ...removeUndefinedFromObject(extraOptions),
     };
 
     const ESLintConstructor = await getESLintConstructor();
