@@ -122,13 +122,8 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   return undefined;
 };
 
-const removeUndefinedFromObject = object => {
-  return Object.keys(object).forEach(v => {
-    if (object[v] === undefined) {
-      // eslint-disable-next-line no-param-reassign
-      delete object[v];
-    }
-  });
+function removeUndefinedFromObject(object) {
+  return Object.fromEntries(Object.entries(object).filter(([, value]) => typeof value !== 'undefined'));
 };
 
 const getESLintConstructor = async () => {
