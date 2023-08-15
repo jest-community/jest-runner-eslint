@@ -123,8 +123,10 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
 };
 
 function removeUndefinedFromObject(object) {
-  return Object.fromEntries(Object.entries(object).filter(([, value]) => typeof value !== 'undefined'));
-};
+  return Object.fromEntries(
+    Object.entries(object).filter(([, value]) => typeof value !== 'undefined'),
+  );
+}
 
 const getESLintConstructor = async () => {
   if (await shouldUseFlatConfig()) {
