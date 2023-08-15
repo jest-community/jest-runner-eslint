@@ -24,8 +24,7 @@ const runESLintRunnerWithMockedEngine = ({
       }
 
       // eslint-disable-next-line no-unused-vars
-      async static outputFixes(report) {
-      }
+      static outputFixes(report) {}
     },
   }));
   const runESLint = require('../runESLint');
