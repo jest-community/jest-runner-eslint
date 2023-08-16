@@ -56,6 +56,7 @@ const mkTestResults = ({
   numPassingTests,
   testPath,
   assertionResults,
+  cliOptions,
 }) => {
   const startTime = new Date(start).getTime();
   const endTime = new Date(end).getTime();
@@ -97,6 +98,7 @@ const mkTestResults = ({
       status: result.status,
       title: result.title,
     })),
+    cliOptions,
   };
 };
 
@@ -121,6 +123,12 @@ const getComputedFixValue = ({ fix, quiet, fixDryRun }) => {
   }
   return undefined;
 };
+
+function removeUndefinedFromObject(object) {
+  return Object.fromEntries(
+    Object.entries(object).filter(([, value]) => typeof value !== 'undefined'),
+  );
+}
 
 const getESLintConstructor = async () => {
   if (await shouldUseFlatConfig()) {
@@ -162,7 +170,7 @@ const getCachedValues = async (config, extraOptions) => {
     const cliOptions = {
       ...baseCliOptions,
       fix: getComputedFixValue(baseCliOptions),
-      ...extraOptions,
+      ...removeUndefinedFromObject(extraOptions),
     };
 
     const ESLintConstructor = await getESLintConstructor();
@@ -238,6 +246,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
       numFailingTests: report[0].errorCount,
       numPassingTests: 0,
       assertionResults: mkAssertionResults(testPath, report),
+      cliOptions,
     });
   }
 
@@ -253,6 +262,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
       numFailingTests: 1,
       numPassingTests: 0,
       assertionResults: mkAssertionResults(testPath, report),
+      cliOptions,
     });
   }
 
@@ -268,6 +278,7 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
         status: 'passed',
       },
     ],
+    cliOptions,
   });
 
   if (!cliOptions.quiet && report[0]?.warningCount > 0) {

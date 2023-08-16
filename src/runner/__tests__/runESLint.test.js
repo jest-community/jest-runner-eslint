@@ -1,7 +1,11 @@
 /* eslint-disable class-methods-use-this, global-require */
 const path = require('path');
 
-const runESLintRunnerWithMockedEngine = ({ mockOptions, runESLintOptions }) => {
+const runESLintRunnerWithMockedEngine = ({
+  mockOptions,
+  runESLintOptions,
+  extraOptions,
+}) => {
   jest.resetModules();
   jest.doMock('eslint', () => ({
     ESLint: class {
@@ -18,11 +22,14 @@ const runESLintRunnerWithMockedEngine = ({ mockOptions, runESLintOptions }) => {
       loadFormatter() {
         return Promise.resolve({ format() {} });
       }
+
+      // eslint-disable-next-line no-unused-vars
+      static outputFixes(report) {}
     },
   }));
   const runESLint = require('../runESLint');
 
-  return runESLint({ extraOptions: {}, ...runESLintOptions });
+  return runESLint({ extraOptions: extraOptions || {}, ...runESLintOptions });
 };
 
 it('Requires the config setupTestFrameworkScriptFile when specified', async () => {
@@ -143,4 +150,22 @@ it('Returns "fail" when the test failed', async () => {
     numPassingTests: 0,
     numPendingTests: 0,
   });
+});
+
+it('Not to be override by undefined in extraOptions', async () => {
+  const result = await runESLintRunnerWithMockedEngine({
+    mockOptions: {
+      ignoredFiles: [],
+      errorCount: 0,
+    },
+    runESLintOptions: {
+      testPath: '/path/to/file.test.js',
+      config: {},
+    },
+    extraOptions: {
+      fix: true,
+    },
+  });
+
+  expect(result.cliOptions.fix).toBeTruthy();
 });
