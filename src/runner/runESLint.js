@@ -73,6 +73,7 @@ const mkTestResults = ({
       start: startTime,
       end: endTime,
       duration: endTime - startTime,
+      runtime: endTime - startTime,
       slow: false,
     },
     skipped: numPassingTests === 0 && numFailingTests === 0,
