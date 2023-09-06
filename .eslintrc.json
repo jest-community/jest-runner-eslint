@@ -5,9 +5,7 @@
     "ecmaVersion": 11
   },
   "rules": {
-    "no-underscore-dangle": 0,
-    "arrow-body-style": 0,
-    "prettier/prettier": 2
+    "no-underscore-dangle": 0
   },
   "env": {
     "jest/globals": true
