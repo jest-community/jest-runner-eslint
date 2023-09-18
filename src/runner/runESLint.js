@@ -234,19 +234,20 @@ const runESLint = async ({ testPath, config, extraOptions }) => {
 
   const end = Date.now();
 
-  const message = await formatter(
-    cliOptions.quiet ? ESLintConstructor.getErrorResults(report) : report,
-  );
+  const eslintReport = cliOptions.quiet
+    ? ESLintConstructor.getErrorResults(report)
+    : report;
+  const message = await formatter(eslintReport);
 
-  if (report[0]?.errorCount > 0) {
+  if (eslintReport[0]?.errorCount > 0) {
     return mkTestResults({
       message,
       start,
       end,
       testPath,
-      numFailingTests: report[0].errorCount,
+      numFailingTests: eslintReport[0].errorCount,
       numPassingTests: 0,
-      assertionResults: mkAssertionResults(testPath, report),
+      assertionResults: mkAssertionResults(testPath, eslintReport),
       cliOptions,
     });
   }
