@@ -1,16 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Works when it has failing tests 1`] = `
-"FAIL integrationTests/__fixtures__/failing/__eslint__/file.js
-  ✕ ESLint
+"FAIL __eslint__/file.js
+  ✕ no-undef 
+  ✕ no-undef 
+
+
 /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/failing/__eslint__/file.js
   4:3  error  'hello' is not defined  no-undef
   5:3  error  'bye' is not defined    no-undef
+
 ✖ 2 problems (2 errors, 0 warnings)
+
 Test Suites: 1 failed, 1 total
-Tests:       1 failed, 1 total
+Tests:       2 failed, 2 total
 Snapshots:   0 total
-Time:
+Time:        
 Ran all test suites.
 "
 `;

@@ -1,26 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Applies custom formatter 1`] = `
-"FAIL integrationTests/__fixtures__/format/__eslint__/file.js
-  ✕ ESLint
-      at mocked-stack-trace  2 |
+"FAIL __eslint__/file.js
+  ✕ no-undef 
+  ✕ no-undef 
+
+error: 'hello' is not defined (no-undef) at __eslint__/file.js:4:3:
+  2 | 
   3 | if (a === 2) {
 > 4 |   hello();
     |   ^
   5 |   bye();
   6 | }
-  7 |
-mocked-stack-trace  3 | if (a === 2) {
+  7 | 
+
+
+error: 'bye' is not defined (no-undef) at __eslint__/file.js:5:3:
+  3 | if (a === 2) {
   4 |   hello();
 > 5 |   bye();
     |   ^
   6 | }
-  7 |
+  7 | 
+
+
 2 errors found.
 Test Suites: 1 failed, 1 total
-Tests:       1 failed, 1 total
+Tests:       2 failed, 2 total
 Snapshots:   0 total
-Time:
+Time:        
 Ran all test suites.
 "
 `;

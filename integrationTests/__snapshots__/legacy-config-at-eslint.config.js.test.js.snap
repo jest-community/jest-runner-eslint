@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Outputs warnings as console messages 1`] = `
+exports[`Does not try to use flat config on eslint versions that don't support it 1`] = `
 "PASS __eslint__/file.js
   ● Console
 
   console.warn
     
-    /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/loud/__eslint__/file.js
+    /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/legacy-config-at-eslint.config.js/__eslint__/file.js
       3:1  warning  Unexpected console statement  no-console
     
     ✖ 1 problem (0 errors, 1 warning)

@@ -37,25 +37,31 @@ it('normalizes cacheLocation', () => {
 
 it('normalizes config', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    configFile: null,
+    overrideConfigFile: null,
   });
 
   expect(normalizeCLIOptions({ config: '/path/to/config' })).toMatchObject({
-    configFile: '/path/to/config',
+    overrideConfigFile: '/path/to/config',
   });
 });
 
 it('normalizes env', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    envs: [],
+    overrideConfig: {
+      env: {},
+    },
   });
 
   expect(normalizeCLIOptions({ env: 'mocha' })).toMatchObject({
-    envs: ['mocha'],
+    overrideConfig: {
+      env: 'mocha',
+    },
   });
 
   expect(normalizeCLIOptions({ env: ['mocha', 'browser'] })).toMatchObject({
-    envs: ['mocha', 'browser'],
+    overrideConfig: {
+      env: ['mocha', 'browser'],
+    },
   });
 });
 
@@ -85,15 +91,21 @@ it('normalizes fix', () => {
 
 it('normalizes global', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    globals: [],
+    overrideConfig: {
+      globals: {},
+    },
   });
 
   expect(normalizeCLIOptions({ global: 'it' })).toMatchObject({
-    globals: ['it'],
+    overrideConfig: {
+      globals: 'it',
+    },
   });
 
   expect(normalizeCLIOptions({ global: ['it', 'describe'] })).toMatchObject({
-    globals: ['it', 'describe'],
+    overrideConfig: {
+      globals: ['it', 'describe'],
+    },
   });
 });
 
@@ -133,37 +145,51 @@ it('normalizes ignorePath', () => {
 
 it('normalizes parser', () => {
   expect(normalizeCLIOptions({})).not.toMatchObject({
-    parser: 'espree',
+    overrideConfig: {
+      parser: 'espree',
+    },
   });
 
   expect(normalizeCLIOptions({ parser: 'flow' })).toMatchObject({
-    parser: 'flow',
+    overrideConfig: {
+      parser: 'flow',
+    },
   });
 });
 
 it('normalizes parserOptions', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    parserOptions: {},
+    overrideConfig: {
+      parserOptions: {},
+    },
   });
 
   expect(
     normalizeCLIOptions({ parserOptions: { ecmaVersion: 2015 } }),
   ).toMatchObject({
-    parserOptions: { ecmaVersion: 2015 },
+    overrideConfig: {
+      parserOptions: { ecmaVersion: 2015 },
+    },
   });
 });
 
 it('normalizes plugin', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    plugins: [],
+    overrideConfig: {
+      plugins: [],
+    },
   });
 
   expect(normalizeCLIOptions({ plugin: 'prettier' })).toMatchObject({
-    plugins: ['prettier'],
+    overrideConfig: {
+      plugins: ['prettier'],
+    },
   });
 
   expect(normalizeCLIOptions({ plugin: ['prettier'] })).toMatchObject({
-    plugins: ['prettier'],
+    overrideConfig: {
+      plugins: ['prettier'],
+    },
   });
 });
 
@@ -185,13 +211,17 @@ it('normalizes rulesdir', () => {
 
 it('normalizes rules', () => {
   expect(normalizeCLIOptions({})).toMatchObject({
-    rules: {},
+    overrideConfig: {
+      rules: {},
+    },
   });
 
   const ruleOptions = { quotes: [2, 'double'], 'no-console': 2 };
 
   expect(normalizeCLIOptions({ rules: ruleOptions })).toMatchObject({
-    rules: ruleOptions,
+    overrideConfig: {
+      rules: ruleOptions,
+    },
   });
 });
 

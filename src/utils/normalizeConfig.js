@@ -14,21 +14,12 @@ const asInt = v => {
   return int;
 };
 
-const OLD_BASE_CONFIG = {
+const BASE_CONFIG = {
   cache: {
     default: false,
   },
   cacheLocation: {
     default: '.eslintcache',
-  },
-  config: {
-    name: 'configFile',
-    default: null,
-  },
-  env: {
-    name: 'envs',
-    default: [],
-    transform: asArray,
   },
   ext: {
     name: 'extensions',
@@ -44,17 +35,8 @@ const OLD_BASE_CONFIG = {
   format: {
     default: undefined,
   },
-  global: {
-    name: 'globals',
-    default: [],
-    transform: asArray,
-  },
   ignorePath: {
     default: null,
-  },
-  ignorePattern: {
-    default: [],
-    transform: asArray,
   },
   maxWarnings: {
     default: -1,
@@ -75,38 +57,17 @@ const OLD_BASE_CONFIG = {
     default: false,
     transform: negate,
   },
-  parser: {
-    default: null,
-  },
-  parserOptions: {
-    default: {},
-  },
-  plugin: {
-    name: 'plugins',
-    default: [],
-    transform: asArray,
-  },
   quiet: {
-    default: false,
-  },
-  reportUnusedDisableDirectives: {
     default: false,
   },
   resolvePluginsRelativeTo: {
     default: undefined,
-  },
-  rules: {
-    default: {},
   },
   rulesdir: {
     name: 'rulePaths',
     default: [],
     transform: asArray,
   },
-};
-
-const BASE_CONFIG = {
-  ...OLD_BASE_CONFIG,
   config: {
     name: 'overrideConfigFile',
     default: null,
@@ -146,15 +107,13 @@ const BASE_CONFIG = {
   },
 };
 
-/* eslint-disable no-param-reassign */
-const normalizeCliOptions = (rawConfig, newApi) => {
-  const configToUse = newApi ? BASE_CONFIG : OLD_BASE_CONFIG;
-  return Object.keys(configToUse).reduce((config, key) => {
+const normalizeCliOptions = rawConfig => {
+  return Object.keys(BASE_CONFIG).reduce((config, key) => {
     const {
       name = key,
       transform = identity,
       default: defaultValue,
-    } = configToUse[key];
+    } = BASE_CONFIG[key];
 
     const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
@@ -163,12 +122,11 @@ const normalizeCliOptions = (rawConfig, newApi) => {
     return config;
   }, {});
 };
-/* eslint-enable no-param-reassign */
 
-const normalizeConfig = (config, newApi) => {
+const normalizeConfig = config => {
   return {
     ...config,
-    cliOptions: normalizeCliOptions(config.cliOptions || {}, newApi),
+    cliOptions: normalizeCliOptions(config.cliOptions || {}),
   };
 };
 
