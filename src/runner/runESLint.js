@@ -1,31 +1,5 @@
-const { ESLint } = require('eslint');
+const { ESLint, loadESLint } = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
-
-let FlatESLint;
-let shouldUseFlatConfig;
-
-try {
-  // Use a dynamic require here rather than a global require because this
-  // import path does not exist in eslint v7 which this library still
-  // supports
-  //
-  // ESlint exposes the new FlatESLint API under `eslint/use-at-your-own-risk` by
-  // using it's [export configuration](https://tinyurl.com/2s45zh9b).  However,
-  // the `import/no-unresolved` rule is [not aware of
-  // `exports`](https://tinyurl.com/469djpx3) and causes a false error here.  So,
-  // let's ignore that rule for this import.
-  //
-  // eslint-disable-next-line global-require, import/no-unresolved
-  const eslintExperimental = require('eslint/use-at-your-own-risk');
-  FlatESLint = eslintExperimental.FlatESLint;
-  shouldUseFlatConfig = eslintExperimental.shouldUseFlatConfig;
-} catch {
-  /* no-op */
-}
-
-if (shouldUseFlatConfig === undefined) {
-  shouldUseFlatConfig = () => Promise.resolve(false);
-}
 
 /*
  * This function exists because there are issues with the `pass`, `skip`, and
@@ -131,53 +105,26 @@ function removeUndefinedFromObject(object) {
   );
 }
 
-const getESLintConstructor = async () => {
-  if (await shouldUseFlatConfig()) {
-    return FlatESLint;
-  }
-
-  return ESLint;
-};
-
-// Remove options that are not constructor args.
-const getESLintConstructorArgs = async cliOptions => {
-  // these are not constructor args for either the legacy or the flat ESLint
-  // api
-  const { fixDryRun, format, maxWarnings, quiet, ...legacyConstructorArgs } =
-    cliOptions;
-
-  if (await shouldUseFlatConfig()) {
-    // these options are supported by the legacy ESLint api but aren't
-    // supported by the ESLintFlat api
-    const {
-      extensions,
-      ignorePath,
-      rulePaths,
-      resolvePluginsRelativeTo,
-      useEslintrc,
-      overrideConfig,
-      ...flatConstructorArgs
-    } = legacyConstructorArgs;
-    return flatConstructorArgs;
-  }
-
-  return legacyConstructorArgs;
-};
-
 let cachedValues;
 const getCachedValues = async (config, extraOptions) => {
   if (!cachedValues) {
-    const { cliOptions: baseCliOptions } = getESLintOptions(config);
+    const ESLintConstructor = (await loadESLint?.()) ?? ESLint;
+
+    const { cliOptions: baseCliOptions } = getESLintOptions(
+      ESLintConstructor.configType,
+      config,
+    );
     const cliOptions = {
       ...baseCliOptions,
       fix: getComputedFixValue(baseCliOptions),
       ...removeUndefinedFromObject(extraOptions),
     };
 
-    const ESLintConstructor = await getESLintConstructor();
-    const cli = new ESLintConstructor(
-      await getESLintConstructorArgs(cliOptions),
-    );
+    // Remove options that are not constructor args.
+    const { fixDryRun, format, maxWarnings, quiet, ...constructorArgs } =
+      cliOptions;
+
+    const cli = new ESLintConstructor(constructorArgs);
 
     cachedValues = {
       isPathIgnored: cli.isPathIgnored.bind(cli),
