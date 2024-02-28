@@ -1,5 +1,26 @@
-const { ESLint, loadESLint } = require('eslint');
+const eslint = require('eslint');
 const getESLintOptions = require('../utils/getESLintOptions');
+
+const { ESLint } = eslint;
+let { loadESLint } = eslint;
+
+// loadESLint and ESLint.configType were added in eslint v8.57.0.  The block
+// below is some compat code to make this library work with flat config and
+// versions of eslint prior to 8.57.0.
+if (!loadESLint) {
+  try {
+    const {
+      FlatESLint,
+      shouldUseFlatConfig,
+      // eslint-disable-next-line global-require, import/no-unresolved
+    } = require('eslint/use-at-your-own-risk');
+    FlatESLint.configType = 'flat';
+    loadESLint = async () =>
+      (await shouldUseFlatConfig?.()) ? FlatESLint : ESLint;
+  } catch {
+    /* no-op */
+  }
+}
 
 /*
  * This function exists because there are issues with the `pass`, `skip`, and
