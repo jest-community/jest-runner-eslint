@@ -30,6 +30,8 @@ jobs:
           - node-version: 12
             jest-watch-typeahead-version: 2
           # Modern timers need Jest 29.2.1 on Node 19+: https://github.com/facebook/jest/pull/13467
+          - node-version: 18.x
+            jest-version: 28
           - node-version: 19.x
             jest-version: 28
           - node-version: 20.x
