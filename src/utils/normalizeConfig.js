@@ -21,11 +21,6 @@ const BASE_CONFIG = {
   cacheLocation: {
     default: '.eslintcache',
   },
-  ext: {
-    name: 'extensions',
-    default: ['.js'],
-    transform: asArray,
-  },
   fix: {
     default: false,
   },
@@ -35,17 +30,9 @@ const BASE_CONFIG = {
   format: {
     default: undefined,
   },
-  ignorePath: {
-    default: null,
-  },
   maxWarnings: {
     default: -1,
     transform: asInt,
-  },
-  noEslintrc: {
-    name: 'useEslintrc',
-    default: false,
-    transform: negate,
   },
   noIgnore: {
     name: 'ignore',
@@ -60,16 +47,36 @@ const BASE_CONFIG = {
   quiet: {
     default: false,
   },
-  resolvePluginsRelativeTo: {
-    default: undefined,
+  config: {
+    name: 'overrideConfigFile',
+    default: null,
+  },
+};
+
+const LEGACY_CONFIG = {
+  ...BASE_CONFIG,
+  ext: {
+    name: 'extensions',
+    default: ['.js'],
+    transform: asArray,
+  },
+  ignorePath: {
+    default: null,
   },
   rulesdir: {
     name: 'rulePaths',
     default: [],
     transform: asArray,
   },
-  config: {
-    name: 'overrideConfigFile',
+  resolvePluginsRelativeTo: {
+    default: undefined,
+  },
+  noEslintrc: {
+    name: 'useEslintrc',
+    default: false,
+    transform: negate,
+  },
+  reportUnusedDisableDirectives: {
     default: null,
   },
   env: {
@@ -98,22 +105,28 @@ const BASE_CONFIG = {
     default: [],
     transform: asArray,
   },
-  reportUnusedDisableDirectives: {
-    default: null,
-  },
   rules: {
     name: 'overrideConfig.rules',
     default: {},
   },
 };
 
-const normalizeCliOptions = rawConfig => {
-  return Object.keys(BASE_CONFIG).reduce((config, key) => {
+const FLAT_CONFIG = {
+  ...BASE_CONFIG,
+  reportUnusedDisableDirectives: {
+    name: 'overrideConfig.linterOptions.reportUnusedDisableDirectives',
+    default: false,
+  },
+};
+
+const normalizeCliOptions = (configType, rawConfig) => {
+  const configConfig = configType === 'flat' ? FLAT_CONFIG : LEGACY_CONFIG;
+  return Object.keys(configConfig).reduce((config, key) => {
     const {
       name = key,
       transform = identity,
       default: defaultValue,
-    } = BASE_CONFIG[key];
+    } = configConfig[key];
 
     const value = rawConfig[key] !== undefined ? rawConfig[key] : defaultValue;
 
@@ -123,10 +136,10 @@ const normalizeCliOptions = rawConfig => {
   }, {});
 };
 
-const normalizeConfig = config => {
+const normalizeConfig = (configType, config) => {
   return {
     ...config,
-    cliOptions: normalizeCliOptions(config.cliOptions || {}),
+    cliOptions: normalizeCliOptions(configType, config.cliOptions || {}),
   };
 };
 

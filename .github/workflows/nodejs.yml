@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [12.x, 14.x, 16.x, 18.x, 19.x, 20.x]
-        eslint-version: [7, "8.40", 8]
+        eslint-version: [7, "8.40", "8.55", 8]
         jest-version: [27, 28, 29]
         jest-watch-typeahead-version: [1, 2]
         exclude:
