@@ -99,7 +99,8 @@ const BASE_CONFIG = {
     transform: asArray,
   },
   reportUnusedDisableDirectives: {
-    default: null,
+    name: 'overrideConfig.reportUnusedDisableDirectives',
+    default: false,
   },
   rules: {
     name: 'overrideConfig.rules',
