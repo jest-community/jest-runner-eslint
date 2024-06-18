@@ -34,7 +34,7 @@
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "babel-jest": "^27 || ^28 || ^29",
-    "eslint": "^7 || ^8",
+    "eslint": "^9.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-formatter-codeframe": "^7.32.1",
@@ -50,7 +50,7 @@
     "semver": "^7.3.8"
   },
   "peerDependencies": {
-    "eslint": "^7 || ^8",
+    "eslint": "^9.0.0",
     "jest": "^27 || ^28 || ^29"
   },
   "prettier": {
