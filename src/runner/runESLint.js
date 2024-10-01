@@ -106,8 +106,8 @@ const mkAssertionResults = (testPath, report) =>
     ].join('\n'),
     fullName: `${reportMessage.line}:${reportMessage.column}: ${reportMessage.message} [${reportMessage.ruleId}]`,
     location: {
-      column: reportMessage.line,
-      line: reportMessage.column,
+      column: reportMessage.column,
+      line: reportMessage.line,
     },
     status: 'failed',
     title: reportMessage.ruleId,
