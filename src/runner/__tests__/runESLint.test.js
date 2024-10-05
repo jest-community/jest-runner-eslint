@@ -15,7 +15,20 @@ const runESLintRunnerWithMockedEngine = ({
 
       lintFiles() {
         return mockOptions.errorCount > 0
-          ? [{ errorCount: mockOptions.errorCount, warningCount: 0 }]
+          ? [
+              {
+                errorCount: mockOptions.errorCount,
+                warningCount: 0,
+                messages: [
+                  {
+                    message: 'Test',
+                    ruleId: 'test-rule',
+                    line: 1,
+                    column: 2,
+                  },
+                ],
+              },
+            ]
           : [];
       }
 
@@ -149,6 +162,19 @@ it('Returns "fail" when the test failed', async () => {
     numFailingTests: 1,
     numPassingTests: 0,
     numPendingTests: 0,
+    testResults: [
+      {
+        title: 'test-rule',
+        testFilePath: '/path/to/file.test.js',
+        fullName: '1:2: Test [test-rule]',
+        failureMessages: ['Test\n    at /path/to/file.test.js:1:2'],
+        location: {
+          line: 1,
+          column: 2,
+        },
+        status: 'failed',
+      },
+    ],
   });
 });
 
