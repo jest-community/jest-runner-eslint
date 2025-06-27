@@ -118,7 +118,7 @@ it('normalizes maxWarnings', () => {
     maxWarnings: 10,
   });
 
-  expect(() => normalizeCLIOptions({ maxWarnings: 'not-an-int' })).toThrowError(
+  expect(() => normalizeCLIOptions({ maxWarnings: 'not-an-int' })).toThrow(
     `'not-an-int' cannot be converted to a number`,
   );
 });
