@@ -5,7 +5,8 @@
     "ecmaVersion": 11
   },
   "rules": {
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "jest/no-alias-methods": 1
   },
   "env": {
     "jest/globals": true
