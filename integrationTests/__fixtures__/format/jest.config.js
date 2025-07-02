@@ -1,4 +1,4 @@
 module.exports = {
-  runner: require.resolve('../../../'),
+  runner: '../../../',
   testMatch: ['**/__eslint__/**/*.js'],
 };
