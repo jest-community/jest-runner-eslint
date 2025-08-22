@@ -41,6 +41,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^26.9.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-rulesdir": "^0.2.1",
     "execa": "^5.1.1",
     "jest": "^27 || ^28 || ^29 || ^30",
     "jest-watch-select-projects": "^2.0.0",
