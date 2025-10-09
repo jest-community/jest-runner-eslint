@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Correctly prints the error message from a failing ESLint rule 1`] = `
+"FAIL integrationTests/__fixtures__/rule-error/__eslint__/one.js
+Cannot read property 'cause' of undefined
+Occurred while linting /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/rule-error/__eslint__/one.js:1
+FAIL integrationTests/__fixtures__/rule-error/__eslint__/two.js
+Cannot read property 'cause' of undefined
+Occurred while linting /mocked-path-to-jest-runner-mocha/integrationTests/__fixtures__/rule-error/__eslint__/two.js:1
+Test Suites: 2 failed, 2 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:
+Ran all test suites.
+"
+`;
