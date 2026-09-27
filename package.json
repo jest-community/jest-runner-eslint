@@ -24,7 +24,7 @@
     "format": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "chalk": "^4.0.0",
+    "chalk": "^6.0.0",
     "cosmiconfig": "^7.0.0",
     "create-jest-runner": "^0.11.2",
     "dot-prop": "^6.0.1"
